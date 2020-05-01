@@ -30,7 +30,7 @@
 
 Create an issue with below given JSON model as the comment body. 
 
-```json
+```
 {
   "name": "YOUR REPO NAME", // Required : Depenedency Name
   "github": "GITHUB REPO", // Optional: In format, user/repo 
