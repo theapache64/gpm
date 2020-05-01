@@ -1,12 +1,12 @@
 package com.theapache64.gpm.core
 
+import com.theapache64.gpm.core.registries.gpm.GpmRegistry
 import com.theapache64.gpm.models.Dependency
 
 object RegistryManager {
 
-
     private val dependencyCollectors = listOf(
-        GpmDependencyCollector
+        GpmRegistry
     )
 
     /**

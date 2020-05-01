@@ -1,19 +1,18 @@
 package com.theapache64.gpm.models
 
-import com.google.gson.annotations.SerializedName
-
+import com.squareup.moshi.Json
 
 data class Dependency(
-    @SerializedName("default_type")
+    @Json(name = "default_type")
     val defaultType: String, // implementation
-    @SerializedName("dependency_signature")
+    @Json(name = "dependency_signature")
     val dependencySignature: String, // com.squareup.okhttp3:okhttp
-    @SerializedName("docs")
+    @Json(name = "docs")
     val docs: String, // https://square.github.io/okhttp/
-    @SerializedName("github")
+    @Json(name = "github")
     val github: String, // square/okhttp
-    @SerializedName("latest_version")
+    @Json(name = "latest_version")
     val latestVersion: String, // 4.6.0
-    @SerializedName("name")
+    @Json(name = "name")
     val name: String // OkHttp
 )

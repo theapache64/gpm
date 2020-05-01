@@ -25,8 +25,13 @@ dependencies {
     implementation 'info.picocli:picocli:4.2.0'
     kapt 'info.picocli:picocli-codegen:4.2.0'
 
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
+
+    // Dagger
+    implementation 'com.google.dagger:dagger:2.27'
+    kapt 'com.google.dagger:dagger-compiler:2.27'
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
     testImplementation 'com.winterbe:expekt:0.5.0'
