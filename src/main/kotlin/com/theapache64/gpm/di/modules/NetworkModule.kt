@@ -1,7 +1,9 @@
 package com.theapache64.gpm.di.modules
 
-import com.theapache64.gpm.core.registries.gpm.GpmApiInterface
-import com.theapache64.gpm.core.registries.maven.MavenApiInterface
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.theapache64.gpm.data.remote.GpmApiInterface
+import com.theapache64.gpm.data.remote.MavenApiInterface
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -13,16 +15,32 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
+    fun provideKotlinJsonAdapterFactory(): KotlinJsonAdapterFactory {
+        return KotlinJsonAdapterFactory()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMoshi(kotlinJsonAdapter: KotlinJsonAdapterFactory): Moshi {
+        return Moshi.Builder()
+            .add(kotlinJsonAdapter)
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideGpmApiInterface(retrofit: Retrofit): GpmApiInterface {
-        return retrofit.create(GpmApiInterface::class.java)
+    fun provideRetrofit(moshi: Moshi): Retrofit.Builder {
+        return Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+    }
+
+    @Singleton
+    @Provides
+    fun provideGpmApiInterface(retrofitBuilder: Retrofit.Builder): GpmApiInterface {
+        return retrofitBuilder
+            .baseUrl("https://raw.githubusercontent.com/theapache64/gpm/")
+            .build()
+            .create(GpmApiInterface::class.java)
     }
 
     @Singleton

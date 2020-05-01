@@ -1,7 +1,11 @@
 package com.theapache64.gpm.commands.subcommands
 
+import com.theapache64.gpm.data.repos.GpmRepo
+import com.theapache64.gpm.di.components.DaggerInstallComponent
+import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import java.util.concurrent.Callable
+import javax.inject.Inject
 
 @CommandLine.Command(
     name = "install",
@@ -9,6 +13,18 @@ import java.util.concurrent.Callable
     description = ["To install the dependency"]
 )
 class Install : Callable<Int> {
+
+    companion object {
+        const val RESULT_REPO_FOUND = 200
+        const val RESULT_REPO_NOT_FOUND = 404
+    }
+
+    @Inject
+    lateinit var gpmRepo: GpmRepo
+
+    init {
+        DaggerInstallComponent.create().inject(this)
+    }
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -31,14 +47,19 @@ class Install : Callable<Int> {
     @CommandLine.Parameters(index = "0", description = ["Dependency name"])
     lateinit var dependencyName: String
 
-    override fun call(): Int {
+    override fun call(): Int = runBlocking {
+
+        dependencyName = dependencyName.trim().toLowerCase()
+
+        // first get from
+        val gpmDependency = gpmRepo.getDependency(dependencyName) ?: return@runBlocking RESULT_REPO_NOT_FOUND
 
         // if all save flags are null, then isSave will be enabled
         if (isSave == null && isSaveDev == null && isSaveDevAndroid == null) {
             isSave = true
         }
 
-        return 0
+        RESULT_REPO_FOUND
     }
 
 }
