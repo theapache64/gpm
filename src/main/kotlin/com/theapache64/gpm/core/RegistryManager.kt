@@ -1,7 +1,7 @@
 package com.theapache64.gpm.core
 
 import com.theapache64.gpm.core.registries.gpm.GpmRegistry
-import com.theapache64.gpm.models.Dependency
+import com.theapache64.gpm.models.RegistryDependency
 
 object RegistryManager {
 
@@ -12,7 +12,7 @@ object RegistryManager {
     /**
      * To get dependency from the available collectors
      */
-    fun getDependency(name: String): Dependency? {
+    fun getDependency(name: String): RegistryDependency? {
 
         for (depCol in dependencyCollectors) {
             val dependency = depCol.getDependency(name)

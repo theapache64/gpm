@@ -2,7 +2,7 @@ package com.theapache64.gpm.models
 
 import com.squareup.moshi.Json
 
-data class Dependency(
+data class RegistryDependency(
     @Json(name = "default_type")
     val defaultType: String, // implementation
     @Json(name = "dependency_signature")

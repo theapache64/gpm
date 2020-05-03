@@ -2,6 +2,7 @@ package com.theapache64.gpm.commands.subcommands
 
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.di.components.DaggerInstallComponent
+import com.theapache64.gpm.core.gm.GradleManager
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import java.util.concurrent.Callable
@@ -21,6 +22,9 @@ class Install : Callable<Int> {
 
     @Inject
     lateinit var gpmRepo: GpmRepo
+
+    @Inject
+    lateinit var gradleParser: GradleManager
 
     init {
         DaggerInstallComponent.create().inject(this)

@@ -47,7 +47,7 @@ dependencies {
     testImplementation 'com.winterbe:expekt:0.5.0'
 
     // Mockito inline
-    testImplementation 'org.mockito:mockito-inline:3.3.3'
+    testImplementation('org.mockito:mockito-inline:3.3.3')
 
     // Mockito-koltin
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
