@@ -1,5 +1,6 @@
 package com.theapache64.gpm.core.gm
 
+import com.theapache64.gpm.utils.GpmConfig
 import java.io.File
 import java.io.IOException
 import java.lang.IllegalArgumentException
@@ -10,7 +11,6 @@ import java.lang.IllegalArgumentException
 class GradleManager constructor(
     private val gradleFile: File
 ) {
-
 
     companion object {
         private val DEPENDENCY_REGEX by lazy {

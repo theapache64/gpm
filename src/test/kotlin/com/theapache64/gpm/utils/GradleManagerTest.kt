@@ -11,14 +11,10 @@ class GradleManagerTest {
 
     private lateinit var gradleManager: GradleManager
     private val sampleGradleFile = File("assets/sample.build.gradle")
-    private val tempGradleFile = File("assets/build.gradle")
 
     @Before
     fun setUp() {
-        tempGradleFile.delete()
-        println(sampleGradleFile.absolutePath)
-        sampleGradleFile.copyTo(tempGradleFile)
-        this.gradleManager = GradleManager(tempGradleFile)
+        this.gradleManager = GradleManager(sampleGradleFile)
     }
 
     @Test

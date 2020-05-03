@@ -2,7 +2,8 @@
   "name": "OkHttp",
   "github": "square/okhttp",
   "docs": "https://square.github.io/okhttp/",
-  "dependency_signature": "com.squareup.okhttp3:okhttp",
-  "latest_version": "4.6.0",
+  "groupId": "com.squareup.okhttp3",
+  "artifactId": "okhttp",
+  "get_from": "maven",
   "default_type": "implementation"
 }

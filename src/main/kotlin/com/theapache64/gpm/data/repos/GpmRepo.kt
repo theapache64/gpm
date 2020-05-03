@@ -1,7 +1,7 @@
 package com.theapache64.gpm.data.repos
 
-import com.theapache64.gpm.data.remote.GpmApiInterface
-import com.theapache64.gpm.models.RegistryDependency
+import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
+import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
 import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -9,11 +9,11 @@ import javax.inject.Singleton
 @Singleton
 class GpmRepo @Inject constructor(
     private val gpmApiInterface: GpmApiInterface
-) {
+) : BaseDependencyRepo {
     /**
      * To get dependency from GPM github registry
      */
-    suspend fun getDependency(dependencyName: String): RegistryDependency? {
+    override suspend fun getDependency(dependencyName: String): GpmDependency? {
         return try {
             gpmApiInterface.getDependency(dependencyName)
         } catch (e: HttpException) {

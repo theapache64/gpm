@@ -1,6 +1,7 @@
 package com.theapache64.gpm.di.components
 
 import com.theapache64.gpm.commands.subcommands.Install
+import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
 import dagger.Component
@@ -10,4 +11,5 @@ import javax.inject.Singleton
 @Component(modules = [GradleModule::class, NetworkModule::class])
 interface InstallComponent {
     fun inject(install: Install)
+    fun gpmApiInterface(): GpmApiInterface
 }

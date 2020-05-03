@@ -1,8 +1,7 @@
 package com.theapache64.gpm.core.base
 
-import com.theapache64.gpm.models.RegistryDependency
+import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
 
 interface BaseRegistry {
-    fun getDependencyUrl(name: String): String
-    fun getDependency(name: String): RegistryDependency?
+    fun getDependency(name: String): GpmDependency?
 }
