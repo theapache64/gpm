@@ -49,16 +49,17 @@ class Install : Callable<Int> {
     }
 
     suspend fun chooseIndex(items: List<String>): Int {
+
         println("Choose: ")
+
         items.forEachIndexed() { index: Int, string: String ->
             println("${index + 1}) $string")
         }
+
         @Suppress("ConstantConditionIf")
         return if (GpmConfig.IS_DEBUG_MODE) {
             delay(1000)
-            val randomInput = (1..items.size).random()
-            println("Random Input: $randomInput")
-            randomInput
+            1
         } else {
             InputUtils.getInt("Choose one", 1, items.size)
         }

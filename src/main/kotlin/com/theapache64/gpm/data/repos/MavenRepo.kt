@@ -61,7 +61,6 @@ class MavenRepo @Inject constructor(
 
     suspend fun getLatestVersion(groupId: String, artifactId: String): ArtifactInfo? {
         val htmlResp = mavenApiInterface.getArtifact(groupId, artifactId).removeNewLinesAndMultipleSpaces()
-        File("x.html").writeText(htmlResp)
         val results = ARTIFACT_VERSION_REGEX.find(htmlResp)
         return if (results != null) {
             val (version, repoUrl, repoName) = results.destructured

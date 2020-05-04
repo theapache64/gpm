@@ -37,6 +37,13 @@ class InstallTest {
     }
 
     @Test
+    fun `Install non existing registry`() {
+        val exitCode = cmd.execute("install", "retrofit")
+        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
+        tempBuildGradle.readText().should.contain("implementation 'com.squareup.retrofit2:retrofit")
+    }
+
+    @Test
     fun `Install --save`() {
         val exitCode = cmd.execute("install", "--save", "okhttp")
         exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
