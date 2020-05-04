@@ -1,7 +1,9 @@
 package com.theapache64.gpm.utils
 
+import com.theapache64.gpm.core.GpmFileManager
 import com.theapache64.gpm.core.gm.GradleDependency
 import com.theapache64.gpm.core.gm.GradleManager
+import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
 import com.theapache64.gpm.rules.MyDaggerMockRule
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.InjectFromComponent
@@ -20,22 +22,29 @@ class GradleManagerTest {
     @InjectFromComponent
     lateinit var sampleGradleFile: File
 
+    @InjectFromComponent
+    lateinit var gpmFileManager: GpmFileManager
+
     @Before
     fun setUp() {
-        this.gradleManager = GradleManager(sampleGradleFile)
+        this.gradleManager = GradleManager(gpmFileManager, sampleGradleFile)
     }
 
     @Test
     fun whenGetDependenciesSize_then10() {
         gradleManager.parseDependencies().size.should.equal(37)
         gradleManager.addDependency(
-            "My Artifact",
-            "Library for doing some things",
-            GradleDependency(
-                GradleDependency.Type.IMP,
-                "myGroup",
+            GradleDependency.Type.IMP,
+            GpmDependency(
                 "myArtifact",
-                "myVersion"
+                GradleDependency.Type.IMP.keyword,
+                "https://mylib.docs",
+                "jcenter",
+                "https://github.com/userx/myArtifact",
+                "myGroup",
+                "My Lib",
+                "Some description",
+                "1.0.0"
             )
         )
         gradleManager.parseDependencies().size.should.equal(38)

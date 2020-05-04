@@ -11,15 +11,4 @@ data class GradleDependency(
         TEST_IMP("testImplementation"),
         AND_TEST_IMP("androidTestImplementation")
     }
-
-    fun getFullSignature(): String {
-
-        val quote = if (version.startsWith("$")) {
-            "\""
-        } else {
-            "'"
-        }
-
-        return "${type.keyword} $quote$groupId:$artifactId:$version$quote"
-    }
 }

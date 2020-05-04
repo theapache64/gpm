@@ -66,14 +66,8 @@ class InstallViewModel @Inject constructor(
         // Adding each dependency
         for (depType in depTypes) {
             gradleManager.addDependency(
-                gpmDependency.name,
-                gpmDependency.description,
-                GradleDependency(
-                    depType,
-                    gpmDependency.groupId,
-                    gpmDependency.artifactId,
-                    gpmDependency.version!!
-                )
+                depType,
+                gpmDependency
             )
         }
 

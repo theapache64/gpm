@@ -1,5 +1,7 @@
 package com.theapache64.gpm.di.modules
 
+import com.squareup.moshi.Moshi
+import com.theapache64.gpm.core.GpmFileManager
 import com.theapache64.gpm.utils.GpmConfig
 import com.theapache64.gpm.core.gm.GradleManager
 import dagger.Module
@@ -7,7 +9,7 @@ import dagger.Provides
 import java.io.File
 import javax.inject.Named
 
-@Module
+@Module(includes = [MoshiModule::class])
 class GradleModule {
 
     @Provides
@@ -28,7 +30,12 @@ class GradleModule {
     }
 
     @Provides
-    fun provideGradleManager(gradleFile: File): GradleManager {
-        return GradleManager(gradleFile)
+    fun provideGpmFileManager(moshi: Moshi): GpmFileManager {
+        return GpmFileManager(moshi)
+    }
+
+    @Provides
+    fun provideGradleManager(gradleFile: File, gpmFileManager: GpmFileManager): GradleManager {
+        return GradleManager(gpmFileManager, gradleFile)
     }
 }

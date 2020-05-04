@@ -1,6 +1,11 @@
 package com.theapache64.gpm.core.gm
 
+import com.squareup.moshi.Moshi
+import com.theapache64.gpm.core.GpmFileManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.models.GpmFileData
+import com.theapache64.gpm.utils.GpmConfig
+import com.theapache64.gpm.utils.GradleUtils
 import com.theapache64.gpm.utils.StringUtils
 import com.theapache64.gpm.utils.insertAt
 import java.io.File
@@ -10,6 +15,7 @@ import java.lang.IllegalArgumentException
  * Currently supports 'implementation' and 'testImplementation' only.
  */
 class GradleManager constructor(
+    private val gpmFileManager: GpmFileManager,
     private val gradleFile: File
 ) {
 
@@ -53,13 +59,26 @@ class GradleManager constructor(
      * To add dependency
      */
     @Throws(IndexOutOfBoundsException::class)
-    fun addDependency(name: String, description: String, newDep: GradleDependency) {
+    fun addDependency(
+        type: GradleDependency.Type,
+        newGpmDep: GpmDependency
+    ) {
 
         val fileContent = gradleFile.readText()
+        val name = newGpmDep.name
+        val description = newGpmDep.description
+
+
+        val fullSignature = GradleUtils.getFullSignature(
+            type.keyword,
+            newGpmDep.groupId,
+            newGpmDep.artifactId,
+            newGpmDep.version!!
+        )
 
         if (fileContent.contains(KEY_DEPENDENCIES)) {
 
-            val newDepSign = "\n\t//$name:$description\n\t${newDep.getFullSignature()}\n"
+            val newDepSign = "\n\t//$name:$description\n\t$fullSignature\n"
 
             // Appending dependency
             val depIndex = fileContent.indexOf(KEY_DEPENDENCIES)
@@ -78,12 +97,14 @@ class GradleManager constructor(
                 dependencies {
                 
                     // $name : $description
-                    ${newDep.getFullSignature()}
+                    $fullSignature
                 }
                 
             """.trimIndent()
             gradleFile.appendText(firstDependency)
         }
+
+        gpmFileManager.add(type, newGpmDep)
     }
 
 }

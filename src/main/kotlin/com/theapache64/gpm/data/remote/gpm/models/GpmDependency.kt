@@ -21,4 +21,6 @@ data class GpmDependency(
     val description: String,
     @Transient
     var version: String? = null // OkHttp
-)
+){
+
+}

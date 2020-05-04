@@ -1,6 +1,8 @@
 package com.theapache64.gpm.di.components
 
+import com.squareup.moshi.Moshi
 import com.theapache64.gpm.commands.subcommands.Install
+import com.theapache64.gpm.core.GpmFileManager
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface
 import com.theapache64.gpm.data.repos.MavenRepo
@@ -23,6 +25,7 @@ interface InstallComponent {
     fun mavenApiInterface(): MavenApiInterface
     fun gradleFile(): File
     fun mavenRepo(): MavenRepo
+    fun gpmFileManager(): GpmFileManager
 
     fun inject(install: Install)
 }

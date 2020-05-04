@@ -11,22 +11,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [MoshiModule::class])
 class NetworkModule {
-
-    @Singleton
-    @Provides
-    fun provideKotlinJsonAdapterFactory(): KotlinJsonAdapterFactory {
-        return KotlinJsonAdapterFactory()
-    }
-
-    @Singleton
-    @Provides
-    fun provideMoshi(kotlinJsonAdapter: KotlinJsonAdapterFactory): Moshi {
-        return Moshi.Builder()
-            .add(kotlinJsonAdapter)
-            .build()
-    }
 
     @Provides
     fun provideRetrofit(): Retrofit.Builder {
