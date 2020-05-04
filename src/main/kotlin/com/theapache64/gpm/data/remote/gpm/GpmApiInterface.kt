@@ -6,7 +6,7 @@ import retrofit2.http.Path
 
 interface GpmApiInterface {
 
-    @GET("master/registry/{name}.json")
+    @GET("registry/{name}.json")
     suspend fun getDependency(
         @Path("name") repoName: String
     ): GpmDependency

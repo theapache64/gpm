@@ -8,7 +8,7 @@ import picocli.CommandLine
 import java.io.PrintWriter
 import java.io.StringWriter
 
-class InstallTest {
+class InstallViewModelTest {
 
     private lateinit var cmd: CommandLine
 
@@ -22,12 +22,12 @@ class InstallTest {
     @Test
     fun whenValidRepoInstall_thenSuccess() {
         val exitCode = cmd.execute("install", "okhttp")
-        exitCode.should.equal(Install.RESULT_REPO_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
     }
 
     @Test
     fun whenInvalidRepoInstall_thenError() {
         val exitCode = cmd.execute("install", "ghdfghfgh")
-        exitCode.should.equal(Install.RESULT_REPO_NOT_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_REPO_NOT_FOUND)
     }
 }

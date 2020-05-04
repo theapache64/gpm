@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -29,16 +30,16 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(moshi: Moshi): Retrofit.Builder {
+    fun provideRetrofit(): Retrofit.Builder {
         return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
     }
 
     @Singleton
     @Provides
-    fun provideGpmApiInterface(retrofitBuilder: Retrofit.Builder): GpmApiInterface {
+    fun provideGpmApiInterface(retrofitBuilder: Retrofit.Builder, moshi: Moshi): GpmApiInterface {
         return retrofitBuilder
-            .baseUrl("https://raw.githubusercontent.com/theapache64/gpm/")
+            .baseUrl("https://raw.githubusercontent.com/theapache64/gpm/dev/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(GpmApiInterface::class.java)
     }
@@ -47,7 +48,8 @@ class NetworkModule {
     @Provides
     fun provideMavenApiInterface(retrofitBuilder: Retrofit.Builder): MavenApiInterface {
         return retrofitBuilder
-            .baseUrl("https://search.maven.org/solrsearch/")
+            .baseUrl("https://mvnrepository.com/")
+            .addConverterFactory(ScalarsConverterFactory.create())
             .build()
             .create(MavenApiInterface::class.java)
     }
