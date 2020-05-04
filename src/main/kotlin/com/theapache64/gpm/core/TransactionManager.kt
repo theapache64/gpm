@@ -8,7 +8,7 @@ import com.theapache64.gpm.models.GpmFileData
 import com.theapache64.gpm.utils.GpmConfig
 import java.io.File
 
-class GpmFileManager(
+class TransactionManager(
     private val moshi: Moshi
 ) {
     companion object {

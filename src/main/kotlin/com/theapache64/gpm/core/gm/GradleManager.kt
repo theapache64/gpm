@@ -1,10 +1,7 @@
 package com.theapache64.gpm.core.gm
 
-import com.squareup.moshi.Moshi
-import com.theapache64.gpm.core.GpmFileManager
+import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
-import com.theapache64.gpm.models.GpmFileData
-import com.theapache64.gpm.utils.GpmConfig
 import com.theapache64.gpm.utils.GradleUtils
 import com.theapache64.gpm.utils.StringUtils
 import com.theapache64.gpm.utils.insertAt
@@ -15,7 +12,7 @@ import java.lang.IllegalArgumentException
  * Currently supports 'implementation' and 'testImplementation' only.
  */
 class GradleManager constructor(
-    private val gpmFileManager: GpmFileManager,
+    private val transactionManager: TransactionManager,
     private val gradleFile: File
 ) {
 
@@ -104,7 +101,7 @@ class GradleManager constructor(
             gradleFile.appendText(firstDependency)
         }
 
-        gpmFileManager.add(type, newGpmDep)
+        transactionManager.add(type, newGpmDep)
     }
 
 }

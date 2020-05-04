@@ -1,6 +1,6 @@
 package com.theapache64.gpm.utils
 
-import com.theapache64.gpm.core.GpmFileManager
+import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.core.gm.GradleDependency
 import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
@@ -23,11 +23,11 @@ class GradleManagerTest {
     lateinit var sampleGradleFile: File
 
     @InjectFromComponent
-    lateinit var gpmFileManager: GpmFileManager
+    lateinit var transactionManager: TransactionManager
 
     @Before
     fun setUp() {
-        this.gradleManager = GradleManager(gpmFileManager, sampleGradleFile)
+        this.gradleManager = GradleManager(transactionManager, sampleGradleFile)
     }
 
     @Test
