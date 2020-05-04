@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 import java.io.File
 
-@Module(includes = [MoshiModule::class])
+@Module(includes = [TransactionModule::class])
 class GradleModule {
 
     @Provides
@@ -28,10 +28,6 @@ class GradleModule {
         return File(filePath)
     }
 
-    @Provides
-    fun provideTransactionManager(moshi: Moshi): TransactionManager {
-        return TransactionManager(moshi)
-    }
 
     @Provides
     fun provideGradleManager(gradleFile: File, transactionManager: TransactionManager): GradleManager {

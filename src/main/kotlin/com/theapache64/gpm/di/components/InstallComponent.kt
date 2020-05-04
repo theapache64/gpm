@@ -18,7 +18,6 @@ interface InstallComponent {
     /*
      * For testing
      */
-
     fun gpmApiInterface(): GpmApiInterface
     fun mavenApiInterface(): MavenApiInterface
     fun gradleFile(): File
