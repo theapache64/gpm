@@ -19,12 +19,15 @@ class GpmRepoTest {
     @InjectFromComponent
     private lateinit var gpmApiInterface: GpmApiInterface
 
+    @InjectFromComponent
+    private lateinit var mavenRepo: MavenRepo
+
     private lateinit var gmpRepo: GpmRepo
 
 
     @Before
     fun setUp() {
-        gmpRepo = GpmRepo(gpmApiInterface)
+        gmpRepo = GpmRepo(gpmApiInterface, mavenRepo)
     }
 
 

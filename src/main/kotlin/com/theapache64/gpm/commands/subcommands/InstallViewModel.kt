@@ -19,9 +19,7 @@ class InstallViewModel @Inject constructor(
     companion object {
         const val RESULT_REPO_FOUND = 200
         const val RESULT_REPO_NOT_FOUND = 404
-        const val RESULT_REPO_DAMAGED = 666
     }
-
 
     override suspend fun call(command: Install): Int {
 
@@ -73,7 +71,7 @@ class InstallViewModel @Inject constructor(
                     depType,
                     gpmDependency.groupId,
                     gpmDependency.artifactId,
-                    ""
+                    gpmDependency.version!!
                 )
             )
         }
@@ -127,7 +125,8 @@ class InstallViewModel @Inject constructor(
                 artifactInfo.repoName,
                 null,
                 selectedMavenDep.groupId,
-                selectedMavenDep.name
+                selectedMavenDep.name,
+                artifactInfo.version
             )
         } else {
             return null

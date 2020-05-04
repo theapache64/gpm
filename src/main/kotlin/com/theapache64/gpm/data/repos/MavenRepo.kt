@@ -20,7 +20,7 @@ class MavenRepo @Inject constructor(
         }
 
         private val ARTIFACT_VERSION_REGEX by lazy {
-            "<tr>.+?vbtn milestone\">(?<version>.+?)<\\/a><\\/td><td><a class=\"b lic\" href=\"(?<repoUrl>.+?)\">(?<repoName>.+?)<\\/a>".toRegex()
+            "<tr>.+?vbtn release\">(?<version>.+?)<\\/a><\\/td><td><a class=\"b lic\" href=\"(?<repoUrl>.+?)\">(?<repoName>.+?)<\\/a>".toRegex()
         }
 
         //Apr 29, 2020
@@ -61,6 +61,7 @@ class MavenRepo @Inject constructor(
 
     suspend fun getLatestVersion(groupId: String, artifactId: String): ArtifactInfo? {
         val htmlResp = mavenApiInterface.getArtifact(groupId, artifactId).removeNewLinesAndMultipleSpaces()
+        File("x.html").writeText(htmlResp)
         val results = ARTIFACT_VERSION_REGEX.find(htmlResp)
         return if (results != null) {
             val (version, repoUrl, repoName) = results.destructured

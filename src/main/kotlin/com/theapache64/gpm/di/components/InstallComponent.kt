@@ -22,5 +22,7 @@ interface InstallComponent {
     fun gpmApiInterface(): GpmApiInterface
     fun mavenApiInterface(): MavenApiInterface
     fun gradleFile(): File
+    fun mavenRepo(): MavenRepo
+
     fun inject(install: Install)
 }

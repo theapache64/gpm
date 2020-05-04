@@ -1,6 +1,9 @@
 package com.theapache64.gpm.commands.subcommands
 
 import com.theapache64.gpm.di.components.DaggerInstallComponent
+import com.theapache64.gpm.utils.GpmConfig
+import com.theapache64.gpm.utils.InputUtils
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import java.util.concurrent.Callable
@@ -45,8 +48,20 @@ class Install : Callable<Int> {
         installViewModel.call(this@Install)
     }
 
-    fun chooseIndex(map: List<String>): Int {
-        TODO("Not yet implemented")
+    suspend fun chooseIndex(items: List<String>): Int {
+        println("Choose: ")
+        items.forEachIndexed() { index: Int, string: String ->
+            println("${index + 1}) $string")
+        }
+        @Suppress("ConstantConditionIf")
+        return if (GpmConfig.IS_DEBUG_MODE) {
+            delay(1000)
+            val randomInput = (1..items.size).random()
+            println("Random Input: $randomInput")
+            randomInput
+        } else {
+            InputUtils.getInt("Choose one", 1, items.size)
+        }
     }
 
 }
