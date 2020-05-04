@@ -7,6 +7,7 @@ import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
 import com.theapache64.gpm.data.remote.maven.models.SearchResult
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
+import picocli.CommandLine
 import javax.inject.Inject
 
 class InstallViewModel @Inject constructor(
@@ -77,22 +78,60 @@ class InstallViewModel @Inject constructor(
             )
         }
 
-
         return RESULT_REPO_FOUND
     }
 
     private suspend fun getDependency(install: Install, dependencyName: String): GpmDependency? {
         var gpmDependency = gpmRepo.getDependency(dependencyName)
 
-        /*if (gpmDependency == null) {
-            val mavenDeps = mavenRepo.getDependencies(dependencyName)
-            val depIndex = install.chooseIndex(
-                mavenDeps.map { "${it.groupId}:${it.artifactId}:${it.latestVersion}" }
-            )
-
-        }*/
+        if (gpmDependency == null) {
+            // Searching for maven
+            gpmDependency = getFromMaven(install, dependencyName)
+        }
 
         return gpmDependency
+    }
+
+    private suspend fun getFromMaven(install: Install, dependencyName: String): GpmDependency? {
+
+        val mavenDeps = mavenRepo.search(dependencyName)
+
+        if (mavenDeps.isNotEmpty()) {
+            val mostUsed = mavenDeps.maxBy { it.usage }!!
+            val selDepId = install.chooseIndex(
+                mavenDeps.map {
+                    val text = "${it.groupId}:${it.artifactId}"
+                    if (it == mostUsed) {
+                        // color text
+                        CommandLine.Help.Ansi.AUTO.string("@|bold,green $text|@")
+                    } else {
+                        //normal text
+                        text
+                    }
+                }
+            )
+            val selectedMavenDep = mavenDeps[selDepId - 1]
+
+            // Getting last version
+            val artifactInfo = mavenRepo.getLatestVersion(
+                selectedMavenDep.groupId,
+                selectedMavenDep.artifactId
+            )
+
+            require(artifactInfo != null) { "Failed to artifact information for $selectedMavenDep" }
+
+            return GpmDependency(
+                selectedMavenDep.artifactId,
+                GradleDependency.Type.IMP.keyword,
+                selectedMavenDep.url,
+                artifactInfo.repoName,
+                null,
+                selectedMavenDep.groupId,
+                selectedMavenDep.name
+            )
+        } else {
+            return null
+        }
     }
 
 }

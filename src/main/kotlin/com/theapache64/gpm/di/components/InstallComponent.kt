@@ -8,10 +8,12 @@ import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
 import com.theapache64.gpm.di.modules.ViewModelModule
 import dagger.Component
+import java.io.File
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ViewModelModule::class, NetworkModule::class])
+@Component(modules = [ViewModelModule::class, NetworkModule::class, GradleModule::class])
 interface InstallComponent {
     /*
      * For testing
@@ -19,5 +21,6 @@ interface InstallComponent {
 
     fun gpmApiInterface(): GpmApiInterface
     fun mavenApiInterface(): MavenApiInterface
+    fun gradleFile(): File
     fun inject(install: Install)
 }

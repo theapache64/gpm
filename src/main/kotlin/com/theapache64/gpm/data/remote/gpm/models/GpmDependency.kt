@@ -12,7 +12,7 @@ data class GpmDependency(
     @Json(name = "get_from")
     val getFrom: String, // maven
     @Json(name = "github")
-    val github: String, // square/okhttp
+    val github: String?, // square/okhttp
     @Json(name = "groupId")
     val groupId: String, // com.squareup.okhttp3
     @Json(name = "name")

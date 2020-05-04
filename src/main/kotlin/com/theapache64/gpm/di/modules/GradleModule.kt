@@ -11,9 +11,7 @@ import javax.inject.Named
 class GradleModule {
 
     @Provides
-    @Named("gradle_file")
     fun gradleFile(): File {
-
 
         @Suppress("ConstantConditionIf")
         val filePath = if (GpmConfig.IS_DEBUG_MODE) {
@@ -30,7 +28,7 @@ class GradleModule {
     }
 
     @Provides
-    fun provideGradleManager(@Named("gradle_file") gradleFile: File): GradleManager {
+    fun provideGradleManager(gradleFile: File): GradleManager {
         return GradleManager(gradleFile)
     }
 }

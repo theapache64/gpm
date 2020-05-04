@@ -2,15 +2,24 @@ package com.theapache64.gpm.utils
 
 import com.theapache64.gpm.core.gm.GradleDependency
 import com.theapache64.gpm.core.gm.GradleManager
+import com.theapache64.gpm.rules.MyDaggerMockRule
 import com.winterbe.expekt.should
+import it.cosenonjaviste.daggermock.InjectFromComponent
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import java.io.File
+import javax.inject.Named
 
 class GradleManagerTest {
 
     private lateinit var gradleManager: GradleManager
-    private val sampleGradleFile = File("assets/sample.build.gradle")
+
+    @get:Rule
+    val daggerRule = MyDaggerMockRule()
+
+    @InjectFromComponent
+    lateinit var sampleGradleFile: File
 
     @Before
     fun setUp() {
@@ -24,7 +33,7 @@ class GradleManagerTest {
             GradleDependency(
                 GradleDependency.Type.IMP,
                 "myGroup",
-                "myArtifcat",
+                "myArtifact",
                 "myVersion"
             )
         )
