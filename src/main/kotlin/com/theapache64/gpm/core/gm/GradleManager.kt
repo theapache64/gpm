@@ -1,8 +1,9 @@
 package com.theapache64.gpm.core.gm
 
-import com.theapache64.gpm.utils.GpmConfig
+import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.utils.StringUtils
+import com.theapache64.gpm.utils.insertAt
 import java.io.File
-import java.io.IOException
 import java.lang.IllegalArgumentException
 
 /**
@@ -16,6 +17,8 @@ class GradleManager constructor(
         private val DEPENDENCY_REGEX by lazy {
             "(?<type>androidTestImplementation|testImplementation|implementation)\\s*\\(?[\"'](?<groupId>.+?):(?<artifactId>.+?):(?<version>.+?)[\"']\\)?".toRegex()
         }
+
+        private const val KEY_DEPENDENCIES = "dependencies"
     }
 
     fun parseDependencies(): List<GradleDependency> {
@@ -49,16 +52,37 @@ class GradleManager constructor(
     /**
      * To add dependency
      */
-    fun addDependency(newDep: GradleDependency) {
-        var fileContent = gradleFile.readText()
-        val lastDependency = DEPENDENCY_REGEX.findAll(fileContent).lastOrNull()
-        if (lastDependency != null) {
-            val fullMatch = lastDependency.value
-            val matchPlusNew = "$fullMatch\n    ${newDep.getFullSignature()}"
-            fileContent = fileContent.replace(fullMatch, matchPlusNew)
-            gradleFile.writeText(fileContent)
+    @Throws(IndexOutOfBoundsException::class)
+    fun addDependency(name: String, description: String, newDep: GradleDependency) {
+
+        val fileContent = gradleFile.readText()
+
+        if (fileContent.contains(KEY_DEPENDENCIES)) {
+
+            val newDepSign = "\n\t//$name:$description\n\t${newDep.getFullSignature()}\n"
+
+            // Appending dependency
+            val depIndex = fileContent.indexOf(KEY_DEPENDENCIES)
+            val openIndex = fileContent.indexOf('{', depIndex)
+            val closingIndex = StringUtils.getClosingIndexOf(fileContent, '{', openIndex, '}')
+            val newContent = fileContent.insertAt(closingIndex, newDepSign)
+            gradleFile.writeText(newContent)
+
+
         } else {
-            throw IOException("Couldn't add dependency '$newDep'. Unable to find dependency ")
+
+            // Adding first dependency
+            val firstDependency = """
+                
+                // Project Dependencies
+                dependencies {
+                
+                    // $name : $description
+                    ${newDep.getFullSignature()}
+                }
+                
+            """.trimIndent()
+            gradleFile.appendText(firstDependency)
         }
     }
 

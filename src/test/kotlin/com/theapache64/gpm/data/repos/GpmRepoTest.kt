@@ -24,7 +24,6 @@ class GpmRepoTest {
 
     private lateinit var gmpRepo: GpmRepo
 
-
     @Before
     fun setUp() {
         gmpRepo = GpmRepo(gpmApiInterface, mavenRepo)

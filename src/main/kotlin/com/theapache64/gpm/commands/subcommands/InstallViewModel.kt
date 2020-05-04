@@ -4,7 +4,6 @@ import com.theapache64.gpm.commands.base.BaseViewModel
 import com.theapache64.gpm.core.gm.GradleDependency
 import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
-import com.theapache64.gpm.data.remote.maven.models.SearchResult
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
 import picocli.CommandLine
@@ -67,6 +66,8 @@ class InstallViewModel @Inject constructor(
         // Adding each dependency
         for (depType in depTypes) {
             gradleManager.addDependency(
+                gpmDependency.name,
+                gpmDependency.description,
                 GradleDependency(
                     depType,
                     gpmDependency.groupId,

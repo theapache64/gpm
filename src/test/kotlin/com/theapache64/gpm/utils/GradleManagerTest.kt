@@ -9,7 +9,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.File
-import javax.inject.Named
 
 class GradleManagerTest {
 
@@ -30,6 +29,8 @@ class GradleManagerTest {
     fun whenGetDependenciesSize_then10() {
         gradleManager.parseDependencies().size.should.equal(37)
         gradleManager.addDependency(
+            "My Artifact",
+            "Library for doing some things",
             GradleDependency(
                 GradleDependency.Type.IMP,
                 "myGroup",
