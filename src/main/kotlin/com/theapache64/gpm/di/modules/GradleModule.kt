@@ -7,25 +7,46 @@ import com.theapache64.gpm.core.gm.GradleManager
 import dagger.Module
 import dagger.Provides
 import java.io.File
+import java.lang.IllegalArgumentException
 
 @Module(includes = [TransactionModule::class])
-class GradleModule {
+class GradleModule(
+    val isDeleteTempFile: Boolean
+) {
 
     @Provides
     fun gradleFile(): File {
 
         @Suppress("ConstantConditionIf")
-        val filePath = if (GpmConfig.IS_DEBUG_MODE) {
-            val sampleFile = File("assets/sample.build.gradle")
-            val tempGradleFile = File("assets/temp.build.gradle")
-            tempGradleFile.delete()
-            sampleFile.copyTo(tempGradleFile)
-            tempGradleFile.absolutePath
-        } else {
-            "app/build.gradle"
-        }
+        return if (GpmConfig.IS_DEBUG_MODE) {
 
-        return File(filePath)
+            val tempGradleFile = File("assets/temp.build.gradle")
+
+            if (isDeleteTempFile) {
+                val sampleFile = File("assets/sample.build.gradle")
+                tempGradleFile.delete()
+                sampleFile.copyTo(tempGradleFile)
+            }
+
+            tempGradleFile
+        } else {
+            val androidGradleFile = File("app/build.gradle")
+            val jvmGradleFile = File("build.gradle")
+            when {
+                androidGradleFile.exists() -> {
+                    // android project
+                    androidGradleFile
+                }
+
+                jvmGradleFile.exists() -> {
+                    jvmGradleFile
+                }
+
+                else -> {
+                    throw IllegalArgumentException("Invalid directory. Are you sure that you're executing the command from project root?")
+                }
+            }
+        }
     }
 
 

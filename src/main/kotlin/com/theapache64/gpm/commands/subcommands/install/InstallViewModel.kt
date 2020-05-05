@@ -92,7 +92,7 @@ class InstallViewModel @Inject constructor(
 
         if (mavenDeps.isNotEmpty()) {
             val mostUsed = mavenDeps.maxBy { it.usage }!!
-            val selDepId = install.chooseIndex(
+            val selDepIndex = install.chooseIndex(
                 mavenDeps.map {
                     val text = "${it.groupId}:${it.artifactId}"
                     if (it == mostUsed) {
@@ -104,7 +104,7 @@ class InstallViewModel @Inject constructor(
                     }
                 }
             )
-            val selMavenDep = mavenDeps[selDepId - 1]
+            val selMavenDep = mavenDeps[selDepIndex]
 
             // Getting last version
             val artifactInfo = mavenRepo.getLatestVersion(

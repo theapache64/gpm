@@ -1,7 +1,9 @@
 package com.theapache64.gpm.commands.subcommands.uninstall
 
+import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.di.components.DaggerUninstallComponent
 import com.theapache64.gpm.di.components.UninstallComponent
+import com.theapache64.gpm.di.modules.GradleModule
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import java.util.concurrent.Callable
@@ -12,7 +14,7 @@ import javax.inject.Inject
     aliases = ["u"],
     description = ["To uninstall a dependency"]
 )
-class Uninstall : Callable<Int> {
+class Uninstall : BaseCommand<Int>() {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -39,10 +41,18 @@ class Uninstall : Callable<Int> {
     lateinit var uninstallViewModel: UninstallViewModel
 
     init {
-        DaggerUninstallComponent.create().inject(this)
+        DaggerUninstallComponent
+            .builder()
+            .gradleModule(GradleModule(false))
+            .build()
+            .inject(this)
     }
 
     override fun call(): Int = runBlocking {
         uninstallViewModel.call(this@Uninstall)
+    }
+
+    fun onNoDepInstalled(depName: String) {
+        println("No dependency installed with '$depName' using gpm. You might have installed it manually.")
     }
 }

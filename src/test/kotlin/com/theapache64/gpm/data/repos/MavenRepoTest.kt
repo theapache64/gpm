@@ -41,7 +41,7 @@ class MavenRepoTest {
     fun `Getting valid artifact information`() = runBlockingUnitTest {
         val info = mavenRepo.getLatestVersion("org.junit.jupiter", "junit-jupiter-api")
         info.should.not.`null`
-        info!!.version.should.equal("5.7.0-M1")
+        info!!.version.should.not.empty
         info.repoName.should.equal("Central")
         info.repoUrl.should.equal("/repos/central")
     }

@@ -2,10 +2,12 @@ package com.theapache64.gpm.core.gm
 
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
+import com.theapache64.gpm.models.GpmFileData
 import com.theapache64.gpm.utils.GradleUtils
 import com.theapache64.gpm.utils.StringUtils
 import com.theapache64.gpm.utils.insertAt
 import java.io.File
+import java.io.IOException
 import java.lang.IllegalArgumentException
 
 /**
@@ -103,6 +105,32 @@ class GradleManager constructor(
         }
 
         transactionManager.add(installedName, type, newGpmDep)
+    }
+
+    /**
+     * To remove dependency
+     */
+    fun removeDep(depToRemove: GpmFileData.AddedDep) {
+
+        val name = depToRemove.gpmDep.name
+        val description = depToRemove.gpmDep.description
+        val groupId = depToRemove.gpmDep.groupId
+        val artifactId = depToRemove.gpmDep.artifactId
+
+
+        val depRegEx = ("\\s*\\/\\/$name:$description\n" +
+                "\\s*${depToRemove.type}\\s*\\(?['\"]$groupId:$artifactId:.+?['\"]\\)?").toRegex()
+
+
+        val fileContent = gradleFile.readText()
+        val newFileContent = fileContent.replace(depRegEx, "")
+
+        if (fileContent.length != newFileContent.length) {
+            // dep removed
+            gradleFile.writeText(newFileContent)
+        } else {
+            throw IOException("Failed to remove dependency. Signature might have changed")
+        }
     }
 
 }

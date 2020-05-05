@@ -1,6 +1,8 @@
 package com.theapache64.gpm.commands.subcommands.install
 
+import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.di.components.DaggerInstallComponent
+import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.utils.GpmConfig
 import com.theapache64.gpm.utils.InputUtils
 import kotlinx.coroutines.delay
@@ -14,7 +16,7 @@ import javax.inject.Inject
     aliases = ["i"],
     description = ["To install the dependency"]
 )
-class Install : Callable<Int> {
+class Install : BaseCommand<Int>() {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -41,28 +43,14 @@ class Install : Callable<Int> {
     lateinit var installViewModel: InstallViewModel
 
     init {
-        DaggerInstallComponent.create().inject(this)
+        DaggerInstallComponent
+            .builder()
+            .gradleModule(GradleModule(true))
+            .build()
+            .inject(this)
     }
 
     override fun call(): Int = runBlocking {
         installViewModel.call(this@Install)
     }
-
-    suspend fun chooseIndex(items: List<String>): Int {
-
-        println("Choose: ")
-
-        items.forEachIndexed() { index: Int, string: String ->
-            println("${index + 1}) $string")
-        }
-
-        @Suppress("ConstantConditionIf")
-        return if (GpmConfig.IS_DEBUG_MODE) {
-            delay(1000)
-            1
-        } else {
-            InputUtils.getInt("Choose one", 1, items.size)
-        }
-    }
-
 }

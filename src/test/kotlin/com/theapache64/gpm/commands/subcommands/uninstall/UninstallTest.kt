@@ -25,6 +25,10 @@ class UninstallTest {
         // Install dependency
         val installExitCode = cmd.execute("install", "okhttp")
         installExitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
+
+        // Uninstall dep
+        val uninstallExitCode = cmd.execute("uninstall", "okhttp")
+        uninstallExitCode.should.equal(UninstallViewModel.RESULT_DEP_UNINSTALLED)
     }
 
     @Test
