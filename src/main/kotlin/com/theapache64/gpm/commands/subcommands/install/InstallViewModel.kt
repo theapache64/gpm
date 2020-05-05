@@ -1,4 +1,4 @@
-package com.theapache64.gpm.commands.subcommands
+package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.commands.base.BaseViewModel
 import com.theapache64.gpm.core.gm.GradleDependency
@@ -66,6 +66,7 @@ class InstallViewModel @Inject constructor(
         // Adding each dependency
         for (depType in depTypes) {
             gradleManager.addDependency(
+                dependencyName,
                 depType,
                 gpmDependency
             )

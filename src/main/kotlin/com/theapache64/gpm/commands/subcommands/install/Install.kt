@@ -1,4 +1,4 @@
-package com.theapache64.gpm.commands.subcommands
+package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.di.components.DaggerInstallComponent
 import com.theapache64.gpm.utils.GpmConfig

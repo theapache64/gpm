@@ -5,5 +5,6 @@
   "group_id": "com.squareup.okhttp3",
   "artifact_id": "okhttp",
   "get_from": "maven",
-  "default_type": "implementation"
+  "default_type": "implementation",
+  "description": "For networking"
 }

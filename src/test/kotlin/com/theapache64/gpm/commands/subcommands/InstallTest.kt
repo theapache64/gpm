@@ -1,6 +1,7 @@
 package com.theapache64.gpm.commands.subcommands
 
 import com.theapache64.gpm.commands.Gpm
+import com.theapache64.gpm.commands.subcommands.install.InstallViewModel
 import com.theapache64.gpm.rules.MyDaggerMockRule
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.InjectFromComponent

@@ -1,6 +1,6 @@
 package com.theapache64.gpm.commands
 
-import com.theapache64.gpm.commands.subcommands.Install
+import com.theapache64.gpm.commands.subcommands.install.Install
 import picocli.CommandLine
 
 @CommandLine.Command(

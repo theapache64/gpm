@@ -1,6 +1,6 @@
 package com.theapache64.gpm.di.components
 
-import com.theapache64.gpm.commands.subcommands.Install
+import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface

@@ -34,6 +34,7 @@ class GradleManagerTest {
     fun whenGetDependenciesSize_then10() {
         gradleManager.parseDependencies().size.should.equal(37)
         gradleManager.addDependency(
+            "my-artifact",
             GradleDependency.Type.IMP,
             GpmDependency(
                 "myArtifact",

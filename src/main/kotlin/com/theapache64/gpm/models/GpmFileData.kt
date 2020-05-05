@@ -11,6 +11,8 @@ class GpmFileData(
     class AddedDep(
         @Json(name = "type")
         val type: String,
+        @Json(name = "installed_name")
+        val installedName: String,
         @Json(name = "gpm_dep")
         val gpmDependency: GpmDependency
     )

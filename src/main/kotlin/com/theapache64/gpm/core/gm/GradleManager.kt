@@ -57,6 +57,7 @@ class GradleManager constructor(
      */
     @Throws(IndexOutOfBoundsException::class)
     fun addDependency(
+        installedName: String,
         type: GradleDependency.Type,
         newGpmDep: GpmDependency
     ) {
@@ -101,7 +102,7 @@ class GradleManager constructor(
             gradleFile.appendText(firstDependency)
         }
 
-        transactionManager.add(type, newGpmDep)
+        transactionManager.add(installedName, type, newGpmDep)
     }
 
 }

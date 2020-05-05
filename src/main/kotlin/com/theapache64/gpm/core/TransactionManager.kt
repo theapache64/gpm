@@ -22,11 +22,12 @@ class TransactionManager(
         }
     }
 
-    fun add(type: GradleDependency.Type, newGpmDep: GpmDependency) {
+    fun add(installedName: String, type: GradleDependency.Type, newGpmDep: GpmDependency) {
         // Need to login
         val adapter = moshi.adapter(GpmFileData::class.java).indent(" ")
         val depToStore = GpmFileData.AddedDep(
             type.keyword,
+            installedName,
             newGpmDep
         )
         val newFileData = if (!GPM_FILE.exists()) {
