@@ -1,8 +1,7 @@
 package com.theapache64.gpm.utils
 
-import com.theapache64.gpm.core.gm.GradleDependency
+import com.theapache64.gpm.core.gm.GradleDep
 import com.winterbe.expekt.should
-import org.junit.Assert.*
 import org.junit.Test
 
 class GradleUtilsTest {
@@ -10,7 +9,7 @@ class GradleUtilsTest {
     fun `Full signature for implementation`() {
 
         val gradleDependency = GradleUtils.getFullSignature(
-            GradleDependency.Type.IMP.keyword,
+            GradleDep.Type.IMP.keyword,
             "org.mockito",
             "mockito",
             "3.3.3"
@@ -25,7 +24,7 @@ class GradleUtilsTest {
     fun `Full signature for testImplementation`() {
 
         val gradleDependency = GradleUtils.getFullSignature(
-            GradleDependency.Type.TEST_IMP.keyword,
+            GradleDep.Type.TEST_IMP.keyword,
             "org.mockito",
             "mockito",
             "3.3.3"
@@ -40,7 +39,7 @@ class GradleUtilsTest {
     fun `Full signature for androidTestImplementation`() {
 
         val gradleDependency = GradleUtils.getFullSignature(
-            GradleDependency.Type.AND_TEST_IMP.keyword,
+            GradleDep.Type.AND_TEST_IMP.keyword,
             "org.mockito",
             "mockito",
             "3.3.3"

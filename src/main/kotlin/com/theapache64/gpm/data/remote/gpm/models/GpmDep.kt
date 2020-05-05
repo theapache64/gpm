@@ -2,7 +2,7 @@ package com.theapache64.gpm.data.remote.gpm.models
 
 import com.squareup.moshi.Json
 
-data class GpmDependency(
+data class GpmDep(
     @Json(name = "artifact_id")
     val artifactId: String, // okhttp
     @Json(name = "default_type")

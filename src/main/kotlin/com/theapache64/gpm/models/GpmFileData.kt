@@ -1,8 +1,7 @@
 package com.theapache64.gpm.models
 
 import com.squareup.moshi.Json
-import com.theapache64.gpm.core.gm.GradleDependency
-import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 
 class GpmFileData(
     @Json(name = "added")
@@ -14,6 +13,6 @@ class GpmFileData(
         @Json(name = "installed_name")
         val installedName: String,
         @Json(name = "gpm_dep")
-        val gpmDependency: GpmDependency
+        val gpmDep: GpmDep
     )
 }

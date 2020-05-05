@@ -1,7 +1,7 @@
 package com.theapache64.gpm.core.gm
 
 import com.theapache64.gpm.core.TransactionManager
-import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.utils.GradleUtils
 import com.theapache64.gpm.utils.StringUtils
 import com.theapache64.gpm.utils.insertAt
@@ -17,17 +17,17 @@ class GradleManager constructor(
 ) {
 
     companion object {
-        private val DEPENDENCY_REGEX by lazy {
+        private val DEP_REGEX by lazy {
             "(?<type>androidTestImplementation|testImplementation|implementation)\\s*\\(?[\"'](?<groupId>.+?):(?<artifactId>.+?):(?<version>.+?)[\"']\\)?".toRegex()
         }
 
-        private const val KEY_DEPENDENCIES = "dependencies"
+        private const val KEY_DEP = "dependencies"
     }
 
-    fun parseDependencies(): List<GradleDependency> {
-        val deps = mutableListOf<GradleDependency>()
+    fun parseDeps(): List<GradleDep> {
+        val deps = mutableListOf<GradleDep>()
         val fileContent = gradleFile.readText()
-        val matchResults = DEPENDENCY_REGEX.findAll(fileContent)
+        val matchResults = DEP_REGEX.findAll(fileContent)
 
         for (result in matchResults) {
 
@@ -36,11 +36,11 @@ class GradleManager constructor(
             val artifactId = result.groups["artifactId"]!!.value
             val version = result.groups["version"]!!.value
 
-            val gdType = GradleDependency.Type.values().find { it.keyword == type }
+            val gdType = GradleDep.Type.values().find { it.keyword == type }
                 ?: throw IllegalArgumentException("Couldn't find dependency type for '$type.'")
 
             deps.add(
-                GradleDependency(
+                GradleDep(
                     gdType,
                     groupId,
                     artifactId,
@@ -56,10 +56,10 @@ class GradleManager constructor(
      * To add dependency
      */
     @Throws(IndexOutOfBoundsException::class)
-    fun addDependency(
+    fun addDep(
         installedName: String,
-        type: GradleDependency.Type,
-        newGpmDep: GpmDependency
+        type: GradleDep.Type,
+        newGpmDep: GpmDep
     ) {
 
         val fileContent = gradleFile.readText()
@@ -74,12 +74,12 @@ class GradleManager constructor(
             newGpmDep.version!!
         )
 
-        if (fileContent.contains(KEY_DEPENDENCIES)) {
+        if (fileContent.contains(KEY_DEP)) {
 
             val newDepSign = "\n\t//$name:$description\n\t$fullSignature\n"
 
             // Appending dependency
-            val depIndex = fileContent.indexOf(KEY_DEPENDENCIES)
+            val depIndex = fileContent.indexOf(KEY_DEP)
             val openIndex = fileContent.indexOf('{', depIndex)
             val closingIndex = StringUtils.getClosingIndexOf(fileContent, '{', openIndex, '}')
             val newContent = fileContent.insertAt(closingIndex, newDepSign)
@@ -89,7 +89,7 @@ class GradleManager constructor(
         } else {
 
             // Adding first dependency
-            val firstDependency = """
+            val firstDep = """
                 
                 // Project Dependencies
                 dependencies {
@@ -99,7 +99,7 @@ class GradleManager constructor(
                 }
                 
             """.trimIndent()
-            gradleFile.appendText(firstDependency)
+            gradleFile.appendText(firstDep)
         }
 
         transactionManager.add(installedName, type, newGpmDep)

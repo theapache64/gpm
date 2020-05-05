@@ -1,9 +1,9 @@
 package com.theapache64.gpm.utils
 
 import com.theapache64.gpm.core.TransactionManager
-import com.theapache64.gpm.core.gm.GradleDependency
+import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.core.gm.GradleManager
-import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.rules.MyDaggerMockRule
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.InjectFromComponent
@@ -32,13 +32,13 @@ class GradleManagerTest {
 
     @Test
     fun whenGetDependenciesSize_then10() {
-        gradleManager.parseDependencies().size.should.equal(37)
-        gradleManager.addDependency(
+        gradleManager.parseDeps().size.should.equal(37)
+        gradleManager.addDep(
             "my-artifact",
-            GradleDependency.Type.IMP,
-            GpmDependency(
+            GradleDep.Type.IMP,
+            GpmDep(
                 "myArtifact",
-                GradleDependency.Type.IMP.keyword,
+                GradleDep.Type.IMP.keyword,
                 "https://mylib.docs",
                 "jcenter",
                 "https://github.com/userx/myArtifact",
@@ -48,6 +48,6 @@ class GradleManagerTest {
                 "1.0.0"
             )
         )
-        gradleManager.parseDependencies().size.should.equal(38)
+        gradleManager.parseDeps().size.should.equal(38)
     }
 }

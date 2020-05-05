@@ -1,15 +1,10 @@
 package com.theapache64.gpm.data.repos
 
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
-import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import retrofit2.HttpException
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.coroutines.CoroutineContext
 
 @Singleton
 class GpmRepo @Inject constructor(
@@ -20,11 +15,11 @@ class GpmRepo @Inject constructor(
     /**
      * To get dependency from GPM github registry
      */
-    suspend fun getDependency(dependencyName: String): GpmDependency? =
+    suspend fun getDep(depName: String): GpmDep? =
         try {
-            val dep = gpmApiInterface.getDependency(dependencyName)
+            val dep = gpmApiInterface.getDependency(depName)
             val versionInfo = mavenRepo.getLatestVersion(dep.groupId, dep.artifactId)
-            require(versionInfo != null) { "Couldn't get version info for '$dependencyName'" }
+            require(versionInfo != null) { "Couldn't get version info for '$depName'" }
             dep.version = versionInfo.version
             dep
         } catch (e: HttpException) {

@@ -32,20 +32,20 @@ class GpmRepoTest {
 
     @Test
     fun `Valid search`() = runBlockingUnitTest {
-        val dependency = gmpRepo.getDependency("okhttp")
-        dependency.should.not.`null`
-        dependency!!.name.should.equal("OkHttp")
-        dependency.github.should.equal("square/okhttp")
-        dependency.docs.should.equal("https://square.github.io/okhttp/")
-        dependency.groupId.should.equal("com.squareup.okhttp3")
-        dependency.artifactId.should.equal("okhttp")
-        dependency.getFrom.should.equal("maven")
-        dependency.defaultType.should.equal("implementation")
+        val dep = gmpRepo.getDep("okhttp")
+        dep.should.not.`null`
+        dep!!.name.should.equal("OkHttp")
+        dep.github.should.equal("square/okhttp")
+        dep.docs.should.equal("https://square.github.io/okhttp/")
+        dep.groupId.should.equal("com.squareup.okhttp3")
+        dep.artifactId.should.equal("okhttp")
+        dep.getFrom.should.equal("maven")
+        dep.defaultType.should.equal("implementation")
     }
 
     @Test
     fun `Invalid search`() = runBlockingUnitTest {
-        gmpRepo.getDependency("fghdfghfgh").should.`null`
+        gmpRepo.getDep("fghdfghfgh").should.`null`
     }
 
 

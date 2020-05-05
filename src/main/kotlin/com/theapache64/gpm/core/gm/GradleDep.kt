@@ -1,6 +1,6 @@
 package com.theapache64.gpm.core.gm
 
-data class GradleDependency(
+data class GradleDep(
     val type: Type,
     val groupId: String,
     val artifactId: String,

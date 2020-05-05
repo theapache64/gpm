@@ -1,7 +1,8 @@
 package com.theapache64.gpm.commands.subcommands.uninstall
 
 import com.theapache64.gpm.commands.Gpm
-import org.junit.Assert.*
+import com.theapache64.gpm.commands.subcommands.install.InstallViewModel
+import com.winterbe.expekt.should
 import org.junit.Before
 import org.junit.Test
 import picocli.CommandLine
@@ -23,6 +24,7 @@ class UninstallTest {
     fun `Uninstall installed dependency`() {
         // Install dependency
         val installExitCode = cmd.execute("install", "okhttp")
+        installExitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
     }
 
     @Test

@@ -27,14 +27,14 @@ class MavenRepoTest {
 
     @Test
     fun `Valid search`() = runBlockingUnitTest {
-        val dependency = mavenRepo.search("okhttp")
-        dependency.size.should.above(1)
+        val dep = mavenRepo.search("okhttp")
+        dep.size.should.above(1)
     }
 
     @Test
     fun `Invalid search`() = runBlockingUnitTest {
-        val dependency = mavenRepo.search("dsfgdfgdsf")
-        dependency.size.should.equal(0)
+        val dep = mavenRepo.search("dsfgdfgdsf")
+        dep.size.should.equal(0)
     }
 
     @Test

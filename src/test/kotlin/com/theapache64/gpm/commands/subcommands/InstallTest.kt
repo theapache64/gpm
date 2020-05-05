@@ -33,35 +33,35 @@ class InstallTest {
     @Test
     fun `Install default`() {
         val exitCode = cmd.execute("install", "okhttp")
-        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
         tempBuildGradle.readText().should.contain("implementation 'com.squareup.okhttp3:okhttp:")
     }
 
     @Test
     fun `Install non existing registry`() {
         val exitCode = cmd.execute("install", "retrofit")
-        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
         tempBuildGradle.readText().should.contain("implementation 'com.squareup.retrofit2:retrofit")
     }
 
     @Test
     fun `Install --save`() {
         val exitCode = cmd.execute("install", "--save", "okhttp")
-        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
         tempBuildGradle.readText().should.contain("implementation 'com.squareup.okhttp3:okhttp:")
     }
 
     @Test
     fun `Install --save-dev`() {
         val exitCode = cmd.execute("install", "--save-dev", "okhttp")
-        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
         tempBuildGradle.readText().should.contain("testImplementation 'com.squareup.okhttp3:okhttp:")
     }
 
     @Test
     fun `Install --save-dev-android`() {
         val exitCode = cmd.execute("install", "--save-dev-android", "okhttp")
-        exitCode.should.equal(InstallViewModel.RESULT_REPO_FOUND)
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
         tempBuildGradle.readText().should.contain("androidTestImplementation 'com.squareup.okhttp3:okhttp:")
     }
 

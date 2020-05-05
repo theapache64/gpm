@@ -33,7 +33,7 @@ class Uninstall : Callable<Int> {
     var isSaveDevAndroid: Boolean = false
 
     @CommandLine.Parameters(index = "0", description = ["Dependency name"])
-    lateinit var dependencyName: String
+    lateinit var depName: String
 
     @Inject
     lateinit var uninstallViewModel: UninstallViewModel

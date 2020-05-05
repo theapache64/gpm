@@ -5,7 +5,6 @@ import com.theapache64.gpm.data.remote.maven.models.ArtifactInfo
 import com.theapache64.gpm.data.remote.maven.models.SearchResult
 import com.theapache64.gpm.utils.removeNewLinesAndMultipleSpaces
 import org.apache.commons.text.StringEscapeUtils
-import java.io.File
 import java.text.SimpleDateFormat
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,9 +26,9 @@ class MavenRepo @Inject constructor(
         private val SEARCH_RESULT_DATE_FORMAT = SimpleDateFormat("MMM dd, yyyy")
     }
 
-    suspend fun search(dependencyName: String): List<SearchResult> {
+    suspend fun search(depName: String): List<SearchResult> {
 
-        val htmlResp = mavenApiInterface.search(dependencyName).removeNewLinesAndMultipleSpaces()
+        val htmlResp = mavenApiInterface.search(depName).removeNewLinesAndMultipleSpaces()
         val matches = SEARCH_RESULT_REGEX.findAll(htmlResp)
         val searchResults = mutableListOf<SearchResult>()
         for (match in matches) {

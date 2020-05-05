@@ -1,9 +1,8 @@
 package com.theapache64.gpm.core
 
 import com.squareup.moshi.Moshi
-import com.theapache64.gpm.core.gm.GradleDependency
-import com.theapache64.gpm.core.gm.GradleManager
-import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.core.gm.GradleDep
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.models.GpmFileData
 import com.theapache64.gpm.utils.GpmConfig
 import java.io.File
@@ -22,7 +21,7 @@ class TransactionManager(
         }
     }
 
-    fun add(installedName: String, type: GradleDependency.Type, newGpmDep: GpmDependency) {
+    fun add(installedName: String, type: GradleDep.Type, newGpmDep: GpmDep) {
         // Need to login
         val adapter = moshi.adapter(GpmFileData::class.java).indent(" ")
         val depToStore = GpmFileData.AddedDep(

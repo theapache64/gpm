@@ -1,9 +1,9 @@
 package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.commands.base.BaseViewModel
-import com.theapache64.gpm.core.gm.GradleDependency
+import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.core.gm.GradleManager
-import com.theapache64.gpm.data.remote.gpm.models.GpmDependency
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
 import picocli.CommandLine
@@ -16,38 +16,38 @@ class InstallViewModel @Inject constructor(
 ) : BaseViewModel<Install>() {
 
     companion object {
-        const val RESULT_REPO_FOUND = 200
+        const val RESULT_DEP_INSTALLED = 200
         const val RESULT_REPO_NOT_FOUND = 404
     }
 
     override suspend fun call(command: Install): Int {
 
-        val dependencyName = command.dependencyName.trim().toLowerCase()
+        val depName = command.depName.trim().toLowerCase()
 
         // first get from
-        val gpmDependency = getDependency(command, dependencyName)
+        val gpmDep = getDep(command, depName)
             ?: return RESULT_REPO_NOT_FOUND
 
 
-        val depTypes = mutableListOf<GradleDependency.Type>().apply {
+        val depTypes = mutableListOf<GradleDep.Type>().apply {
 
             if (command.isSave) {
-                add(GradleDependency.Type.IMP)
+                add(GradleDep.Type.IMP)
             }
 
             if (command.isSaveDev) {
-                add(GradleDependency.Type.TEST_IMP)
+                add(GradleDep.Type.TEST_IMP)
             }
 
             if (command.isSaveDevAndroid) {
-                add(GradleDependency.Type.AND_TEST_IMP)
+                add(GradleDep.Type.AND_TEST_IMP)
             }
 
             // Still empty
-            if (isEmpty() && !gpmDependency.defaultType.isNullOrBlank()) {
+            if (isEmpty() && !gpmDep.defaultType.isNullOrBlank()) {
                 // setting default dependency
-                val depType = GradleDependency.Type.values().find { it.keyword == gpmDependency.defaultType.trim() }
-                    ?: throw IllegalArgumentException("Invalid default type '${gpmDependency.defaultType}'")
+                val depType = GradleDep.Type.values().find { it.keyword == gpmDep.defaultType.trim() }
+                    ?: throw IllegalArgumentException("Invalid default type '${gpmDep.defaultType}'")
 
                 add(depType)
             }
@@ -55,7 +55,7 @@ class InstallViewModel @Inject constructor(
             // Still Empty?
             if (isEmpty()) {
                 // adding default
-                add(GradleDependency.Type.IMP)
+                add(GradleDep.Type.IMP)
             }
         }
 
@@ -65,30 +65,30 @@ class InstallViewModel @Inject constructor(
 
         // Adding each dependency
         for (depType in depTypes) {
-            gradleManager.addDependency(
-                dependencyName,
+            gradleManager.addDep(
+                depName,
                 depType,
-                gpmDependency
+                gpmDep
             )
         }
 
-        return RESULT_REPO_FOUND
+        return RESULT_DEP_INSTALLED
     }
 
-    private suspend fun getDependency(install: Install, dependencyName: String): GpmDependency? {
-        var gpmDependency = gpmRepo.getDependency(dependencyName)
+    private suspend fun getDep(install: Install, depName: String): GpmDep? {
+        var gpmDep = gpmRepo.getDep(depName)
 
-        if (gpmDependency == null) {
+        if (gpmDep == null) {
             // Searching for maven
-            gpmDependency = getFromMaven(install, dependencyName)
+            gpmDep = getFromMaven(install, depName)
         }
 
-        return gpmDependency
+        return gpmDep
     }
 
-    private suspend fun getFromMaven(install: Install, dependencyName: String): GpmDependency? {
+    private suspend fun getFromMaven(install: Install, depName: String): GpmDep? {
 
-        val mavenDeps = mavenRepo.search(dependencyName)
+        val mavenDeps = mavenRepo.search(depName)
 
         if (mavenDeps.isNotEmpty()) {
             val mostUsed = mavenDeps.maxBy { it.usage }!!
@@ -104,24 +104,24 @@ class InstallViewModel @Inject constructor(
                     }
                 }
             )
-            val selectedMavenDep = mavenDeps[selDepId - 1]
+            val selMavenDep = mavenDeps[selDepId - 1]
 
             // Getting last version
             val artifactInfo = mavenRepo.getLatestVersion(
-                selectedMavenDep.groupId,
-                selectedMavenDep.artifactId
+                selMavenDep.groupId,
+                selMavenDep.artifactId
             )
 
-            require(artifactInfo != null) { "Failed to artifact information for $selectedMavenDep" }
+            require(artifactInfo != null) { "Failed to artifact information for $selMavenDep" }
 
-            return GpmDependency(
-                selectedMavenDep.artifactId,
-                GradleDependency.Type.IMP.keyword,
-                selectedMavenDep.url,
+            return GpmDep(
+                selMavenDep.artifactId,
+                GradleDep.Type.IMP.keyword,
+                selMavenDep.url,
                 artifactInfo.repoName,
                 null,
-                selectedMavenDep.groupId,
-                selectedMavenDep.name,
+                selMavenDep.groupId,
+                selMavenDep.name,
                 artifactInfo.version
             )
         } else {
