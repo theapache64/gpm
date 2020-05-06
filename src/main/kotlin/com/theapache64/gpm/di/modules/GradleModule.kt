@@ -11,7 +11,7 @@ import java.lang.IllegalArgumentException
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(
-    val isDeleteTempFile: Boolean
+    private val isDeleteTempFile: Boolean
 ) {
 
     @Provides

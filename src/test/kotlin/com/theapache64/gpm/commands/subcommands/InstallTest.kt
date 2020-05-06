@@ -94,6 +94,8 @@ class InstallTest {
 
         this.installCmd = CommandLine(install)
         installCmd.out = PrintWriter(StringWriter())
+
+        tempBuildGradle.delete()
     }
 
     @Test

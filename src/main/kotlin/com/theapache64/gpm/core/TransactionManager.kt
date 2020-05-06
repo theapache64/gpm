@@ -60,7 +60,7 @@ class TransactionManager @Inject constructor(
     }
 
     private fun isDuplicate(installedName: String, type: GradleDep.Type, newGpmDep: GpmDep): Boolean {
-        return getData().deps.find {
+        return getData()?.deps?.find {
             it.installedName == installedName &&
                     it.type == type.key &&
                     it.gpmDep.artifactId == newGpmDep.artifactId &&
@@ -71,7 +71,7 @@ class TransactionManager @Inject constructor(
 
     private fun getLastDepAdded(): GpmFileData.AddedDep? {
         return try {
-            getData().deps.lastOrNull()
+            getData()?.deps?.lastOrNull()
         } catch (e: FileNotFoundException) {
             null
         }
@@ -83,20 +83,32 @@ class TransactionManager @Inject constructor(
     }
 
     fun getInstalled(type: String, depName: String): List<GpmFileData.AddedDep> {
-        return getData().deps.filter {
+        return getData()?.deps?.filter {
             it.installedName == depName && it.type == type
-        }
+        } ?: listOf()
     }
 
     fun remove(depToRemove: GpmFileData.AddedDep) {
         val data = getData()
-        val isRemoved = data.deps.removeIf { it.id == depToRemove.id }
-        if (isRemoved) {
-            setData(data)
+        if (data != null) {
+            val isRemoved = data.deps.removeIf { it.id == depToRemove.id }
+            if (isRemoved) {
+                setData(data)
+            } else {
+                throw IOException("Failed to remove dependency. Couldn't find dependency with id '${depToRemove.id}'")
+            }
         } else {
-            throw IOException("Failed to remove dependency. Couldn't find dependency with id '${depToRemove.id}'")
+            throw IOException(
+                """
+                Failed to remove dependency. Are you sure you have installed it through gpm?
+            """.trimIndent()
+            )
         }
     }
 
-    private fun getData() = adapter.fromJson(GPM_FILE.readText())!!
+    private fun getData() = try {
+        adapter.fromJson(GPM_FILE.readText())
+    } catch (e: FileNotFoundException) {
+        null
+    }
 }

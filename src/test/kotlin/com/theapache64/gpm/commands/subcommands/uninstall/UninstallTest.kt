@@ -13,13 +13,13 @@ class UninstallTest {
 
     private lateinit var cmd: CommandLine
 
+
+
     @Before
     fun setUp() {
         this.cmd = CommandLine(Gpm()).apply {
             out = PrintWriter(StringWriter())
         }
-
-
     }
 
     @Test
@@ -49,6 +49,8 @@ class UninstallTest {
 
     @Test
     fun `Uninstall dependency which installed through same dependency name`() {
+
+
         val uninstallExitCode = cmd.execute("uninstall", "same-name")
         uninstallExitCode.should.equal(UninstallViewModel.RESULT_DEP_UNINSTALLED)
     }
