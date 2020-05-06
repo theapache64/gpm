@@ -14,7 +14,15 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ViewModelModule::class, NetworkModule::class, MoshiModule::class, GradleModule::class, CommandModule::class])
+@Component(
+    modules = [
+        ViewModelModule::class,
+        NetworkModule::class,
+        MoshiModule::class,
+        GradleModule::class,
+        CommandModule::class
+    ]
+)
 interface InstallComponent {
     /*
      * For testing

@@ -9,8 +9,7 @@ import javax.inject.Named
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(
-    private val isFromTest: Boolean,
-    private val isDeleteTempFile: Boolean
+    private val isFromTest: Boolean
 ) {
 
     @Provides
@@ -19,15 +18,10 @@ class GradleModule(
 
         @Suppress("ConstantConditionIf")
         return if (isFromTest) {
-
             val tempGradleFile = File("src/test/resources/temp.build.gradle")
-
-            if (!tempGradleFile.exists() || isDeleteTempFile) {
-                val sampleFile = File("src/test/resources/sample.build.gradle")
-                tempGradleFile.delete()
-                sampleFile.copyTo(tempGradleFile)
-            }
-
+            val sampleFile = File("src/test/resources/sample.build.gradle")
+            tempGradleFile.delete()
+            sampleFile.copyTo(tempGradleFile)
             tempGradleFile
 
         } else {

@@ -42,7 +42,7 @@ class Uninstall(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
     init {
         DaggerUninstallComponent
             .builder()
-            .gradleModule(GradleModule(isFromTest = false, isDeleteTempFile = false))
+            .gradleModule(GradleModule(isFromTest = false))
             .build()
             .inject(this)
     }

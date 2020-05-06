@@ -47,7 +47,7 @@ class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
     init {
         DaggerInstallComponent
             .builder()
-            .gradleModule(GradleModule(isFromTest = false, isDeleteTempFile = true))
+            .gradleModule(GradleModule(isFromTest = false))
             .transactionModule(TransactionModule(false))
             .build()
             .inject(this)

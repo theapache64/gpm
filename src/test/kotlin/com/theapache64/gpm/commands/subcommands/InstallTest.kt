@@ -48,7 +48,7 @@ class InstallTest {
     @get:Rule
     val daggerRule = DaggerMock.rule<InstallComponent>(NetworkModule()) {
         customizeBuilder<DaggerInstallComponent.Builder> {
-            it.gradleModule(GradleModule(isFromTest = true, isDeleteTempFile = true))
+            it.gradleModule(GradleModule(isFromTest = true))
                 .transactionModule(TransactionModule(true))
         }
         set {

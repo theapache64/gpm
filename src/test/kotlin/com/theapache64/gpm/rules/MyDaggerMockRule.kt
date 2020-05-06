@@ -8,5 +8,5 @@ import it.cosenonjaviste.daggermock.DaggerMockRule
 class MyDaggerMockRule : DaggerMockRule<InstallComponent>(
     InstallComponent::class.java,
     NetworkModule(),
-    GradleModule(isFromTest = true, isDeleteTempFile = true)
+    GradleModule(isFromTest = true)
 )
