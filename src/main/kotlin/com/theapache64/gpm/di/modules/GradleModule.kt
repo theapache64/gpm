@@ -5,6 +5,7 @@ import com.theapache64.gpm.core.gm.GradleManager
 import dagger.Module
 import dagger.Provides
 import java.io.File
+import javax.inject.Named
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(
@@ -13,6 +14,7 @@ class GradleModule(
 ) {
 
     @Provides
+    @Named("gradle_file")
     fun gradleFile(): File {
 
         @Suppress("ConstantConditionIf")
@@ -52,7 +54,10 @@ class GradleModule(
 
 
     @Provides
-    fun provideGradleManager(gradleFile: File, transactionManager: TransactionManager): GradleManager {
+    fun provideGradleManager(
+        @Named("gradle_file") gradleFile: File,
+        transactionManager: TransactionManager
+    ): GradleManager {
         return GradleManager(transactionManager, gradleFile)
     }
 }

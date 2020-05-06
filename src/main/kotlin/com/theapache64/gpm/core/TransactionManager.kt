@@ -11,7 +11,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class TransactionManager @Inject constructor(
-    private val isFromTest: Boolean,
+    private val gpmJsonFile: File,
     private val moshi: Moshi
 ) {
 
@@ -19,14 +19,6 @@ class TransactionManager @Inject constructor(
         moshi.adapter(GpmFileData::class.java).indent(" ")
     }
 
-    private val gpmFile by lazy {
-        @Suppress("ConstantConditionIf")
-        if (isFromTest) {
-            File("src/test/resources/temp.gpm.json")
-        } else {
-            File("gpm.json")
-        }
-    }
 
     fun add(installedName: String, type: GradleDep.Type, newGpmDep: GpmDep) {
 
@@ -46,10 +38,10 @@ class TransactionManager @Inject constructor(
             installedName,
             newGpmDep
         )
-        val newFileData = if (!gpmFile.exists()) {
+        val newFileData = if (!gpmJsonFile.exists()) {
             GpmFileData(mutableListOf(depToStore))
         } else {
-            val gpmFileData = adapter.fromJson(gpmFile.readText())
+            val gpmFileData = adapter.fromJson(gpmJsonFile.readText())
             gpmFileData!!.deps.add(depToStore)
             gpmFileData
         }
@@ -77,7 +69,7 @@ class TransactionManager @Inject constructor(
 
     private fun setData(newFileData: GpmFileData) {
         val gpmFileDataJson = adapter.toJson(newFileData)
-        gpmFile.writeText(gpmFileDataJson)
+        gpmJsonFile.writeText(gpmFileDataJson)
     }
 
     fun getInstalled(type: String, depName: String): List<GpmFileData.AddedDep> {
@@ -105,7 +97,7 @@ class TransactionManager @Inject constructor(
     }
 
     private fun getData() = try {
-        adapter.fromJson(gpmFile.readText())
+        adapter.fromJson(gpmJsonFile.readText())
     } catch (e: FileNotFoundException) {
         null
     }

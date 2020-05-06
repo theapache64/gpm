@@ -27,6 +27,7 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
+import javax.inject.Named
 
 class InstallTest {
 
@@ -40,6 +41,10 @@ class InstallTest {
 
     private val install = Install(true)
 
+
+    private lateinit var tempBuildGradle: File
+    private lateinit var tempGpmJson: File
+
     @get:Rule
     val daggerRule = DaggerMock.rule<InstallComponent>(NetworkModule()) {
         customizeBuilder<DaggerInstallComponent.Builder> {
@@ -47,12 +52,12 @@ class InstallTest {
                 .transactionModule(TransactionModule(true))
         }
         set {
+            tempBuildGradle = it.gradleFile()
+            tempGpmJson = it.gpmJsonFile()
             it.inject(install)
         }
     }
 
-    @InjectFromComponent
-    lateinit var tempBuildGradle: File
 
     private var fakeGpmApi: GpmApiInterface = mock()
     private var fakeMavenApi: MavenApiInterface = mock()
@@ -143,6 +148,7 @@ class InstallTest {
     @After
     fun tearDown() {
         tempBuildGradle.delete()
+        tempGpmJson.delete()
     }
 
 }

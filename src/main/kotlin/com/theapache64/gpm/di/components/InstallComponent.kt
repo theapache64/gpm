@@ -10,6 +10,7 @@ import com.theapache64.gpm.data.repos.MavenRepo
 import com.theapache64.gpm.di.modules.*
 import dagger.Component
 import java.io.File
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
@@ -21,7 +22,13 @@ interface InstallComponent {
     fun getGpm(): Gpm
     fun gpmApiInterface(): GpmApiInterface
     fun mavenApiInterface(): MavenApiInterface
+
+    @Named("gradle_file")
     fun gradleFile(): File
+
+    @Named("gpm_json_file")
+    fun gpmJsonFile(): File
+
     fun mavenRepo(): MavenRepo
     fun gpmFileManager(): TransactionManager
 
