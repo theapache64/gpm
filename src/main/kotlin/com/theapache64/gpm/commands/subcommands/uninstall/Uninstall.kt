@@ -1,12 +1,11 @@
 package com.theapache64.gpm.commands.subcommands.uninstall
 
 import com.theapache64.gpm.commands.base.BaseCommand
+import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.di.components.DaggerUninstallComponent
-import com.theapache64.gpm.di.components.UninstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
-import java.util.concurrent.Callable
 import javax.inject.Inject
 
 @CommandLine.Command(
@@ -52,7 +51,11 @@ class Uninstall : BaseCommand<Int>() {
         uninstallViewModel.call(this@Uninstall)
     }
 
-    fun onNoDepInstalled(depName: String) {
-        println("No dependency installed with '$depName' using gpm. You might have installed it manually.")
+    fun onNoDepInstalled(depType: GradleDep.Type, depName: String) {
+        println("No dependency named '$depName' installed as '${depType.key}' using gpm. You might have installed it manually.")
+    }
+
+    fun onBeforeDepRemove(depType: GradleDep.Type, depName: String) {
+        println("Removing '${depType.key}' of $depName...'")
     }
 }

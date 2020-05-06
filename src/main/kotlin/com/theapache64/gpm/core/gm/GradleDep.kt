@@ -6,7 +6,7 @@ data class GradleDep(
     val artifactId: String,
     val version: String
 ) {
-    enum class Type(val keyword: String) {
+    enum class Type(val key: String) {
         IMP("implementation"),
         TEST_IMP("testImplementation"),
         AND_TEST_IMP("androidTestImplementation")

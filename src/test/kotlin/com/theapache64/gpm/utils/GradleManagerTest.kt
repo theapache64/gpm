@@ -38,7 +38,7 @@ class GradleManagerTest {
             GradleDep.Type.IMP,
             GpmDep(
                 "myArtifact",
-                GradleDep.Type.IMP.keyword,
+                GradleDep.Type.IMP.key,
                 "https://mylib.docs",
                 "jcenter",
                 "https://github.com/userx/myArtifact",

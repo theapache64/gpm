@@ -3,6 +3,8 @@ package com.theapache64.gpm.commands
 import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.commands.subcommands.uninstall.Uninstall
 import picocli.CommandLine
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @CommandLine.Command(
     name = "gpm",
@@ -12,5 +14,6 @@ import picocli.CommandLine
         Uninstall::class
     ]
 )
-class Gpm {
+@Singleton
+class Gpm @Inject constructor() {
 }

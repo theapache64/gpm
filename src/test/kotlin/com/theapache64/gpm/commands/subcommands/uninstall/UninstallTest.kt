@@ -18,10 +18,13 @@ class UninstallTest {
         this.cmd = CommandLine(Gpm()).apply {
             out = PrintWriter(StringWriter())
         }
+
+
     }
 
     @Test
     fun `Uninstall installed dependency`() {
+
         // Install dependency
         val installExitCode = cmd.execute("install", "okhttp")
         installExitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
@@ -33,17 +36,21 @@ class UninstallTest {
 
     @Test
     fun `Uninstall dependency which is manually added`() {
-
+        // Uninstall dep
+        val uninstallExitCode = cmd.execute("uninstall", "robolectric")
+        uninstallExitCode.should.equal(UninstallViewModel.RESULT_NO_DEP_INSTALLED)
     }
 
     @Test
     fun `Uninstall not installed dependency`() {
-
+        val uninstallExitCode = cmd.execute("uninstall", "invalid-library")
+        uninstallExitCode.should.equal(UninstallViewModel.RESULT_NO_DEP_INSTALLED)
     }
 
     @Test
     fun `Uninstall dependency which installed through same dependency name`() {
-
+        val uninstallExitCode = cmd.execute("uninstall", "same-name")
+        uninstallExitCode.should.equal(UninstallViewModel.RESULT_DEP_UNINSTALLED)
     }
 
     @Test

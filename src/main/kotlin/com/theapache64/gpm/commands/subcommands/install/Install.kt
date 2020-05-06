@@ -10,6 +10,7 @@ import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import java.util.concurrent.Callable
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @CommandLine.Command(
     name = "install",

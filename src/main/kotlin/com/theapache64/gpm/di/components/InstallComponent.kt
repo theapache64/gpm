@@ -1,23 +1,24 @@
 package com.theapache64.gpm.di.components
 
+import com.squareup.moshi.Moshi
+import com.theapache64.gpm.commands.Gpm
 import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface
 import com.theapache64.gpm.data.repos.MavenRepo
-import com.theapache64.gpm.di.modules.GradleModule
-import com.theapache64.gpm.di.modules.NetworkModule
-import com.theapache64.gpm.di.modules.ViewModelModule
+import com.theapache64.gpm.di.modules.*
 import dagger.Component
 import java.io.File
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ViewModelModule::class, NetworkModule::class, GradleModule::class])
+@Component(modules = [ViewModelModule::class, NetworkModule::class, MoshiModule::class, GradleModule::class, CommandModule::class])
 interface InstallComponent {
     /*
      * For testing
      */
+    fun getGpm(): Gpm
     fun gpmApiInterface(): GpmApiInterface
     fun mavenApiInterface(): MavenApiInterface
     fun gradleFile(): File
@@ -25,4 +26,5 @@ interface InstallComponent {
     fun gpmFileManager(): TransactionManager
 
     fun inject(install: Install)
+    fun moshi(): Moshi
 }

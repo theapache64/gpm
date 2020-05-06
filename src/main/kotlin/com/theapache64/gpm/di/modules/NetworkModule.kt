@@ -19,7 +19,6 @@ class NetworkModule {
         return Retrofit.Builder()
     }
 
-    @Singleton
     @Provides
     fun provideGpmApiInterface(retrofitBuilder: Retrofit.Builder, moshi: Moshi): GpmApiInterface {
         return retrofitBuilder

@@ -38,7 +38,7 @@ class GradleManager constructor(
             val artifactId = result.groups["artifactId"]!!.value
             val version = result.groups["version"]!!.value
 
-            val gdType = GradleDep.Type.values().find { it.keyword == type }
+            val gdType = GradleDep.Type.values().find { it.key == type }
                 ?: throw IllegalArgumentException("Couldn't find dependency type for '$type.'")
 
             deps.add(
@@ -70,7 +70,7 @@ class GradleManager constructor(
 
 
         val fullSignature = GradleUtils.getFullSignature(
-            type.keyword,
+            type.key,
             newGpmDep.groupId,
             newGpmDep.artifactId,
             newGpmDep.version!!
@@ -78,7 +78,7 @@ class GradleManager constructor(
 
         if (fileContent.contains(KEY_DEP)) {
 
-            val newDepSign = "\n\t//$name:$description\n\t$fullSignature\n"
+            val newDepSign = "\n\t// $name:$description\n\t$fullSignature\n"
 
             // Appending dependency
             val depIndex = fileContent.indexOf(KEY_DEP)
@@ -117,19 +117,26 @@ class GradleManager constructor(
         val groupId = depToRemove.gpmDep.groupId
         val artifactId = depToRemove.gpmDep.artifactId
 
-
-        val depRegEx = ("\\s*\\/\\/$name:$description\n" +
+        val depRegEx = ("(?:\\s*\\/\\/\\s$name:$description)?\n" +
                 "\\s*${depToRemove.type}\\s*\\(?['\"]$groupId:$artifactId:.+?['\"]\\)?").toRegex()
-
 
         val fileContent = gradleFile.readText()
         val newFileContent = fileContent.replace(depRegEx, "")
 
         if (fileContent.length != newFileContent.length) {
-            // dep removed
+            // dep removed, update gradle file
             gradleFile.writeText(newFileContent)
+
+            // remove the transaction also
+            transactionManager.remove(depToRemove)
         } else {
-            throw IOException("Failed to remove dependency. Signature might have changed")
+            throw IOException(
+                """
+                Failed to remove dependency. 
+                Couldn't find `${depToRemove.type} '${groupId}:$artifactId:...'` in ${gradleFile.name}
+                Signature might have changed.
+            """.trimIndent()
+            )
         }
     }
 

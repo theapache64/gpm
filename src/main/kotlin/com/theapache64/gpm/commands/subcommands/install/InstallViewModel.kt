@@ -1,6 +1,6 @@
 package com.theapache64.gpm.commands.subcommands.install
 
-import com.theapache64.gpm.commands.base.BaseViewModel
+import com.theapache64.gpm.commands.base.BaseInstallUninstallViewModel
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
@@ -13,7 +13,7 @@ class InstallViewModel @Inject constructor(
     private val gpmRepo: GpmRepo,
     private val mavenRepo: MavenRepo,
     private val gradleManager: GradleManager
-) : BaseViewModel<Install>() {
+) : BaseInstallUninstallViewModel<Install>() {
 
     companion object {
         const val RESULT_DEP_INSTALLED = 200
@@ -29,36 +29,12 @@ class InstallViewModel @Inject constructor(
             ?: return RESULT_REPO_NOT_FOUND
 
 
-        val depTypes = mutableListOf<GradleDep.Type>().apply {
-
-            if (command.isSave) {
-                add(GradleDep.Type.IMP)
-            }
-
-            if (command.isSaveDev) {
-                add(GradleDep.Type.TEST_IMP)
-            }
-
-            if (command.isSaveDevAndroid) {
-                add(GradleDep.Type.AND_TEST_IMP)
-            }
-
-            // Still empty
-            if (isEmpty() && !gpmDep.defaultType.isNullOrBlank()) {
-                // setting default dependency
-                val depType = GradleDep.Type.values().find { it.keyword == gpmDep.defaultType.trim() }
-                    ?: throw IllegalArgumentException("Invalid default type '${gpmDep.defaultType}'")
-
-                add(depType)
-            }
-
-            // Still Empty?
-            if (isEmpty()) {
-                // adding default
-                add(GradleDep.Type.IMP)
-            }
-        }
-
+        val depTypes = getDepTypes(
+            command.isSave,
+            command.isSaveDev,
+            command.isSaveDevAndroid,
+            gpmDep.defaultType
+        )
         require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
 
         // Getting latest version
@@ -116,7 +92,7 @@ class InstallViewModel @Inject constructor(
 
             return GpmDep(
                 selMavenDep.artifactId,
-                GradleDep.Type.IMP.keyword,
+                GradleDep.Type.IMP.key,
                 selMavenDep.url,
                 artifactInfo.repoName,
                 null,

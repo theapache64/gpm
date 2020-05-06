@@ -20,15 +20,16 @@ class GradleModule(
         @Suppress("ConstantConditionIf")
         return if (GpmConfig.IS_DEBUG_MODE) {
 
-            val tempGradleFile = File("assets/temp.build.gradle")
+            val tempGradleFile = File("src/test/resources/temp.build.gradle")
 
-            if (isDeleteTempFile) {
-                val sampleFile = File("assets/sample.build.gradle")
+            if (!tempGradleFile.exists() || isDeleteTempFile) {
+                val sampleFile = File("src/test/resources/sample.build.gradle")
                 tempGradleFile.delete()
                 sampleFile.copyTo(tempGradleFile)
             }
 
             tempGradleFile
+
         } else {
             val androidGradleFile = File("app/build.gradle")
             val jvmGradleFile = File("build.gradle")

@@ -58,6 +58,9 @@ class MavenRepo @Inject constructor(
         return searchResults
     }
 
+    /**
+     * To get latest version of the given artifactId from the given group
+     */
     suspend fun getLatestVersion(groupId: String, artifactId: String): ArtifactInfo? {
         val htmlResp = mavenApiInterface.getArtifact(groupId, artifactId).removeNewLinesAndMultipleSpaces()
         val results = ARTIFACT_VERSION_REGEX.find(htmlResp)

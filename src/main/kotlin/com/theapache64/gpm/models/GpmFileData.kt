@@ -8,6 +8,8 @@ class GpmFileData(
     val deps: MutableList<AddedDep>
 ) {
     class AddedDep(
+        @Json(name = "id")
+        val id: Int,
         @Json(name = "type")
         val type: String,
         @Json(name = "installed_name")
