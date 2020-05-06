@@ -13,7 +13,7 @@ import javax.inject.Inject
     aliases = ["u"],
     description = ["To uninstall a dependency"]
 )
-class Uninstall : BaseCommand<Int>() {
+class Uninstall(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -42,7 +42,7 @@ class Uninstall : BaseCommand<Int>() {
     init {
         DaggerUninstallComponent
             .builder()
-            .gradleModule(GradleModule(false))
+            .gradleModule(GradleModule(isFromTest = false, isDeleteTempFile = false))
             .build()
             .inject(this)
     }

@@ -3,6 +3,7 @@ package com.theapache64.gpm.commands.subcommands.install
 import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.di.components.DaggerInstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
+import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.utils.GpmConfig
 import com.theapache64.gpm.utils.InputUtils
 import kotlinx.coroutines.delay
@@ -17,7 +18,7 @@ import javax.inject.Singleton
     aliases = ["i"],
     description = ["To install the dependency"]
 )
-class Install : BaseCommand<Int>() {
+class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -46,7 +47,8 @@ class Install : BaseCommand<Int>() {
     init {
         DaggerInstallComponent
             .builder()
-            .gradleModule(GradleModule(true))
+            .gradleModule(GradleModule(isFromTest = false, isDeleteTempFile = true))
+            .transactionModule(TransactionModule(false))
             .build()
             .inject(this)
     }

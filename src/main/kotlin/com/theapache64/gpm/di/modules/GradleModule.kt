@@ -1,16 +1,14 @@
 package com.theapache64.gpm.di.modules
 
-import com.squareup.moshi.Moshi
 import com.theapache64.gpm.core.TransactionManager
-import com.theapache64.gpm.utils.GpmConfig
 import com.theapache64.gpm.core.gm.GradleManager
 import dagger.Module
 import dagger.Provides
 import java.io.File
-import java.lang.IllegalArgumentException
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(
+    private val isFromTest: Boolean,
     private val isDeleteTempFile: Boolean
 ) {
 
@@ -18,7 +16,7 @@ class GradleModule(
     fun gradleFile(): File {
 
         @Suppress("ConstantConditionIf")
-        return if (GpmConfig.IS_DEBUG_MODE) {
+        return if (isFromTest) {
 
             val tempGradleFile = File("src/test/resources/temp.build.gradle")
 
@@ -31,8 +29,10 @@ class GradleModule(
             tempGradleFile
 
         } else {
+
             val androidGradleFile = File("app/build.gradle")
             val jvmGradleFile = File("build.gradle")
+
             when {
                 androidGradleFile.exists() -> {
                     // android project

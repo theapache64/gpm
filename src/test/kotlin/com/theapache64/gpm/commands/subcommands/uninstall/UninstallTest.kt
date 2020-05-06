@@ -14,7 +14,6 @@ class UninstallTest {
     private lateinit var cmd: CommandLine
 
 
-
     @Before
     fun setUp() {
         this.cmd = CommandLine(Gpm()).apply {

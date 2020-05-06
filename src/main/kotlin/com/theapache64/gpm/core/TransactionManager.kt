@@ -5,13 +5,13 @@ import com.squareup.moshi.Moshi
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.models.GpmFileData
-import com.theapache64.gpm.utils.GpmConfig
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import javax.inject.Inject
 
 class TransactionManager @Inject constructor(
+    private val isFromTest: Boolean,
     private val moshi: Moshi
 ) {
 
@@ -19,14 +19,12 @@ class TransactionManager @Inject constructor(
         moshi.adapter(GpmFileData::class.java).indent(" ")
     }
 
-    companion object {
-        private val GPM_FILE by lazy {
-            @Suppress("ConstantConditionIf")
-            if (GpmConfig.IS_DEBUG_MODE) {
-                File("src/test/resources/temp.gpm.json")
-            } else {
-                File("gpm.json")
-            }
+    private val gpmFile by lazy {
+        @Suppress("ConstantConditionIf")
+        if (isFromTest) {
+            File("src/test/resources/temp.gpm.json")
+        } else {
+            File("gpm.json")
         }
     }
 
@@ -48,10 +46,10 @@ class TransactionManager @Inject constructor(
             installedName,
             newGpmDep
         )
-        val newFileData = if (!GPM_FILE.exists()) {
+        val newFileData = if (!gpmFile.exists()) {
             GpmFileData(mutableListOf(depToStore))
         } else {
-            val gpmFileData = adapter.fromJson(GPM_FILE.readText())
+            val gpmFileData = adapter.fromJson(gpmFile.readText())
             gpmFileData!!.deps.add(depToStore)
             gpmFileData
         }
@@ -79,7 +77,7 @@ class TransactionManager @Inject constructor(
 
     private fun setData(newFileData: GpmFileData) {
         val gpmFileDataJson = adapter.toJson(newFileData)
-        GPM_FILE.writeText(gpmFileDataJson)
+        gpmFile.writeText(gpmFileDataJson)
     }
 
     fun getInstalled(type: String, depName: String): List<GpmFileData.AddedDep> {
@@ -107,7 +105,7 @@ class TransactionManager @Inject constructor(
     }
 
     private fun getData() = try {
-        adapter.fromJson(GPM_FILE.readText())
+        adapter.fromJson(gpmFile.readText())
     } catch (e: FileNotFoundException) {
         null
     }

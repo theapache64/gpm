@@ -5,7 +5,9 @@ import com.theapache64.gpm.utils.InputUtils
 import kotlinx.coroutines.delay
 import java.util.concurrent.Callable
 
-abstract class BaseCommand<T> : Callable<T> {
+abstract class BaseCommand<T>(
+    val isFromTest: Boolean
+) : Callable<T> {
 
     suspend fun chooseIndex(items: List<String>): Int {
 
@@ -16,7 +18,7 @@ abstract class BaseCommand<T> : Callable<T> {
         }
 
         @Suppress("ConstantConditionIf")
-        return if (GpmConfig.IS_DEBUG_MODE) {
+        return if (isFromTest) {
             delay(1000)
             1
         } else {

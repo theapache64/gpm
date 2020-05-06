@@ -6,9 +6,9 @@ import dagger.Module
 import dagger.Provides
 
 @Module(includes = [MoshiModule::class])
-class TransactionModule {
+class TransactionModule(private val isFromTest: Boolean) {
     @Provides
     fun provideTransactionManager(moshi: Moshi): TransactionManager {
-        return TransactionManager(moshi)
+        return TransactionManager(isFromTest, moshi)
     }
 }

@@ -13,10 +13,12 @@ import com.theapache64.gpm.di.components.DaggerInstallComponent
 import com.theapache64.gpm.di.components.InstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
+import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.runBlockingUnitTest
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,12 +38,13 @@ class InstallTest {
 
     private lateinit var installCmd: CommandLine
 
-    private val install = Install()
+    private val install = Install(true)
 
     @get:Rule
     val daggerRule = DaggerMock.rule<InstallComponent>(NetworkModule()) {
         customizeBuilder<DaggerInstallComponent.Builder> {
-            it.gradleModule(GradleModule(true))
+            it.gradleModule(GradleModule(isFromTest = true, isDeleteTempFile = true))
+                .transactionModule(TransactionModule(true))
         }
         set {
             it.inject(install)
@@ -94,8 +97,6 @@ class InstallTest {
 
         this.installCmd = CommandLine(install)
         installCmd.out = PrintWriter(StringWriter())
-
-        tempBuildGradle.delete()
     }
 
     @Test
@@ -137,6 +138,11 @@ class InstallTest {
     fun `Install not existing library`() {
         val exitCode = installCmd.execute(INVALID_REPO)
         exitCode.should.equal(InstallViewModel.RESULT_REPO_NOT_FOUND)
+    }
+
+    @After
+    fun tearDown() {
+        tempBuildGradle.delete()
     }
 
 }
