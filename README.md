@@ -19,10 +19,10 @@
 | `install`                    | To install the dependency as `implementation`                | ✔️          | Done | v1.0.0-alpha01 |
 | `install --save-dev`         | To install the dependency as `testImplementation`            | ✔️           | Done | v1.0.0-alpha01 |
 | `install --save-dev-android` | To install the dependency as `androidTestImplementation`     | ✔️           | Done | v1.0.0-alpha01 |
-| `uninstall`                  | To uninstall the dependency from `implementation`            | ⏳           | Implementing | v1.0.0-alpha01 |
-| `uninstall dev`              | To uninstall the dependency from `testImplementation`        | ⏳           | Implementing | v1.0.0-alpha01 |
-| `uninstall dev-android`      | To uninstall the dependency from `androidTestImplementation` | ⏳           | Implementing | v1.0.0-alpha01 |
-| `docs`                       | To open the documentation in default browser                 | ❌           | Pending | v1.0.0-alpha01 |
+| `uninstall`                  | To uninstall the dependency from `implementation`            | ✔️          | Done | v1.0.0-alpha01 |
+| `uninstall dev`              | To uninstall the dependency from `testImplementation`        | ✔️          | Done | v1.0.0-alpha01 |
+| `uninstall dev-android`      | To uninstall the dependency from `androidTestImplementation` | ✔️          | Done | v1.0.0-alpha01 |
+| `docs`                       | To open the documentation in default browser                 | ⏳           | Implementing | v1.0.0-alpha01 |
 | `update`                     | To update the dependency version to latest                   | ❌           | Pending | -              |
 | `list`                       | To list all the dependencies                                 | ❌           | Pending | -              |
 
