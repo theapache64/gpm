@@ -4,8 +4,12 @@ import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
-import com.theapache64.gpm.rules.MyDaggerMockRule
+import com.theapache64.gpm.di.GradleFile
+import com.theapache64.gpm.di.components.InstallComponent
+import com.theapache64.gpm.di.modules.GradleModule
+import com.theapache64.gpm.di.modules.TransactionModule
 import com.winterbe.expekt.should
+import it.cosenonjaviste.daggermock.DaggerMock
 import it.cosenonjaviste.daggermock.InjectFromComponent
 import org.junit.Before
 import org.junit.Rule
@@ -15,19 +19,25 @@ import java.io.File
 class GradleManagerTest {
 
     private lateinit var gradleManager: GradleManager
+    private lateinit var gradleFile: File
+
 
     @get:Rule
-    val daggerRule = MyDaggerMockRule()
+    val daggerRule = DaggerMock.rule<InstallComponent>(
+        GradleModule(true),
+        TransactionModule(true)
+    ) {
+        set {
+            gradleFile = it.gradleFile()
+        }
+    }
 
     @InjectFromComponent
-    lateinit var sampleGradleFile: File
-
-    @InjectFromComponent
-    lateinit var transactionManager: TransactionManager
+    lateinit var tm: TransactionManager
 
     @Before
     fun setUp() {
-        this.gradleManager = GradleManager(transactionManager, sampleGradleFile)
+        this.gradleManager = GradleManager(tm, gradleFile)
     }
 
     @Test

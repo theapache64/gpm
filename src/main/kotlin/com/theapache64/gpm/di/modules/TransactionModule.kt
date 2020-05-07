@@ -5,13 +5,14 @@ import com.theapache64.gpm.core.TransactionManager
 import dagger.Module
 import dagger.Provides
 import java.io.File
-import javax.inject.Named
+import com.theapache64.gpm.di.GpmJsonFile
+import com.theapache64.gpm.di.GradleFile
 
 @Module(includes = [MoshiModule::class])
 class TransactionModule(private val isFromTest: Boolean) {
 
     @Provides
-    @Named("gpm_json_file")
+    @GpmJsonFile
     fun provideGpmJsonFile(): File {
         return if (isFromTest) {
             File("src/test/resources/temp.gpm.json")
@@ -21,7 +22,7 @@ class TransactionModule(private val isFromTest: Boolean) {
     }
 
     @Provides
-    fun provideTransactionManager(@Named("gpm_json_file") gpmJsonFile: File, moshi: Moshi): TransactionManager {
+    fun provideTransactionManager(@GpmJsonFile gpmJsonFile: File, moshi: Moshi): TransactionManager {
         return TransactionManager(gpmJsonFile, moshi)
     }
 }

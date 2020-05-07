@@ -8,7 +8,8 @@ import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.di.modules.ViewModelModule
 import dagger.Component
 import java.io.File
-import javax.inject.Named
+import com.theapache64.gpm.di.GpmJsonFile
+import com.theapache64.gpm.di.GradleFile
 import javax.inject.Singleton
 
 @Singleton
@@ -18,10 +19,10 @@ import javax.inject.Singleton
 interface UninstallComponent {
     fun inject(uninstall: Uninstall)
 
-    @Named("gradle_file")
+    @GradleFile
     fun gradleFile(): File
 
-    @Named("gpm_json_file")
+    @GpmJsonFile
     fun gpmJsonFile(): File
     fun transactionManager(): TransactionManager
     fun gradleManager(): GradleManager

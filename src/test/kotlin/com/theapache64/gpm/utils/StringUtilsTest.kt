@@ -17,6 +17,6 @@ class StringUtilsTest {
 
         // open = 13, close = 29
         val endingIndex = StringUtils.getClosingIndexOf(input, '{', 13, '}')
-        endingIndex.should.equal(2)
+        endingIndex.should.equal(29)
     }
 }

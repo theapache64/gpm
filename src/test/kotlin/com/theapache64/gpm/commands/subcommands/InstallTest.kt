@@ -27,7 +27,8 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
-import javax.inject.Named
+import com.theapache64.gpm.di.GpmJsonFile
+import com.theapache64.gpm.di.GradleFile
 
 class InstallTest {
 
