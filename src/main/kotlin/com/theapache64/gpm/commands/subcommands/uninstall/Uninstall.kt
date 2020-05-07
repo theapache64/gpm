@@ -4,6 +4,7 @@ import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.di.components.DaggerUninstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
+import com.theapache64.gpm.di.modules.TransactionModule
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import javax.inject.Inject
@@ -43,6 +44,7 @@ class Uninstall(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
         DaggerUninstallComponent
             .builder()
             .gradleModule(GradleModule(isFromTest = false))
+            .transactionModule(TransactionModule(isFromTest = false))
             .build()
             .inject(this)
     }

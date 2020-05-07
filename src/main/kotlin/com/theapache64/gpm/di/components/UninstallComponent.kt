@@ -1,14 +1,29 @@
 package com.theapache64.gpm.di.components
 
 import com.theapache64.gpm.commands.subcommands.uninstall.Uninstall
+import com.theapache64.gpm.core.TransactionManager
+import com.theapache64.gpm.core.gm.GradleManager
+import com.theapache64.gpm.di.modules.GradleModule
+import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.di.modules.ViewModelModule
 import dagger.Component
+import java.io.File
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
 @Component(
-    modules = [ViewModelModule::class]
+    modules = [ViewModelModule::class, GradleModule::class, TransactionModule::class]
 )
 interface UninstallComponent {
     fun inject(uninstall: Uninstall)
+
+    @Named("gradle_file")
+    fun gradleFile(): File
+
+    @Named("gpm_json_file")
+    fun gpmJsonFile(): File
+    fun transactionManager(): TransactionManager
+    fun gradleManager(): GradleManager
+
 }

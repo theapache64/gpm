@@ -125,9 +125,6 @@ dependencies {
     testImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
-    implementation 'com.squareup.okhttp3:same-name:1.1.1'
-    implementation 'com.squareup.okhttp3:another:1.1.1'
-
     // Espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation('com.schibsted.spain:barista:3.4.0') {
