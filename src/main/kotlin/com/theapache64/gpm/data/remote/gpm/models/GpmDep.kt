@@ -21,6 +21,6 @@ data class GpmDep(
     val description: String,
     @Transient
     var version: String? = null // OkHttp
-){
+) {
 
 }

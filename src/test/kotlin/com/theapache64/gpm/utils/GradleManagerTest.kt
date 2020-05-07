@@ -1,11 +1,10 @@
 package com.theapache64.gpm.utils
 
+import com.theapache64.gpm.commands.subcommands.install.InstallComponent
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
-import com.theapache64.gpm.di.GradleFile
-import com.theapache64.gpm.di.components.InstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import com.winterbe.expekt.should

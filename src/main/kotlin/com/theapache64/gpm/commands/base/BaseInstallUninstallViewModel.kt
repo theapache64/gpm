@@ -5,9 +5,9 @@ import com.theapache64.gpm.core.gm.GradleDep
 abstract class BaseInstallUninstallViewModel<T> : BaseViewModel<T>() {
 
     fun getDepTypes(
-        isSave : Boolean,
-        isSaveDev : Boolean,
-        isSaveDevAndroid:Boolean,
+        isSave: Boolean,
+        isSaveDev: Boolean,
+        isSaveDevAndroid: Boolean,
         defaultType: String?
     ): List<GradleDep.Type> = mutableListOf<GradleDep.Type>().apply {
 

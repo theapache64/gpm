@@ -2,11 +2,10 @@ package com.theapache64.gpm.di.modules
 
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.core.gm.GradleManager
+import com.theapache64.gpm.di.GradleFile
 import dagger.Module
 import dagger.Provides
 import java.io.File
-import com.theapache64.gpm.di.GpmJsonFile
-import com.theapache64.gpm.di.GradleFile
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(

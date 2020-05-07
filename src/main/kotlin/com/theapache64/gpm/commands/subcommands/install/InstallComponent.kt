@@ -1,8 +1,7 @@
-package com.theapache64.gpm.di.components
+package com.theapache64.gpm.commands.subcommands.install
 
 import com.squareup.moshi.Moshi
 import com.theapache64.gpm.commands.Gpm
-import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface

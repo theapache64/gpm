@@ -2,7 +2,6 @@ package com.theapache64.gpm.commands.subcommands.uninstall
 
 import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.core.gm.GradleDep
-import com.theapache64.gpm.di.components.DaggerUninstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import kotlinx.coroutines.runBlocking

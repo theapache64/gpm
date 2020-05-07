@@ -1,17 +1,11 @@
 package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.commands.base.BaseCommand
-import com.theapache64.gpm.di.components.DaggerInstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
-import com.theapache64.gpm.utils.GpmConfig
-import com.theapache64.gpm.utils.InputUtils
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
-import java.util.concurrent.Callable
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @CommandLine.Command(
     name = "install",

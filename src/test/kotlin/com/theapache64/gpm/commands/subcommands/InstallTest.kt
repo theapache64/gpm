@@ -3,21 +3,21 @@ package com.theapache64.gpm.commands.subcommands
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import com.theapache64.gpm.commands.subcommands.install.DaggerInstallComponent
 import com.theapache64.gpm.commands.subcommands.install.Install
+import com.theapache64.gpm.commands.subcommands.install.InstallComponent
 import com.theapache64.gpm.commands.subcommands.install.InstallViewModel
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface
-import com.theapache64.gpm.di.components.DaggerInstallComponent
-import com.theapache64.gpm.di.components.InstallComponent
+
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.runBlockingUnitTest
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.DaggerMock
-import it.cosenonjaviste.daggermock.InjectFromComponent
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -27,8 +27,6 @@ import retrofit2.HttpException
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
-import com.theapache64.gpm.di.GpmJsonFile
-import com.theapache64.gpm.di.GradleFile
 
 class InstallTest {
 

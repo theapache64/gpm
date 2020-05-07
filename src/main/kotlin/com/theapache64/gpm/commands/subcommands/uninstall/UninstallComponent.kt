@@ -1,15 +1,14 @@
-package com.theapache64.gpm.di.components
+package com.theapache64.gpm.commands.subcommands.uninstall
 
-import com.theapache64.gpm.commands.subcommands.uninstall.Uninstall
 import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.core.gm.GradleManager
+import com.theapache64.gpm.di.GpmJsonFile
+import com.theapache64.gpm.di.GradleFile
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.di.modules.ViewModelModule
 import dagger.Component
 import java.io.File
-import com.theapache64.gpm.di.GpmJsonFile
-import com.theapache64.gpm.di.GradleFile
 import javax.inject.Singleton
 
 @Singleton

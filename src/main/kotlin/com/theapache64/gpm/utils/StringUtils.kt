@@ -3,7 +3,7 @@ package com.theapache64.gpm.utils
 
 object StringUtils {
 
-    fun getClosingIndexOf(text: String, openingChar: Char, openingIndex: Int, closingChar : Char): Int {
+    fun getClosingIndexOf(text: String, openingChar: Char, openingIndex: Int, closingChar: Char): Int {
         var closePos: Int = openingIndex
         var counter = 1
         while (counter > 0) {
