@@ -136,3 +136,6 @@ gradle-app.setting
 
 # End of https://www.gitignore.io/api/kotlin,intellij,gradle
 SecretConstants.kt
+src/test/resources/temp.build.gradle
+x.html
+src/test/resources/temp.gpm.json
