@@ -95,7 +95,7 @@ class InstallTest {
         )
 
         whenever(fakeMavenApi.getArtifact(any(), any())).thenReturn(
-            File("src/test/resources/okhttp.mavenrepository.com.html").readText()
+            File("src/test/resources/okhttp.mavenrepository.com.txt").readText()
         )
 
         whenever(fakeMavenApi.search(INVALID_REPO)).thenReturn("")
