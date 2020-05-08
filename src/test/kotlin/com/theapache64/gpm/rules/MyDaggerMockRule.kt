@@ -2,6 +2,7 @@ package com.theapache64.gpm.rules
 
 import com.theapache64.gpm.commands.subcommands.install.DaggerInstallComponent
 import com.theapache64.gpm.commands.subcommands.install.InstallComponent
+import com.theapache64.gpm.di.modules.CommandModule
 
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
@@ -16,6 +17,7 @@ class MyDaggerMockRule : DaggerMockRule<InstallComponent>(
     init {
         customizeBuilder<DaggerInstallComponent.Builder> {
             it.transactionModule(TransactionModule(true))
+                .commandModule(CommandModule(true))
         }
     }
 }

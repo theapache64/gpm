@@ -19,7 +19,7 @@ class MavenRepo @Inject constructor(
         }
 
         private val ARTIFACT_VERSION_REGEX by lazy {
-            "<tr>.+?vbtn release\">(?<version>.+?)<\\/a><\\/td><td><a class=\"b lic\" href=\"(?<repoUrl>.+?)\">(?<repoName>.+?)<\\/a>".toRegex()
+            "<tr>.+?vbtn release\">(?<version>.+?)<\\/a>.+?<a class=\"b lic\" href=\"(?<repoUrl>.+?)\">(?<repoName>.+?)<\\/a>".toRegex()
         }
 
         //Apr 29, 2020
