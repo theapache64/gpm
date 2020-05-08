@@ -8,7 +8,6 @@ import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import javax.inject.Inject
 import javax.inject.Singleton
-import javax.print.Doc
 
 @CommandLine.Command(
     name = "gpm",

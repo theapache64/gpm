@@ -2,7 +2,6 @@ package com.theapache64.gpm.data.repos
 
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
-import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,18 +1,10 @@
 package com.theapache64.gpm.commands.subcommands
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.whenever
 import com.theapache64.gpm.commands.subcommands.install.DaggerInstallComponent
 import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.commands.subcommands.install.InstallComponent
 import com.theapache64.gpm.commands.subcommands.install.InstallViewModel
-import com.theapache64.gpm.core.gm.GradleDep
-import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
-import com.theapache64.gpm.data.remote.gpm.models.GpmDep
-import com.theapache64.gpm.data.remote.maven.MavenApiInterface
 import com.theapache64.gpm.di.modules.CommandModule
-
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
 import com.theapache64.gpm.di.modules.TransactionModule
@@ -24,7 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import picocli.CommandLine
-import retrofit2.HttpException
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter

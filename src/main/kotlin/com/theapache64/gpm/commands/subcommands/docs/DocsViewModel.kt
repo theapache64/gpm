@@ -29,9 +29,13 @@ class DocsViewModel @Inject constructor(
 
         } else {
 
-            val index = command.chooseIndex(transaction.map {
-                "${it.type} ${it.gpmDep.groupId}:${it.gpmDep.artifactId}"
-            })
+            val index = if (transaction.size > 1) {
+                command.chooseIndex(transaction.map {
+                    "${it.type} ${it.gpmDep.groupId}:${it.gpmDep.artifactId}"
+                })
+            } else {
+                0
+            }
 
             val selDep = transaction[index]
             command.onDocUrl(selDep.gpmDep.docs)

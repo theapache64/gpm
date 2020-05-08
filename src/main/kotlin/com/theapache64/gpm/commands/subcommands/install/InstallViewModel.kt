@@ -12,7 +12,8 @@ import javax.inject.Inject
 class InstallViewModel @Inject constructor(
     private val gpmRepo: GpmRepo,
     private val mavenRepo: MavenRepo,
-    private val gradleManager: GradleManager
+    private val gradleManager: GradleManager/*,
+    private val progressBar: ProgressBar*/
 ) : BaseInstallUninstallViewModel<Install>() {
 
     companion object {
@@ -25,6 +26,7 @@ class InstallViewModel @Inject constructor(
         val depName = command.depName.trim().toLowerCase()
 
         // first get from
+        //progressBar.set(20, "Searching '$depName'")
         val gpmDep = getDep(command, depName)
             ?: return RESULT_REPO_NOT_FOUND
 
@@ -35,11 +37,13 @@ class InstallViewModel @Inject constructor(
             command.isSaveDevAndroid,
             gpmDep.defaultType
         )
+
         require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
 
         // Getting latest version
 
         // Adding each dependency
+        //progressBar.set(50, "Installing '$depName'")
         for (depType in depTypes) {
             gradleManager.addDep(
                 depName,
@@ -48,6 +52,7 @@ class InstallViewModel @Inject constructor(
             )
         }
 
+        //progressBar.set(100, "Done")
         return RESULT_DEP_INSTALLED
     }
 
