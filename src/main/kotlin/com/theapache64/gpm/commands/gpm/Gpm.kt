@@ -20,7 +20,7 @@ import javax.inject.Singleton
     ]
 )
 @Singleton
-class Gpm @Inject constructor(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
+class Gpm @Inject constructor(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     init {
         DaggerGpmComponent.create().inject(this)
