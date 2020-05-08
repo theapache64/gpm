@@ -11,8 +11,41 @@
 
 **gpm** uses similar syntax as **npm**.
 
+## ⚙️ Install
 
-### Features
+Copy-paste below command into your terminal to install latest version
+
+```shell script
+wget "https://raw.githubusercontent.com/theapache64/gpm/master/install.sh" -q --show-progress -O install.sh && sh install.sh && source ~/.bashrc
+```
+
+## 👨🏻‍💻 Usage
+
+```shell script
+Usage: gpm [-hV] [COMMAND]
+  -h, --help      Show this help message and exit.
+  -V, --version   Print version information and exit.
+Commands:
+  install, i    To install the dependency
+  uninstall, u  To uninstall a dependency
+  docs, d       To open library docs
+```
+
+**Example**
+
+To install a library
+
+```shell script
+$ gpm i <library-name-or-keyword>
+```
+
+```shell script
+$ gpm i okhttp
+```
+
+Other supported commands given below
+
+### ⚡️ Features
 
 | Command                      | Description                                                  | Implemented | Status  | Milestone      |
 |------------------------------|--------------------------------------------------------------|-------------|---------|----------------|
@@ -26,9 +59,9 @@
 | `update`                     | To update the dependency version to latest                   | ❌           | Pending | -              |
 | `list`                       | To list all the dependencies                                 | ❌           | Pending | -              |
 
-### How can I add my repo to the registry?
+## 🤗 How can I add my repo to the registry?
 
-Create an issue with below given JSON model as the comment body. 
+[Create an issue](https://github.com/theapache64/gpm/issues/new) with below given JSON model as the comment body. 
 
 ```
 {
@@ -56,10 +89,10 @@ Create an issue with below given JSON model as the comment body.
 }
 ```
 
-### Project Status 👷
+## 👷 Project Status 
 
 This project is under active development. Tap the `👁️ Watch` button to get updates. 
 
-
-## Author ✍️
+## ✍️ Author
 - theapache64
+
