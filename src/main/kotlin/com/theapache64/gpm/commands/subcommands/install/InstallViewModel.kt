@@ -98,6 +98,7 @@ class InstallViewModel @Inject constructor(
                 null,
                 selMavenDep.groupId,
                 selMavenDep.name,
+                selMavenDep.description,
                 artifactInfo.version
             )
         } else {

@@ -31,14 +31,8 @@ import java.io.StringWriter
 
 class InstallTest {
 
-    companion object {
-        private const val OKHTTP = "okhttp"
-        private const val RETROFIT = "retrofit"
-        private const val INVALID_REPO = "^%&^%some-invalid-repo&^%"
-    }
 
     private lateinit var installCmd: CommandLine
-
     private val install = Install(true)
 
 
@@ -60,46 +54,8 @@ class InstallTest {
     }
 
 
-    private var fakeGpmApi: GpmApiInterface = mock()
-    private var fakeMavenApi: MavenApiInterface = mock()
-
     @Before
     fun setUp() = runBlockingUnitTest {
-
-        whenever(fakeGpmApi.getDependency(OKHTTP)).thenReturn(
-            GpmDep(
-                "okhttp",
-                GradleDep.Type.IMP.key,
-                "https://square.github.io/okhttp/",
-                "jcenter",
-                "https://github.com/square/okhttp/",
-                "com.squareup.okhttp3",
-                "OkHttp",
-                "Square’s meticulous HTTP client for Java and Kotlin.\n",
-                "4.6.0"
-            )
-        )
-
-        whenever(fakeGpmApi.getDependency(RETROFIT)).thenReturn(
-            GpmDep(
-                "retrofit",
-                GradleDep.Type.IMP.key,
-                "https://square.github.io/retrofit/",
-                "jcenter",
-                "https://github.com/square/retrofit/",
-                "com.squareup.retrofit2",
-                "Retrofit",
-                "Square’s meticulous type-safe HTTP client for Java and Kotlin.\n",
-                "2.8.1"
-            )
-        )
-
-        whenever(fakeMavenApi.getArtifact(any(), any())).thenReturn(
-            File("src/test/resources/okhttp.mavenrepository.com.txt").readText()
-        )
-
-        whenever(fakeMavenApi.search(INVALID_REPO)).thenReturn("")
-        whenever(fakeGpmApi.getDependency(INVALID_REPO)).thenThrow(HttpException::class.java)
 
         this.installCmd = CommandLine(install)
         installCmd.out = PrintWriter(StringWriter())
@@ -150,7 +106,7 @@ class InstallTest {
 
     @Test
     fun `Install not existing library`() {
-        val exitCode = installCmd.execute(INVALID_REPO)
+        val exitCode = installCmd.execute("gdfhdfghdfghfdg")
         exitCode.should.equal(InstallViewModel.RESULT_REPO_NOT_FOUND)
     }
 

@@ -28,7 +28,8 @@ class MavenRepo @Inject constructor(
 
     suspend fun search(depName: String): List<SearchResult> {
 
-        val htmlResp = mavenApiInterface.search(depName).removeNewLinesAndMultipleSpaces()
+        val searchHtml = mavenApiInterface.search(depName)
+        val htmlResp = searchHtml.removeNewLinesAndMultipleSpaces()
         val matches = SEARCH_RESULT_REGEX.findAll(htmlResp)
         val searchResults = mutableListOf<SearchResult>()
         for (match in matches) {
