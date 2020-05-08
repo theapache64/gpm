@@ -11,13 +11,15 @@
 
 **gpm** uses similar syntax as **npm**.
 
-### Install
+## Install
+
+Copy-paste below command to your terminal
 
 ```shell script
 wget "https://raw.githubusercontent.com/theapache64/gpm/master/install.sh" -q --show-progress -O install.sh && sh install.sh && source ~/.bashrc
 ```
 
-### Usage
+## Usage
 
 ```shell script
 Usage: gpm [-hV] [COMMAND]
@@ -29,21 +31,19 @@ Commands:
   docs, d       To open library docs
 ```
 
-**Install**
+**Example**
 
-To install a library, use the `i` or `--install` option.
+To install a library
 
 ```shell script
 $ gpm i <library-name-or-keyword>
 ```
 
-**Example**
-
 ```shell script
 $ gpm i okhttp
 ```
 
-Other supported commands are given below
+Other supported commands given below
 
 ### Features
 
@@ -59,7 +59,7 @@ Other supported commands are given below
 | `update`                     | To update the dependency version to latest                   | ❌           | Pending | -              |
 | `list`                       | To list all the dependencies                                 | ❌           | Pending | -              |
 
-### How can I add my repo to the registry?
+## How can I add my repo to the registry?
 
 Create an issue with below given JSON model as the comment body. 
 
@@ -89,7 +89,7 @@ Create an issue with below given JSON model as the comment body.
 }
 ```
 
-### Project Status 👷
+## Project Status 👷
 
 This project is under active development. Tap the `👁️ Watch` button to get updates. 
 
