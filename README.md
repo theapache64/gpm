@@ -11,7 +11,7 @@
 
 **gpm** uses similar syntax as **npm**.
 
-## ⚙️ Install
+## Install ⚙️
 
 Copy-paste below command into your terminal to install latest version
 
