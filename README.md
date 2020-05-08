@@ -11,6 +11,39 @@
 
 **gpm** uses similar syntax as **npm**.
 
+### Install
+
+```shell script
+wget "https://raw.githubusercontent.com/theapache64/gpm/master/install.sh" -q --show-progress -O install.sh && sh install.sh && source ~/.bashrc
+```
+
+### Usage
+
+```shell script
+Usage: gpm [-hV] [COMMAND]
+  -h, --help      Show this help message and exit.
+  -V, --version   Print version information and exit.
+Commands:
+  install, i    To install the dependency
+  uninstall, u  To uninstall a dependency
+  docs, d       To open library docs
+```
+
+**Install**
+
+To install a library, use the `i` or `--install` option.
+
+```shell script
+$ gpm i <library-name-or-keyword>
+```
+
+**Example**
+
+```shell script
+$ gpm i okhttp
+```
+
+Other supported commands are given below
 
 ### Features
 
