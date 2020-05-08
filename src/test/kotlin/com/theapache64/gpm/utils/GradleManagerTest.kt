@@ -5,6 +5,7 @@ import com.theapache64.gpm.core.TransactionManager
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
+import com.theapache64.gpm.di.modules.CommandModule
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import com.winterbe.expekt.should
@@ -24,7 +25,8 @@ class GradleManagerTest {
     @get:Rule
     val daggerRule = DaggerMock.rule<InstallComponent>(
         GradleModule(true),
-        TransactionModule(true)
+        TransactionModule(true),
+        CommandModule(true)
     ) {
         set {
             gradleFile = it.gradleFile()

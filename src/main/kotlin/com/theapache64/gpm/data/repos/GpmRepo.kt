@@ -15,14 +15,20 @@ class GpmRepo @Inject constructor(
     /**
      * To get dependency from GPM github registry
      */
-    suspend fun getDep(depName: String): GpmDep? =
-        try {
+    suspend fun getDep(depName: String): GpmDep? {
+        return try {
             val dep = gpmApiInterface.getDependency(depName)
-            val versionInfo = mavenRepo.getLatestVersion(dep.groupId, dep.artifactId)
-            require(versionInfo != null) { "Couldn't get version info for '$depName'" }
-            dep.version = versionInfo.version
-            dep
-        } catch (e: HttpException) {
+            if (dep == null) {
+                null
+            } else {
+                val versionInfo = mavenRepo.getLatestVersion(dep.groupId, dep.artifactId)
+                require(versionInfo != null) { "Couldn't get version info for '$depName'" }
+                dep.version = versionInfo.version
+                dep
+            }
+        } catch (e: Exception) {
             null
         }
+    }
+
 }

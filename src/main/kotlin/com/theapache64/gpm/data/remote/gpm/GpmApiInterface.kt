@@ -9,6 +9,6 @@ interface GpmApiInterface {
     @GET("registry/{name}.json")
     suspend fun getDependency(
         @Path("name") repoName: String
-    ): GpmDep
+    ): GpmDep?
 
 }

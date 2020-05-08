@@ -47,7 +47,7 @@ class MavenRepoTest {
     }
 
     @Test
-    fun `Hey yo`() = runBlockingUnitTest {
+    fun `Getting valid artifact information 2`() = runBlockingUnitTest {
         val info = mavenRepo.getLatestVersion("me.tongfei", "progressbar")
         info.should.not.`null`
         info!!.version.should.not.empty

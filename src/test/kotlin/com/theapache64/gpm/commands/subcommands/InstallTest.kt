@@ -11,6 +11,7 @@ import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface
+import com.theapache64.gpm.di.modules.CommandModule
 
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.NetworkModule
@@ -49,6 +50,7 @@ class InstallTest {
         customizeBuilder<DaggerInstallComponent.Builder> {
             it.gradleModule(GradleModule(isFromTest = true))
                 .transactionModule(TransactionModule(true))
+                .commandModule(CommandModule(true))
         }
         set {
             tempBuildGradle = it.gradleFile()
@@ -108,6 +110,14 @@ class InstallTest {
         val exitCode = installCmd.execute("okhttp")
         exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
         tempBuildGradle.readText().should.contain("implementation 'com.squareup.okhttp3:okhttp:")
+    }
+
+    @Test
+    fun `Install default another`() {
+        val exitCode = installCmd.execute("progressbar")
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
+        /*
+        tempBuildGradle.readText().should.contain("implementation 'com.squareup.okhttp3:okhttp:")*/
     }
 
     @Test
