@@ -62,6 +62,7 @@ dependencies {
 
     // ProgressBar:A terminal-based progress bar for JVM
     implementation 'me.tongfei:progressbar:0.8.1'
+
 }
 
 compileKotlin {

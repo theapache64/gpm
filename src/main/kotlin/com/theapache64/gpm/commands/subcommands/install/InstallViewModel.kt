@@ -9,6 +9,7 @@ import com.theapache64.gpm.data.repos.MavenRepo
 import com.theapache64.gpm.di.InstallProgress
 import com.theapache64.gpm.utils.set
 import me.tongfei.progressbar.ProgressBar
+import me.tongfei.progressbar.ProgressBarBuilder
 import picocli.CommandLine
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class InstallViewModel @Inject constructor(
     private val mavenRepo: MavenRepo,
     private val gradleManager: GradleManager,
     @InstallProgress
-    private val progressBar: ProgressBar
+    private val progressBarBuilder: ProgressBarBuilder
 ) : BaseInstallUninstallViewModel<Install>() {
 
     companion object {
@@ -27,6 +28,7 @@ class InstallViewModel @Inject constructor(
 
     override suspend fun call(command: Install): Int {
 
+        val progressBar = progressBarBuilder.build()
         return progressBar.use {
 
             val depName = command.depName.trim().toLowerCase()

@@ -4,13 +4,17 @@ import com.theapache64.gpm.di.InstallProgress
 import dagger.Module
 import dagger.Provides
 import me.tongfei.progressbar.ProgressBar
+import me.tongfei.progressbar.ProgressBarBuilder
 
 @Module
 class ProgressBarModule {
 
     @InstallProgress
     @Provides
-    fun provideInstallProgressBar(): ProgressBar {
-        return ProgressBar("Install", 100)
+    fun provideInstallProgressBar(): ProgressBarBuilder {
+        return ProgressBarBuilder()
+            .setTaskName("🚛  Install")
+            .setInitialMax(100)
+            .setUpdateIntervalMillis(200)
     }
 }
