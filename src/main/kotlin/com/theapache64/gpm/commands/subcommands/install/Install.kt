@@ -1,24 +1,21 @@
 package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.commands.base.BaseCommand
-import com.theapache64.gpm.di.components.DaggerInstallComponent
+import com.theapache64.gpm.core.gm.GradleDep
+import com.theapache64.gpm.data.remote.gpm.models.GpmDep
+import com.theapache64.gpm.di.modules.CommandModule
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
-import com.theapache64.gpm.utils.GpmConfig
-import com.theapache64.gpm.utils.InputUtils
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
-import java.util.concurrent.Callable
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @CommandLine.Command(
     name = "install",
     aliases = ["i"],
     description = ["To install the dependency"]
 )
-class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
+class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -47,6 +44,7 @@ class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
     init {
         DaggerInstallComponent
             .builder()
+            .commandModule(CommandModule(isFromTest = false))
             .gradleModule(GradleModule(isFromTest = false))
             .transactionModule(TransactionModule(false))
             .build()
@@ -55,5 +53,29 @@ class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
 
     override fun call(): Int = runBlocking {
         installViewModel.call(this@Install)
+    }
+
+    fun onBeforeGetDep() {
+        println("🔍 Searching for '$depName'")
+    }
+
+    fun onDepGot() {
+        println("✔️ Found dependency")
+    }
+
+    fun onBeforeSearchingInGpmRegistry() {
+        println("🔍 Searching in gpm registry for '$depName'...")
+    }
+
+    fun onBeforeSearchingInMavenCentral() {
+        println("🔍 Searching in maven for '$depName'")
+    }
+
+    fun onDepNotFoundAnywhere() {
+        println("❌ Couldn't find dependency with name '$depName'")
+    }
+
+    fun onBeforeAddDependency(depType: GradleDep.Type) {
+        println("⌨️ Adding ${depType.key} to build.gradle...")
     }
 }

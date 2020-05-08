@@ -15,11 +15,11 @@ class MavenRepo @Inject constructor(
 ) {
     companion object {
         private val SEARCH_RESULT_REGEX by lazy {
-            "<div class=\"im\">.+?(?<number>\\d+?)\\. <\\/span><a href=\"\\/artifact\\/(?<groupId>.+?)\\/(?<artifactId>.+?)\">(?<name>.+?)<\\/a>.+?<b>(?<usages>.+?)<\\/b> usages<\\/a>.+?im-description\">(?<description>.+?)<div.+?Last Release on (?<lastRelease>.+?)<\\/div>".toRegex()
+            "<div class=\"im\">.+?(?<number>\\d+?)\\. <\\/span><a href=\"\\/artifact\\/(?<groupId>.+?)\\/(?<artifactId>.+?)\">(?<name>.+?)<\\/a>.+?(?:<b>(?<usages>.+?)<\\/b> usages<\\/a>.+?)?im-description\">(?<description>.+?)<div.+?Last Release on (?<lastRelease>.+?)<\\/div".toRegex()
         }
 
         private val ARTIFACT_VERSION_REGEX by lazy {
-            "<tr>.+?vbtn release\">(?<version>.+?)<\\/a><\\/td><td><a class=\"b lic\" href=\"(?<repoUrl>.+?)\">(?<repoName>.+?)<\\/a>".toRegex()
+            "<tr>.+?vbtn release\">(?<version>.+?)<\\/a>.+?<a class=\"b lic\" href=\"(?<repoUrl>.+?)\">(?<repoName>.+?)<\\/a>".toRegex()
         }
 
         //Apr 29, 2020
@@ -27,8 +27,8 @@ class MavenRepo @Inject constructor(
     }
 
     suspend fun search(depName: String): List<SearchResult> {
-
-        val htmlResp = mavenApiInterface.search(depName).removeNewLinesAndMultipleSpaces()
+        val searchHtml = mavenApiInterface.search(depName)
+        val htmlResp = searchHtml.removeNewLinesAndMultipleSpaces()
         val matches = SEARCH_RESULT_REGEX.findAll(htmlResp)
         val searchResults = mutableListOf<SearchResult>()
         for (match in matches) {
@@ -43,6 +43,13 @@ class MavenRepo @Inject constructor(
                 lastRelease
             ) = match.destructured
 
+            val usage = usages.trim().replace(",", "").let {
+                if (it.isEmpty()) {
+                    null
+                } else {
+                    it.toInt()
+                }
+            }
             searchResults.add(
                 SearchResult(
                     number.trim().toInt(),
@@ -50,7 +57,7 @@ class MavenRepo @Inject constructor(
                     groupId.trim(),
                     artifactId.trim(),
                     StringEscapeUtils.unescapeHtml4(description.trim()),
-                    usages.trim().replace(",", "").toInt(),
+                    usage,
                     SEARCH_RESULT_DATE_FORMAT.parse(lastRelease.trim())
                 )
             )

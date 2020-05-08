@@ -1,7 +1,6 @@
 package com.theapache64.gpm.di.modules
 
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface
 import dagger.Module
@@ -19,6 +18,7 @@ class NetworkModule {
         return Retrofit.Builder()
     }
 
+    @Singleton
     @Provides
     fun provideGpmApiInterface(retrofitBuilder: Retrofit.Builder, moshi: Moshi): GpmApiInterface {
         return retrofitBuilder

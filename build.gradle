@@ -59,6 +59,9 @@ dependencies {
     // DaggerMock
     testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.5'
     testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.5'
+
+	// OkHttp:For networking
+	implementation 'com.squareup.okhttp3:okhttp:4.6.0'
 }
 
 compileKotlin {

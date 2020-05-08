@@ -46,9 +46,18 @@ class MavenRepoTest {
         info.repoUrl.should.equal("/repos/central")
     }
 
+    @Test
+    fun `Getting valid artifact information 2`() = runBlockingUnitTest {
+        val info = mavenRepo.getLatestVersion("me.tongfei", "progressbar")
+        info.should.not.`null`
+        info!!.version.should.not.empty
+    }
+
+
     @Test(expected = HttpException::class)
     fun `Getting invalid artifact information`() = runBlockingUnitTest {
         val info = mavenRepo.getLatestVersion("gfh", "jhj")
         info.should.`null`
     }
+
 }

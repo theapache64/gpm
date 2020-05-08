@@ -2,7 +2,6 @@ package com.theapache64.gpm.commands.subcommands.uninstall
 
 import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.core.gm.GradleDep
-import com.theapache64.gpm.di.components.DaggerUninstallComponent
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import kotlinx.coroutines.runBlocking
@@ -14,7 +13,7 @@ import javax.inject.Inject
     aliases = ["u"],
     description = ["To uninstall a dependency"]
 )
-class Uninstall(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
+class Uninstall(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -54,10 +53,10 @@ class Uninstall(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
     }
 
     fun onNoDepInstalled(depType: GradleDep.Type, depName: String) {
-        println("No dependency named '$depName' installed as '${depType.key}' using gpm. You might have installed it manually.")
+        println("⚠️ No dependency named '$depName' installed as '${depType.key}' using gpm. You might have installed it manually.")
     }
 
-    fun onBeforeDepRemove(depType: GradleDep.Type, depName: String) {
-        println("Removing '${depType.key}' of $depName...'")
+    fun onAfterDepRemove(depType: GradleDep.Type, depName: String) {
+        println("🗑️ Removed '${depType.key}' of '$depName'...")
     }
 }

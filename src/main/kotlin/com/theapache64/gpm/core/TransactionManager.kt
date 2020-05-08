@@ -72,9 +72,9 @@ class TransactionManager @Inject constructor(
         gpmJsonFile.writeText(gpmFileDataJson)
     }
 
-    fun getInstalled(type: String, depName: String): List<GpmFileData.AddedDep> {
+    fun getInstalled(type: String?, depName: String): List<GpmFileData.AddedDep> {
         return getData()?.deps?.filter {
-            it.installedName == depName && it.type == type
+            it.installedName == depName && (type == null || it.type == type)
         } ?: listOf()
     }
 

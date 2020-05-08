@@ -8,7 +8,6 @@ import com.theapache64.gpm.utils.StringUtils
 import com.theapache64.gpm.utils.insertAt
 import java.io.File
 import java.io.IOException
-import java.lang.IllegalArgumentException
 
 /**
  * Currently supports 'implementation' and 'testImplementation' only.
