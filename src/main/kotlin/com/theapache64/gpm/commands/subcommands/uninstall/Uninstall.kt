@@ -13,7 +13,7 @@ import javax.inject.Inject
     aliases = ["u"],
     description = ["To uninstall a dependency"]
 )
-class Uninstall(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
+class Uninstall(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
         names = ["-S", "--save"],

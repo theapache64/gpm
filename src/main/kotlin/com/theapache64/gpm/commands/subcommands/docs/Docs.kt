@@ -9,10 +9,10 @@ import javax.inject.Inject
 @CommandLine.Command(
     name = "docs",
     aliases = ["d"],
-    description = ["To open library docs in default browser"]
+    description = ["To open library docs"]
 )
 class Docs(
-    isFromTest: Boolean
+    isFromTest: Boolean = false
 ) : BaseCommand<Int>(isFromTest) {
     @CommandLine.Parameters(index = "0", description = ["Dependency name"])
     lateinit var depName: String

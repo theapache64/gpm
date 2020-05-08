@@ -1,6 +1,7 @@
 package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.commands.base.BaseCommand
+import com.theapache64.gpm.di.modules.CommandModule
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
 import kotlinx.coroutines.runBlocking
@@ -12,7 +13,7 @@ import javax.inject.Inject
     aliases = ["i"],
     description = ["To install the dependency"]
 )
-class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
+class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
         names = ["-S", "--save"],
@@ -41,6 +42,7 @@ class Install(isFromTest: Boolean) : BaseCommand<Int>(isFromTest) {
     init {
         DaggerInstallComponent
             .builder()
+            .commandModule(CommandModule(isFromTest = false))
             .gradleModule(GradleModule(isFromTest = false))
             .transactionModule(TransactionModule(false))
             .build()
