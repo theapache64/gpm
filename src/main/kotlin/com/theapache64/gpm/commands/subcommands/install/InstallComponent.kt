@@ -8,7 +8,6 @@ import com.theapache64.gpm.data.remote.maven.MavenApiInterface
 import com.theapache64.gpm.data.repos.MavenRepo
 import com.theapache64.gpm.di.GpmJsonFile
 import com.theapache64.gpm.di.GradleFile
-import com.theapache64.gpm.di.InstallProgress
 import com.theapache64.gpm.di.modules.*
 import dagger.Component
 import java.io.File
@@ -20,8 +19,7 @@ import javax.inject.Singleton
         NetworkModule::class,
         MoshiModule::class,
         GradleModule::class,
-        CommandModule::class,
-        ProgressBarModule::class
+        CommandModule::class
     ]
 )
 interface InstallComponent {

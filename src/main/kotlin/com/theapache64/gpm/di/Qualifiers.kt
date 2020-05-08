@@ -11,8 +11,3 @@ annotation class GradleFile
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 annotation class GpmJsonFile
-
-@Qualifier
-@MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-annotation class InstallProgress

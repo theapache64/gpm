@@ -53,10 +53,10 @@ class Uninstall(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
     }
 
     fun onNoDepInstalled(depType: GradleDep.Type, depName: String) {
-        println("No dependency named '$depName' installed as '${depType.key}' using gpm. You might have installed it manually.")
+        println("⚠️ No dependency named '$depName' installed as '${depType.key}' using gpm. You might have installed it manually.")
     }
 
     fun onBeforeDepRemove(depType: GradleDep.Type, depName: String) {
-        println("Removing '${depType.key}' of $depName...'")
+        println("🗑️ Removing '${depType.key}' of '$depName'...")
     }
 }

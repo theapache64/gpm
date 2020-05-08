@@ -31,7 +31,6 @@ class UninstallViewModel @Inject constructor(
 
             command.onBeforeDepRemove(depType, depName)
             val installedDeps = tm.getInstalled(depType.key, depName)
-            println("Size is ${installedDeps.size}")
 
             if (installedDeps.isEmpty()) {
                 command.onNoDepInstalled(depType, depName)

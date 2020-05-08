@@ -6,20 +6,15 @@ import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
-import com.theapache64.gpm.di.InstallProgress
-import com.theapache64.gpm.utils.set
-import me.tongfei.progressbar.ProgressBar
-import me.tongfei.progressbar.ProgressBarBuilder
 import picocli.CommandLine
 import javax.inject.Inject
 
 class InstallViewModel @Inject constructor(
     private val gpmRepo: GpmRepo,
     private val mavenRepo: MavenRepo,
-    private val gradleManager: GradleManager,
-    @InstallProgress
-    private val progressBarBuilder: ProgressBarBuilder
+    private val gradleManager: GradleManager
 ) : BaseInstallUninstallViewModel<Install>() {
+
 
     companion object {
         const val RESULT_DEP_INSTALLED = 200
@@ -28,48 +23,47 @@ class InstallViewModel @Inject constructor(
 
     override suspend fun call(command: Install): Int {
 
-        val progressBar = progressBarBuilder.build()
-        return progressBar.use {
+        val depName = command.depName.trim().toLowerCase()
 
-            val depName = command.depName.trim().toLowerCase()
-
-            // first get from
-            progressBar.set(20, "Searching '$depName'")
-            val gpmDep = getDep(command, depName)
-                ?: return RESULT_REPO_NOT_FOUND
+        // first get from
+        val gpmDep = getDep(command, depName)
+            ?: return RESULT_REPO_NOT_FOUND
 
 
-            val depTypes = getDepTypes(
-                command.isSave,
-                command.isSaveDev,
-                command.isSaveDevAndroid,
-                gpmDep.defaultType
+        val depTypes = getDepTypes(
+            command.isSave,
+            command.isSaveDev,
+            command.isSaveDevAndroid,
+            gpmDep.defaultType
+        )
+
+        require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
+
+        // Getting latest version
+
+        // Adding each dependency
+        for (depType in depTypes) {
+            gradleManager.addDep(
+                depName,
+                depType,
+                gpmDep
             )
-
-            require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
-
-            // Getting latest version
-
-            // Adding each dependency
-            progressBar.set(50, "Installing '$depName'")
-            for (depType in depTypes) {
-                gradleManager.addDep(
-                    depName,
-                    depType,
-                    gpmDep
-                )
-            }
-
-            progressBar.set(100, "Done")
-            RESULT_DEP_INSTALLED
         }
+
+
+        return RESULT_DEP_INSTALLED
     }
 
-    private suspend fun getDep(install: Install, depName: String): GpmDep? {
+    private suspend fun getDep(
+        install: Install,
+        depName: String
+    ): GpmDep? {
+
         var gpmDep = gpmRepo.getDep(depName)
 
         if (gpmDep == null) {
             // Searching for maven
+
             gpmDep = getFromMaven(install, depName)
         }
 
@@ -77,26 +71,34 @@ class InstallViewModel @Inject constructor(
     }
 
     private suspend fun getFromMaven(install: Install, depName: String): GpmDep? {
-
         val mavenDeps = mavenRepo.search(depName)
-
         if (mavenDeps.isNotEmpty()) {
-            val mostUsed = mavenDeps.maxBy { it.usage }!!
-            val selDepIndex = install.chooseIndex(
-                mavenDeps.map {
-                    val text = "${it.groupId}:${it.artifactId}"
-                    if (it == mostUsed) {
-                        // color text
-                        CommandLine.Help.Ansi.AUTO.string("@|bold,green $text|@")
-                    } else {
-                        //normal text
-                        text
+
+            val mostUsed = mavenDeps.maxBy { it.usage ?: 0 }!!
+            val selDepIndex = if (mavenDeps.size > 1) {
+
+                val index = install.chooseIndex(
+                    mavenDeps.map {
+                        val text = "${it.groupId}:${it.artifactId}"
+                        if (it == mostUsed) {
+                            // color text
+                            CommandLine.Help.Ansi.AUTO.string("@|bold,green $text|@")
+                        } else {
+                            //normal text
+                            text
+                        }
                     }
-                }
-            )
+                )
+
+                index
+            } else {
+                0
+            }
+
             val selMavenDep = mavenDeps[selDepIndex]
 
-            // Getting last version
+            // Getting latest version
+
             val artifactInfo = mavenRepo.getLatestVersion(
                 selMavenDep.groupId,
                 selMavenDep.artifactId

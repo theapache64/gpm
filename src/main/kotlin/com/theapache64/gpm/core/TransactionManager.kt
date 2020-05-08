@@ -25,12 +25,12 @@ class TransactionManager @Inject constructor(
         // Need to login
         val newDepId = getLastDepAdded()?.id?.plus(1) ?: 1
 
-        if (newDepId != 1) {
+        /*if (newDepId != 1) {
             // got prev transaction, so check if this is a duplicate one
             if (isDuplicate(installedName, type, newGpmDep)) {
                 return
             }
-        }
+        }*/
 
         val depToStore = GpmFileData.AddedDep(
             newDepId,

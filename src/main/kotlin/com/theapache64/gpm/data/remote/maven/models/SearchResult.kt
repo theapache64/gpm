@@ -8,7 +8,7 @@ data class SearchResult(
     val groupId: String,
     val artifactId: String,
     val description: String,
-    val usage: Int,
+    val usage: Int?,
     val lastRelease: Date
 ) {
     val url = "https://mvnrepository.com/artifact/$groupId/$artifactId"
