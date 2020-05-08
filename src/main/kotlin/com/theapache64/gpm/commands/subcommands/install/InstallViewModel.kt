@@ -21,20 +21,20 @@ class InstallViewModel @Inject constructor(
         const val RESULT_REPO_NOT_FOUND = 404
     }
 
-    override suspend fun call(install: Install): Int {
+    override suspend fun call(command: Install): Int {
 
-        val depName = install.depName.trim().toLowerCase()
+        val depName = command.depName.trim().toLowerCase()
 
         // first get from
-        install.onBeforeGetDep()
-        val gpmDep = getDep(install, depName)
+        command.onBeforeGetDep()
+        val gpmDep = getDep(command, depName)
             ?: return RESULT_REPO_NOT_FOUND
 
-        install.onDepGot(gpmDep)
+        command.onDepGot()
         val depTypes = getDepTypes(
-            install.isSave,
-            install.isSaveDev,
-            install.isSaveDevAndroid,
+            command.isSave,
+            command.isSaveDev,
+            command.isSaveDevAndroid,
             gpmDep.defaultType
         )
 
@@ -42,7 +42,7 @@ class InstallViewModel @Inject constructor(
 
         // Adding each dependency
         for (depType in depTypes) {
-            install.onBeforeAddDependency(depType)
+            command.onBeforeAddDependency(depType)
             gradleManager.addDep(
                 depName,
                 depType,

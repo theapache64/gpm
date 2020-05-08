@@ -59,7 +59,7 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
         println("🔍 Searching for '$depName'")
     }
 
-    fun onDepGot(gpmDep: GpmDep) {
+    fun onDepGot() {
         println("✔️ Found dependency")
     }
 

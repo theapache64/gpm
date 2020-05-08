@@ -29,7 +29,7 @@ class UninstallViewModel @Inject constructor(
 
         for (depType in depTypes) {
 
-            command.onBeforeDepRemove(depType, depName)
+
             val installedDeps = tm.getInstalled(depType.key, depName)
 
             if (installedDeps.isEmpty()) {
@@ -50,6 +50,7 @@ class UninstallViewModel @Inject constructor(
             }
 
             gradleManager.removeDep(depToRemove)
+            command.onAfterDepRemove(depType, depName)
         }
 
         return RESULT_DEP_UNINSTALLED
