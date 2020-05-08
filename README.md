@@ -11,15 +11,15 @@
 
 **gpm** uses similar syntax as **npm**.
 
-## Install
+## ⚙️ Install
 
-Copy-paste below command to your terminal
+Copy-paste below command into your terminal to install latest version
 
 ```shell script
 wget "https://raw.githubusercontent.com/theapache64/gpm/master/install.sh" -q --show-progress -O install.sh && sh install.sh && source ~/.bashrc
 ```
 
-## Usage
+## 👨🏻‍💻 Usage
 
 ```shell script
 Usage: gpm [-hV] [COMMAND]
@@ -45,7 +45,7 @@ $ gpm i okhttp
 
 Other supported commands given below
 
-### Features
+### ⚡️ Features
 
 | Command                      | Description                                                  | Implemented | Status  | Milestone      |
 |------------------------------|--------------------------------------------------------------|-------------|---------|----------------|
@@ -59,9 +59,9 @@ Other supported commands given below
 | `update`                     | To update the dependency version to latest                   | ❌           | Pending | -              |
 | `list`                       | To list all the dependencies                                 | ❌           | Pending | -              |
 
-## How can I add my repo to the registry?
+## 🤗 How can I add my repo to the registry?
 
-Create an issue with below given JSON model as the comment body. 
+[Create an issue](https://github.com/theapache64/gpm/issues/new) with below given JSON model as the comment body. 
 
 ```
 {
@@ -89,10 +89,9 @@ Create an issue with below given JSON model as the comment body.
 }
 ```
 
-## Project Status 👷
+## 👷 Project Status 
 
 This project is under active development. Tap the `👁️ Watch` button to get updates. 
 
-
-## Author ✍️
+## ✍️ Author
 - theapache64
