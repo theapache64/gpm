@@ -6,14 +6,18 @@ import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
+import com.theapache64.gpm.di.InstallProgress
+import com.theapache64.gpm.utils.set
+import me.tongfei.progressbar.ProgressBar
 import picocli.CommandLine
 import javax.inject.Inject
 
 class InstallViewModel @Inject constructor(
     private val gpmRepo: GpmRepo,
     private val mavenRepo: MavenRepo,
-    private val gradleManager: GradleManager/*,
-    private val progressBar: ProgressBar*/
+    private val gradleManager: GradleManager,
+    @InstallProgress
+    private val progressBar: ProgressBar
 ) : BaseInstallUninstallViewModel<Install>() {
 
     companion object {
@@ -23,37 +27,40 @@ class InstallViewModel @Inject constructor(
 
     override suspend fun call(command: Install): Int {
 
-        val depName = command.depName.trim().toLowerCase()
+        return progressBar.use {
 
-        // first get from
-        //progressBar.set(20, "Searching '$depName'")
-        val gpmDep = getDep(command, depName)
-            ?: return RESULT_REPO_NOT_FOUND
+            val depName = command.depName.trim().toLowerCase()
+
+            // first get from
+            progressBar.set(20, "Searching '$depName'")
+            val gpmDep = getDep(command, depName)
+                ?: return RESULT_REPO_NOT_FOUND
 
 
-        val depTypes = getDepTypes(
-            command.isSave,
-            command.isSaveDev,
-            command.isSaveDevAndroid,
-            gpmDep.defaultType
-        )
-
-        require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
-
-        // Getting latest version
-
-        // Adding each dependency
-        //progressBar.set(50, "Installing '$depName'")
-        for (depType in depTypes) {
-            gradleManager.addDep(
-                depName,
-                depType,
-                gpmDep
+            val depTypes = getDepTypes(
+                command.isSave,
+                command.isSaveDev,
+                command.isSaveDevAndroid,
+                gpmDep.defaultType
             )
-        }
 
-        //progressBar.set(100, "Done")
-        return RESULT_DEP_INSTALLED
+            require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
+
+            // Getting latest version
+
+            // Adding each dependency
+            progressBar.set(50, "Installing '$depName'")
+            for (depType in depTypes) {
+                gradleManager.addDep(
+                    depName,
+                    depType,
+                    gpmDep
+                )
+            }
+
+            progressBar.set(100, "Done")
+            RESULT_DEP_INSTALLED
+        }
     }
 
     private suspend fun getDep(install: Install, depName: String): GpmDep? {
