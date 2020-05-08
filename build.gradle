@@ -59,6 +59,9 @@ dependencies {
     // DaggerMock
     testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.5'
     testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.5'
+
+	// ProgressBar:A terminal-based progress bar for JVM
+	implementation 'me.tongfei:progressbar:0.8.1'
 }
 
 compileKotlin {
