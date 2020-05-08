@@ -21,28 +21,28 @@ class InstallViewModel @Inject constructor(
         const val RESULT_REPO_NOT_FOUND = 404
     }
 
-    override suspend fun call(command: Install): Int {
+    override suspend fun call(install: Install): Int {
 
-        val depName = command.depName.trim().toLowerCase()
+        val depName = install.depName.trim().toLowerCase()
 
         // first get from
-        val gpmDep = getDep(command, depName)
+        install.onBeforeGetDep()
+        val gpmDep = getDep(install, depName)
             ?: return RESULT_REPO_NOT_FOUND
 
-
+        install.onDepGot(gpmDep)
         val depTypes = getDepTypes(
-            command.isSave,
-            command.isSaveDev,
-            command.isSaveDevAndroid,
+            install.isSave,
+            install.isSaveDev,
+            install.isSaveDevAndroid,
             gpmDep.defaultType
         )
 
         require(depTypes.isNotEmpty()) { "Dependency type can't be empty" }
 
-        // Getting latest version
-
         // Adding each dependency
         for (depType in depTypes) {
+            install.onBeforeAddDependency(depType)
             gradleManager.addDep(
                 depName,
                 depType,
@@ -59,12 +59,17 @@ class InstallViewModel @Inject constructor(
         depName: String
     ): GpmDep? {
 
+        install.onBeforeSearchingInGpmRegistry()
         var gpmDep = gpmRepo.getDep(depName)
 
         if (gpmDep == null) {
             // Searching for maven
-
+            install.onBeforeSearchingInMavenCentral()
             gpmDep = getFromMaven(install, depName)
+        }
+
+        if (gpmDep == null) {
+            install.onDepNotFoundAnywhere()
         }
 
         return gpmDep
@@ -72,6 +77,7 @@ class InstallViewModel @Inject constructor(
 
     private suspend fun getFromMaven(install: Install, depName: String): GpmDep? {
         val mavenDeps = mavenRepo.search(depName)
+
         if (mavenDeps.isNotEmpty()) {
 
             val mostUsed = mavenDeps.maxBy { it.usage ?: 0 }!!
