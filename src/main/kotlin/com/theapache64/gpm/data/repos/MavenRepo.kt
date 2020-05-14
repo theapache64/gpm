@@ -62,7 +62,13 @@ class MavenRepo @Inject constructor(
                 )
             )
         }
-        return searchResults
+        return if (searchResults.size > 5) {
+            // only first five needed
+            searchResults.subList(0, 4)
+        } else {
+            // no change
+            searchResults
+        }
     }
 
     /**
