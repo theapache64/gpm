@@ -8,6 +8,7 @@ abstract class BaseInstallUninstallViewModel<T> : BaseViewModel<T>() {
         isSave: Boolean,
         isSaveDev: Boolean,
         isSaveDevAndroid: Boolean,
+        isKapt: Boolean,
         defaultType: String?
     ): List<GradleDep.Type> = mutableListOf<GradleDep.Type>().apply {
 
@@ -21,6 +22,10 @@ abstract class BaseInstallUninstallViewModel<T> : BaseViewModel<T>() {
 
         if (isSaveDevAndroid) {
             add(GradleDep.Type.AND_TEST_IMP)
+        }
+
+        if (isKapt) {
+            add(GradleDep.Type.KAPT)
         }
 
         // Still empty

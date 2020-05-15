@@ -29,7 +29,17 @@ class MavenRepo @Inject constructor(
     suspend fun search(depName: String): List<SearchResult> {
         val searchHtml = mavenApiInterface.search(depName)
         val htmlResp = searchHtml.removeNewLinesAndMultipleSpaces()
-        val matches = SEARCH_RESULT_REGEX.findAll(htmlResp)
+        val matches = SEARCH_RESULT_REGEX.findAll(htmlResp).toMutableList().let { matches ->
+
+            // Minimizing results to top5
+            if (matches.size > 5) {
+                // only first five needed
+                matches.subList(0, 5)
+            } else {
+                // no change
+                matches
+            }
+        }
         val searchResults = mutableListOf<SearchResult>()
         for (match in matches) {
 
@@ -62,13 +72,7 @@ class MavenRepo @Inject constructor(
                 )
             )
         }
-        return if (searchResults.size > 5) {
-            // only first five needed
-            searchResults.subList(0, 4)
-        } else {
-            // no change
-            searchResults
-        }
+        return searchResults
     }
 
     /**

@@ -35,6 +35,7 @@ class InstallViewModel @Inject constructor(
             command.isSave,
             command.isSaveDev,
             command.isSaveDevAndroid,
+            command.isKapt,
             gpmDep.defaultType
         )
 

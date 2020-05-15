@@ -33,6 +33,12 @@ class Uninstall(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
     )
     var isSaveDevAndroid: Boolean = false
 
+    @CommandLine.Option(
+        names = ["-K", "--kapt"],
+        description = ["To uninstall the dependency defined as 'kapt'"]
+    )
+    var isKapt: Boolean = false
+
     @CommandLine.Parameters(index = "0", description = ["Dependency name"])
     lateinit var depName: String
 

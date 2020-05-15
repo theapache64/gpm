@@ -9,6 +9,7 @@ data class GradleDep(
     enum class Type(val key: String) {
         IMP("implementation"),
         TEST_IMP("testImplementation"),
-        AND_TEST_IMP("androidTestImplementation")
+        AND_TEST_IMP("androidTestImplementation"),
+        KAPT("kapt")
     }
 }

@@ -96,6 +96,14 @@ class InstallTest {
     }
 
     @Test
+    fun `Install --kapt`() {
+        val exitCode = installCmd.execute("--kapt", "dagger-compiler")
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
+        tempBuildGradle.readText().should.contain("kapt 'com.squareup.dagger:dagger-compiler:")
+    }
+
+
+    @Test
     fun `Install not existing library`() {
         val exitCode = installCmd.execute("gdfhdfghdfghfdg")
         exitCode.should.equal(InstallViewModel.RESULT_REPO_NOT_FOUND)

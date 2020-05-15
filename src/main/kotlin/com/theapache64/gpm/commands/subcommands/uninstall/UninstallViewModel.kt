@@ -24,6 +24,7 @@ class UninstallViewModel @Inject constructor(
             command.isSave,
             command.isSaveDev,
             command.isSaveDevAndroid,
+            command.isKapt,
             GradleDep.Type.IMP.key
         )
 
