@@ -1,0 +1,18 @@
+{
+ "added": [
+  {
+   "id": 1,
+   "type": "kapt",
+   "installed_name": "dagger-compiler",
+   "gpm_dep": {
+    "artifact_id": "dagger-compiler",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.google.dagger/dagger-compiler",
+    "get_from": "Central",
+    "group_id": "com.google.dagger",
+    "name": "Dagger Compiler",
+    "description": "A fast dependency injector for Android and Java."
+   }
+  }
+ ]
+}
