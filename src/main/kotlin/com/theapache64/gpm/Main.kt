@@ -5,6 +5,7 @@ import picocli.CommandLine
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
+
     val cmd = CommandLine(Gpm(false))
     if (args.isEmpty()) {
         cmd.usage(System.out)

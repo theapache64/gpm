@@ -6,6 +6,7 @@ import com.theapache64.gpm.di.GradleFile
 import dagger.Module
 import dagger.Provides
 import java.io.File
+import kotlin.system.exitProcess
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(
@@ -40,7 +41,21 @@ class GradleModule(
                 }
 
                 else -> {
-                    throw IllegalArgumentException("Invalid directory. Are you sure that you're executing the command from project root?")
+
+                    /**
+                     * SMART END
+                     */
+
+                    val currentDir = File(System.getProperty("user.dir"))
+
+                    println(
+                        """
+                        Invalid directory '${currentDir.absolutePath}'.
+                        Are you sure that you're executing the command from project root?
+                    """.trimIndent()
+                    )
+
+                    exitProcess(0)
                 }
             }
         }
