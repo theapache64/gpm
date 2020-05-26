@@ -19,31 +19,31 @@ import javax.inject.Inject
 class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     @CommandLine.Option(
-        names = ["-S", "--save"],
+        names = ["-S", "-s", "--save"],
         description = ["To install the dependency as 'implementation'"]
     )
     var isSave: Boolean = false
 
     @CommandLine.Option(
-        names = ["-FS", "--force-search"],
+        names = ["-FS", "-fs", "--force-search"],
         description = ["To skip gpm registry search check and quick search with other repos"]
     )
     var isForceSearch: Boolean = false
 
     @CommandLine.Option(
-        names = ["-D", "--save-dev"],
+        names = ["-D", "-d", "--save-dev"],
         description = ["To install the dependency as 'testImplementation'"]
     )
     var isSaveDev: Boolean = false
 
     @CommandLine.Option(
-        names = ["-DA", "--save-dev-android"],
+        names = ["-DA", "-da", "--save-dev-android"],
         description = ["To install the dependency as 'androidTestImplementation'"]
     )
     var isSaveDevAndroid: Boolean = false
 
     @CommandLine.Option(
-        names = ["-K", "--kapt"],
+        names = ["-K", "-k", "--kapt"],
         description = ["To install the dependency as 'kapt'"]
     )
     var isKapt: Boolean = false
