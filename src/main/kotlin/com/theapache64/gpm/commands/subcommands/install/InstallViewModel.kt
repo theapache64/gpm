@@ -59,13 +59,11 @@ class InstallViewModel @Inject constructor(
         install: Install,
         depName: String
     ): GpmDep? {
-
-        install.onBeforeSearchingInGpmRegistry()
-
         var gpmDep = if (install.isForceSearch) {
             // dont look at gpm repo
             null
         } else {
+            install.onBeforeSearchingInGpmRegistry()
             gpmRepo.getDep(depName)
         }
 
