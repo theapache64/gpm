@@ -61,7 +61,13 @@ class InstallViewModel @Inject constructor(
     ): GpmDep? {
 
         install.onBeforeSearchingInGpmRegistry()
-        var gpmDep = gpmRepo.getDep(depName)
+
+        var gpmDep = if (install.isForceSearch) {
+            // dont look at gpm repo
+            null
+        } else {
+            gpmRepo.getDep(depName)
+        }
 
         if (gpmDep == null) {
             // Searching for maven

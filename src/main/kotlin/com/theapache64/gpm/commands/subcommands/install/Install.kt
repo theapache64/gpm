@@ -1,5 +1,6 @@
 package com.theapache64.gpm.commands.subcommands.install
 
+import com.sun.org.apache.xpath.internal.operations.Bool
 import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
@@ -22,6 +23,12 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
         description = ["To install the dependency as 'implementation'"]
     )
     var isSave: Boolean = false
+
+    @CommandLine.Option(
+        names = ["-FS", "--force-search"],
+        description = ["To skip gpm registry search check and quick search with other repos"]
+    )
+    var isForceSearch: Boolean = false
 
     @CommandLine.Option(
         names = ["-D", "--save-dev"],
