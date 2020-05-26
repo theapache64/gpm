@@ -65,8 +65,8 @@ class GradleManager constructor(
 
         val fileContent = gradleFile.readText()
         val name = newGpmDep.name
-        val description = newGpmDep.description
-
+        val brokenDescription = StringUtils.breakOnAndComment(80, newGpmDep.description)
+            .replace("\n", "\n\t")
 
         val fullSignature = GradleUtils.getFullSignature(
             type.key,
@@ -77,7 +77,7 @@ class GradleManager constructor(
 
         if (fileContent.contains(KEY_DEP)) {
 
-            val newDepSign = "\n\t// $name:$description\n\t$fullSignature\n"
+            val newDepSign = "\n\t// $name : $brokenDescription\n\t$fullSignature\n"
 
             // Appending dependency
             val depIndex = fileContent.indexOf(KEY_DEP)
@@ -95,7 +95,7 @@ class GradleManager constructor(
                 // Project Dependencies
                 dependencies {
                 
-                    // $name : $description
+                    // $name : $brokenDescription
                     $fullSignature
                 }
                 

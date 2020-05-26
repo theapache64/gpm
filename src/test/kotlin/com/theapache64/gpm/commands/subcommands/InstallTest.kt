@@ -1,5 +1,7 @@
 package com.theapache64.gpm.commands.subcommands
 
+import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import com.theapache64.gpm.commands.subcommands.install.DaggerInstallComponent
 import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.commands.subcommands.install.InstallComponent
@@ -11,14 +13,13 @@ import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.runBlockingUnitTest
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.DaggerMock
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
+import org.junit.Assert.assertEquals
 import picocli.CommandLine
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
+import kotlin.math.exp
 
 class InstallTest {
 
@@ -109,9 +110,16 @@ class InstallTest {
         exitCode.should.equal(InstallViewModel.RESULT_REPO_NOT_FOUND)
     }
 
+    @Test
+    fun `Install lengthy description library`() {
+        val exitCode = installCmd.execute("webcam")
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
+        tempBuildGradle.readText().should.contain("implementation 'com.github.sarxos:webcam-capture")
+    }
+
     @After
     fun tearDown() {
-        tempBuildGradle.delete()
+        // tempBuildGradle.delete()
         tempGpmJson.delete()
     }
 

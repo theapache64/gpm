@@ -109,5 +109,4 @@ class DocsTest {
         exitCode.should.equal(DocsViewModel.RESULT_DOC_FOUND)
     }
 
-
 }

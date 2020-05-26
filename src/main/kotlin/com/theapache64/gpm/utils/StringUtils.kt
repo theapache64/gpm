@@ -1,5 +1,7 @@
 package com.theapache64.gpm.utils
 
+import java.lang.StringBuilder
+
 
 object StringUtils {
 
@@ -15,6 +17,33 @@ object StringUtils {
             }
         }
         return closePos
+    }
+
+    fun breakOnAndComment(charLimit: Int, input: String): String {
+        if (input.length < charLimit) {
+            return input
+        }
+
+        return getChunked(input, charLimit).joinToString("\n// ")
+    }
+
+    private fun getChunked(input: String, charLimit: Int, sep: String = ""): List<String> {
+        val chunks = mutableListOf<String>()
+        val words = input.split(" ")
+        val builder = StringBuilder()
+        for (word in words) {
+            builder.append(word).append(" ")
+            if (builder.length >= charLimit) {
+                // move to chunk
+                val newLine = builder.toString().trim()
+                chunks.add(newLine)
+                builder.clear()
+            }
+        }
+        if (builder.isNotEmpty()) {
+            chunks.add(builder.toString().trim())
+        }
+        return chunks
     }
 
 }

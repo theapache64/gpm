@@ -13,6 +13,20 @@
     "name": "Dagger Compiler",
     "description": "A fast dependency injector for Android and Java."
    }
+  },
+  {
+   "id": 2,
+   "type": "testImplementation",
+   "installed_name": "truth",
+   "gpm_dep": {
+    "artifact_id": "truth",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.google.truth/truth",
+    "get_from": "Central",
+    "group_id": "com.google.truth",
+    "name": "Truth Core",
+    "description": "Truth Core"
+   }
   }
  ]
 }
