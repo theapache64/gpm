@@ -46,6 +46,8 @@ $ gpm i <library-name-or-keyword>
 $ gpm i okhttp
 ```
 
+![](example.gif)
+
 Other supported commands given below
 
 
