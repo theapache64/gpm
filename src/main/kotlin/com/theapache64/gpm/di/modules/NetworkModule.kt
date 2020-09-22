@@ -22,7 +22,7 @@ class NetworkModule {
     @Provides
     fun provideGpmApiInterface(retrofitBuilder: Retrofit.Builder, moshi: Moshi): GpmApiInterface {
         return retrofitBuilder
-            .baseUrl("https://raw.githubusercontent.com/theapache64/gpm/dev/")
+            .baseUrl("https://raw.githubusercontent.com/theapache64/gpm/master/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(GpmApiInterface::class.java)
