@@ -77,7 +77,7 @@ class GradleManager constructor(
 
         if (fileContent.contains(KEY_DEP)) {
 
-            val newDepSign = "\n\t// $name : $brokenDescription\n\t$fullSignature\n"
+            val newDepSign = "\n    // $name : $brokenDescription\n    $fullSignature\n"
 
             // Appending dependency
             val depIndex = fileContent.indexOf(KEY_DEP)
