@@ -6,12 +6,8 @@
 
 ![Java CI with Gradle](https://github.com/theapache64/gpm/workflows/Java%20CI%20with%20Gradle/badge.svg)
 
-**gpm** is a package manager for Gradle projects. It is inspired from the famous **npm** package manager.
- **gpm** is not a replacement for the Gradle build system, but a helper to install the dependencies seamlessly to reduce latency.
-
- It consists of a command line client, also called **gpm**, and an online database of package directory, called the **gpm registry**.
-
-**gpm** uses similar syntax as **npm**.
+GPM is a package manager for Gradle projects. It is inspired by the famous npm package manager. GPM is not a replacement for the Gradle build system, but a helper to install the dependencies seamlessly to reduce latency.
+It consists of a command-line client, also called **gpm**, and an online database of a package directory called the GPM registry. It uses similar syntax as npm.
 
 ## Install ⚙️
 
