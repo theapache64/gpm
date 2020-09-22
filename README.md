@@ -48,7 +48,9 @@ $ gpm i okhttp
 
 Other supported commands given below
 
-##️ Features ⚡
+
+## Features ⚡
+
 
 | Command                      | Description                                                  | Implemented | Status  | Milestone      |
 |------------------------------|--------------------------------------------------------------|-------------|---------|----------------|
