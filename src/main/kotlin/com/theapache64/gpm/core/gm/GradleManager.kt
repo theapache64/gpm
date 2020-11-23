@@ -61,7 +61,7 @@ class GradleManager constructor(
         installedName: String,
         type: GradleDep.Type,
         newGpmDep: GpmDep
-    ) {
+    ): String {
 
         val fileContent = gradleFile.readText()
         val name = newGpmDep.name
@@ -75,6 +75,8 @@ class GradleManager constructor(
             newGpmDep.version!!
         )
 
+        val addedLines : String
+
         if (fileContent.contains(KEY_DEP)) {
 
             val newDepSign = "\n    // $name : $brokenDescription\n    $fullSignature\n"
@@ -86,24 +88,31 @@ class GradleManager constructor(
             val newContent = fileContent.insertAt(closingIndex, newDepSign)
             gradleFile.writeText(newContent)
 
+            addedLines = newDepSign
 
         } else {
 
             // Adding first dependency
+            val newDepSign = """// $name : $brokenDescription
+                    $fullSignature"""
+
             val firstDep = """
                 
                 // Project Dependencies
                 dependencies {
                 
-                    // $name : $brokenDescription
-                    $fullSignature
+                    $newDepSign
                 }
                 
             """.trimIndent()
             gradleFile.appendText(firstDep)
+
+            addedLines = newDepSign
         }
 
         transactionManager.add(installedName, type, newGpmDep)
+
+        return addedLines
     }
 
     /**

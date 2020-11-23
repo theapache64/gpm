@@ -27,7 +27,7 @@ object StringUtils {
         return getChunked(input, charLimit).joinToString("\n// ")
     }
 
-    private fun getChunked(input: String, charLimit: Int, sep: String = ""): List<String> {
+    private fun getChunked(input: String, charLimit: Int): List<String> {
         val chunks = mutableListOf<String>()
         val words = input.split(" ")
         val builder = StringBuilder()

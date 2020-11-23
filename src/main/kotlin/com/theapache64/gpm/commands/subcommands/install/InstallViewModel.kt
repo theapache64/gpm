@@ -44,11 +44,12 @@ class InstallViewModel @Inject constructor(
         // Adding each dependency
         for (depType in depTypes) {
             command.onBeforeAddDependency(depType)
-            gradleManager.addDep(
+            val newlyAddedLines = gradleManager.addDep(
                 depName,
                 depType,
                 gpmDep
             )
+            command.onAfterDependenciesAdded(newlyAddedLines)
         }
 
 

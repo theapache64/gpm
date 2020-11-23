@@ -91,4 +91,9 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
     fun onBeforeAddDependency(depType: GradleDep.Type) {
         println("⌨️ Adding ${depType.key} to build.gradle...")
     }
+
+    fun onAfterDependenciesAdded(newlyAddedLines: String) {
+        val coloredLines = CommandLine.Help.Ansi.AUTO.string("@|bold,green $newlyAddedLines|@")
+        println("✅ Added $coloredLines to build.gradle!")
+    }
 }
