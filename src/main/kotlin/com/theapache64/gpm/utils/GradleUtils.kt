@@ -9,7 +9,7 @@ object GradleUtils {
         isGradleKts: Boolean
     ): String {
 
-        val quote = if (version.startsWith("$")) {
+        val quote = if (isGradleKts || version.startsWith("$")) {
             "\""
         } else {
             "'"
