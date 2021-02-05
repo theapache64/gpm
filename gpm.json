@@ -1,47 +1,47 @@
 {
- "added": [
-  {
-   "id": 1,
-   "type": "kapt",
-   "installed_name": "dagger-compiler",
-   "gpm_dep": {
-    "artifact_id": "dagger-compiler",
-    "default_type": "implementation",
-    "docs": "https://mvnrepository.com/artifact/com.google.dagger/dagger-compiler",
-    "get_from": "Central",
-    "group_id": "com.google.dagger",
-    "name": "Dagger Compiler",
-    "description": "A fast dependency injector for Android and Java."
-   }
-  },
-  {
-   "id": 2,
-   "type": "testImplementation",
-   "installed_name": "truth",
-   "gpm_dep": {
-    "artifact_id": "truth",
-    "default_type": "implementation",
-    "docs": "https://mvnrepository.com/artifact/com.google.truth/truth",
-    "get_from": "Central",
-    "group_id": "com.google.truth",
-    "name": "Truth Core",
-    "description": "Truth Core"
-   }
-  },
-  {
-   "id": 3,
-   "type": "implementation",
-   "installed_name": "okhttp",
-   "gpm_dep": {
-    "artifact_id": "okhttp",
-    "default_type": "implementation",
-    "docs": "https://square.github.io/okhttp/",
-    "get_from": "maven",
-    "github": "square/okhttp",
-    "group_id": "com.squareup.okhttp3",
-    "name": "OkHttp",
-    "description": "For networking"
-   }
-  }
- ]
+  "added": [
+    {
+      "id": 1,
+      "type": "kapt",
+      "installed_name": "dagger-compiler",
+      "gpm_dep": {
+        "artifact_id": "dagger-compiler",
+        "default_type": "implementation",
+        "docs": "https://mvnrepository.com/artifact/com.google.dagger/dagger-compiler",
+        "get_from": "Central",
+        "group_id": "com.google.dagger",
+        "name": "Dagger Compiler",
+        "description": "A fast dependency injector for Android and Java."
+      }
+    },
+    {
+      "id": 2,
+      "type": "testImplementation",
+      "installed_name": "truth",
+      "gpm_dep": {
+        "artifact_id": "truth",
+        "default_type": "implementation",
+        "docs": "https://mvnrepository.com/artifact/com.google.truth/truth",
+        "get_from": "Central",
+        "group_id": "com.google.truth",
+        "name": "Truth Core",
+        "description": "Truth Core"
+      }
+    },
+    {
+      "id": 3,
+      "type": "implementation",
+      "installed_name": "okhttp",
+      "gpm_dep": {
+        "artifact_id": "okhttp",
+        "default_type": "implementation",
+        "docs": "https://square.github.io/okhttp/",
+        "get_from": "maven",
+        "github": "square/okhttp",
+        "group_id": "com.squareup.okhttp3",
+        "name": "OkHttp",
+        "description": "For networking"
+      }
+    }
+  ]
 }

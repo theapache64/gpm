@@ -1,6 +1,5 @@
 package com.theapache64.gpm.utils
 
-import com.google.common.truth.Truth.assertThat
 import com.winterbe.expekt.should
 import org.junit.Assert.assertEquals
 import org.junit.Test

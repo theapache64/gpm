@@ -6,8 +6,10 @@
 
 ![Java CI with Gradle](https://github.com/theapache64/gpm/workflows/Java%20CI%20with%20Gradle/badge.svg)
 
-GPM is a package manager for Gradle projects. It is inspired by the famous npm package manager. GPM is not a replacement for the Gradle build system, but a helper to install the dependencies seamlessly to reduce latency.
-It consists of a command-line client, also called **gpm**, and an online database of a package directory called the GPM registry. It uses similar syntax as npm.
+GPM is a package manager for Gradle projects. It is inspired by the famous npm package manager. GPM is not a replacement
+for the Gradle build system, but a helper to install the dependencies seamlessly to reduce latency. It consists of a
+command-line client, also called **gpm**, and an online database of a package directory called the GPM registry. It uses
+similar syntax as npm.
 
 ## Install ⚙️
 
@@ -36,6 +38,7 @@ To install a library
 ```shell script
 $ gpm i <library-name-or-keyword>
 ```
+
 *example*
 
 ```shell script
@@ -46,9 +49,7 @@ $ gpm i okhttp
 
 Other supported commands given below
 
-
 ## Features ⚡
-
 
 | Command                      | Description                                                  | Implemented | Status  | Milestone      |
 |------------------------------|--------------------------------------------------------------|-------------|---------|----------------|
@@ -64,7 +65,7 @@ Other supported commands given below
 
 ### How can I add my repo to the registry? 🤗
 
-[Create an issue](https://github.com/theapache64/gpm/issues/new) with below given JSON model as the comment body. 
+[Create an issue](https://github.com/theapache64/gpm/issues/new) with below given JSON model as the comment body.
 
 ```
 {
@@ -92,9 +93,9 @@ Other supported commands given below
 }
 ```
 
-## Project Status 👷 
+## Project Status 👷
 
-This project is under active development. Tap the `👁️ Watch` button to get updates. 
+This project is under active development. Tap the `👁️ Watch` button to get updates.
 
 ## Author ✍️
 

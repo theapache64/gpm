@@ -5,7 +5,8 @@ object GradleUtils {
         typeKeyword: String,
         groupId: String,
         artifactId: String,
-        version: String
+        version: String,
+        isGradleKts: Boolean
     ): String {
 
         val quote = if (version.startsWith("$")) {
@@ -14,6 +15,12 @@ object GradleUtils {
             "'"
         }
 
-        return "$typeKeyword $quote$groupId:$artifactId:$version$quote"
+        return if (isGradleKts) {
+            // kotlin script
+            "$typeKeyword($quote$groupId:$artifactId:$version$quote)"
+        } else {
+            // normal gradle
+            "$typeKeyword $quote$groupId:$artifactId:$version$quote"
+        }
     }
 }

@@ -1,9 +1,7 @@
 package com.theapache64.gpm.commands.subcommands.install
 
-import com.sun.org.apache.xpath.internal.operations.Bool
 import com.theapache64.gpm.commands.base.BaseCommand
 import com.theapache64.gpm.core.gm.GradleDep
-import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.di.modules.CommandModule
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule

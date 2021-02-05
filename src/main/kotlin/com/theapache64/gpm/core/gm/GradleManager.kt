@@ -68,14 +68,16 @@ class GradleManager constructor(
         val brokenDescription = StringUtils.breakOnAndComment(80, newGpmDep.description)
             .replace("\n", "\n\t")
 
+        val isGradleKts = gradleFile.extension == "kts"
         val fullSignature = GradleUtils.getFullSignature(
             type.key,
             newGpmDep.groupId,
             newGpmDep.artifactId,
-            newGpmDep.version!!
+            newGpmDep.version!!,
+            isGradleKts
         )
 
-        val addedLines : String
+        val addedLines: String
 
         if (fileContent.contains(KEY_DEP)) {
 

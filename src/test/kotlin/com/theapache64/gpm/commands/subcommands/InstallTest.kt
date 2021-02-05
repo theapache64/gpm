@@ -1,7 +1,5 @@
 package com.theapache64.gpm.commands.subcommands
 
-import com.google.common.truth.Truth
-import com.google.common.truth.Truth.assertThat
 import com.theapache64.gpm.commands.subcommands.install.DaggerInstallComponent
 import com.theapache64.gpm.commands.subcommands.install.Install
 import com.theapache64.gpm.commands.subcommands.install.InstallComponent
@@ -13,13 +11,14 @@ import com.theapache64.gpm.di.modules.TransactionModule
 import com.theapache64.gpm.runBlockingUnitTest
 import com.winterbe.expekt.should
 import it.cosenonjaviste.daggermock.DaggerMock
-import org.junit.*
-import org.junit.Assert.assertEquals
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import picocli.CommandLine
 import java.io.File
 import java.io.PrintWriter
 import java.io.StringWriter
-import kotlin.math.exp
 
 class InstallTest {
 
