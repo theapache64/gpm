@@ -68,7 +68,7 @@ class GradleUtilsTest {
         )
 
         gradleDependency.should.equal(
-            "implementation('org.mockito:mockito:3.3.3')"
+            "implementation(\"org.mockito:mockito:3.3.3\")"
         )
     }
 
@@ -84,7 +84,7 @@ class GradleUtilsTest {
         )
 
         gradleDependency.should.equal(
-            "testImplementation('org.mockito:mockito:3.3.3')"
+            "testImplementation(\"org.mockito:mockito:3.3.3\")"
         )
     }
 
@@ -100,7 +100,7 @@ class GradleUtilsTest {
         )
 
         gradleDependency.should.equal(
-            "androidTestImplementation('org.mockito:mockito:3.3.3')"
+            "androidTestImplementation(\"org.mockito:mockito:3.3.3\")"
         )
     }
 }
