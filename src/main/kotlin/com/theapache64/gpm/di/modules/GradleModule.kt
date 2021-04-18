@@ -28,6 +28,7 @@ class GradleModule(
         } else {
 
             val androidGradleFile = File("app/build.gradle")
+            val androidKtsGradleFile = File("app/build.gradle.kts")
             val jvmGradleFile = File("build.gradle")
             val jvmKtsGradleFile = File("build.gradle.kts")
 
@@ -37,6 +38,10 @@ class GradleModule(
                     androidGradleFile
                 }
 
+                androidKtsGradleFile.exists() -> {
+                    androidKtsGradleFile
+                }
+                
                 jvmGradleFile.exists() -> {
                     jvmGradleFile
                 }
