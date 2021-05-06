@@ -26,7 +26,7 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
         names = ["-FS", "-fs", "--force-search"],
         description = ["To skip gpm registry search check and quick search with other repos"]
     )
-    var isForceSearch: Boolean = false
+    var isForceSearch: Boolean = true
 
     @CommandLine.Option(
         names = ["-D", "-d", "--save-dev"],
