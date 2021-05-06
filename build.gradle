@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'kotlin-kapt'
 
 group 'com.theapache64.gpm'
-version 'v1.0.1'
+version 'v1.0.2'
 
 repositories {
     mavenCentral()
@@ -31,6 +31,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.2'
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+
+    // Inquirer
+    implementation 'com.github.kotlin-inquirer:kotlin-inquirer:v0.0.2-alpha'
 
 
     // Dagger
