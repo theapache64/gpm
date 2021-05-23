@@ -6,8 +6,10 @@ import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
-import picocli.CommandLine
 import javax.inject.Inject
+
+const val RESET_COLOR = "\u001b[0m" // Text Reset
+const val GREEN_BOLD = "\u001b[1;32m" // GREEN
 
 class InstallViewModel @Inject constructor(
     private val gpmRepo: GpmRepo,
@@ -89,20 +91,17 @@ class InstallViewModel @Inject constructor(
             val mostUsed = mavenDeps.maxBy { it.usage ?: 0 }!!
             val selDepIndex = if (mavenDeps.size > 1) {
 
-                val index = install.chooseIndex(
-                    mavenDeps.map {
-                        val text = "${it.groupId}:${it.artifactId}"
-                        if (it == mostUsed) {
-                            // color text
-                            CommandLine.Help.Ansi.AUTO.string("@|bold,green $text|@")
-                        } else {
-                            //normal text
-                            text
-                        }
+                val choosables = mavenDeps.map {
+                    val text = "${it.groupId}:${it.artifactId}"
+                    if (it == mostUsed) {
+                        // color text
+                        "$GREEN_BOLD$text${RESET_COLOR}"
+                    } else {
+                        //normal text
+                        text
                     }
-                )
-
-                index
+                }
+                install.chooseIndex(choosables)
             } else {
                 0
             }
@@ -110,7 +109,6 @@ class InstallViewModel @Inject constructor(
             val selMavenDep = mavenDeps[selDepIndex]
 
             // Getting latest version
-
             val artifactInfo = mavenRepo.getLatestVersion(
                 selMavenDep.groupId,
                 selMavenDep.artifactId

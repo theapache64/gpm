@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @CommandLine.Command(
     name = "gpm",
-    version = ["v1.0.1"],
+    version = ["v1.0.3"],
     mixinStandardHelpOptions = true,
     subcommands = [
         Install::class,

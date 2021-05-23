@@ -13,10 +13,9 @@ similar syntax as npm.
 
 ## Install ⚙️
 
-Copy-paste below command into your terminal to install latest version
 
 ```shell script
-wget "https://raw.githubusercontent.com/theapache64/gpm/master/install.sh" -q --show-progress -O install.sh && sh install.sh && source ~/.bashrc
+sudo npm install -g gpm-cli
 ```
 
 ## Usage ⌨️

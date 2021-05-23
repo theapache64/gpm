@@ -7,7 +7,7 @@
   "main": "index.js",
   "preferGlobal": true,
   "repository": "https://github.com/theapache64/gpm",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "jdeploy": {
     "jar": "gpm.main.jar"
   },
