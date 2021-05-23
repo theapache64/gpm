@@ -139,3 +139,5 @@ SecretConstants.kt
 src/test/resources/temp.build.gradle
 x.html
 src/test/resources/temp.gpm.json
+node_modules
+package-lock.json

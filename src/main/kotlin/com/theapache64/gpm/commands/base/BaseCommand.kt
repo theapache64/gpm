@@ -21,7 +21,7 @@ abstract class BaseCommand<T>(
             delay(1000)
             0
         } else {
-            InputUtils.getInt("Choose one", 1, items.size) - 1
+            InputUtils.getInt("Choose #", 1, items.size) - 1
         }
     }
 }
