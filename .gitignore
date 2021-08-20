@@ -143,3 +143,4 @@ x.html
 src/test/resources/temp.gpm.json
 node_modules
 package-lock.json
+gpm.json
