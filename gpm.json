@@ -1,47 +1,75 @@
 {
-  "added": [
-    {
-      "id": 1,
-      "type": "kapt",
-      "installed_name": "dagger-compiler",
-      "gpm_dep": {
-        "artifact_id": "dagger-compiler",
-        "default_type": "implementation",
-        "docs": "https://mvnrepository.com/artifact/com.google.dagger/dagger-compiler",
-        "get_from": "Central",
-        "group_id": "com.google.dagger",
-        "name": "Dagger Compiler",
-        "description": "A fast dependency injector for Android and Java."
-      }
-    },
-    {
-      "id": 2,
-      "type": "testImplementation",
-      "installed_name": "truth",
-      "gpm_dep": {
-        "artifact_id": "truth",
-        "default_type": "implementation",
-        "docs": "https://mvnrepository.com/artifact/com.google.truth/truth",
-        "get_from": "Central",
-        "group_id": "com.google.truth",
-        "name": "Truth Core",
-        "description": "Truth Core"
-      }
-    },
-    {
-      "id": 3,
-      "type": "implementation",
-      "installed_name": "okhttp",
-      "gpm_dep": {
-        "artifact_id": "okhttp",
-        "default_type": "implementation",
-        "docs": "https://square.github.io/okhttp/",
-        "get_from": "maven",
-        "github": "square/okhttp",
-        "group_id": "com.squareup.okhttp3",
-        "name": "OkHttp",
-        "description": "For networking"
-      }
-    }
-  ]
+ "added": [
+  {
+   "id": 1,
+   "type": "kapt",
+   "installed_name": "dagger-compiler",
+   "gpm_dep": {
+    "artifact_id": "dagger-compiler",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.google.dagger/dagger-compiler",
+    "get_from": "Central",
+    "group_id": "com.google.dagger",
+    "name": "Dagger Compiler",
+    "description": "A fast dependency injector for Android and Java."
+   }
+  },
+  {
+   "id": 2,
+   "type": "testImplementation",
+   "installed_name": "truth",
+   "gpm_dep": {
+    "artifact_id": "truth",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.google.truth/truth",
+    "get_from": "Central",
+    "group_id": "com.google.truth",
+    "name": "Truth Core",
+    "description": "Truth Core"
+   }
+  },
+  {
+   "id": 3,
+   "type": "implementation",
+   "installed_name": "okhttp",
+   "gpm_dep": {
+    "artifact_id": "okhttp",
+    "default_type": "implementation",
+    "docs": "https://square.github.io/okhttp/",
+    "get_from": "maven",
+    "github": "square/okhttp",
+    "group_id": "com.squareup.okhttp3",
+    "name": "OkHttp",
+    "description": "For networking"
+   }
+  },
+  {
+   "id": 4,
+   "type": "implementation",
+   "installed_name": "retrofit",
+   "gpm_dep": {
+    "artifact_id": "retrofit",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit",
+    "get_from": "Central",
+    "group_id": "com.squareup.retrofit2",
+    "name": "Retrofit",
+    "description": "A type-safe HTTP client for Android and Java."
+   }
+  },
+  {
+   "id": 5,
+   "type": "implementation",
+   "installed_name": "coroutines-core",
+   "gpm_dep": {
+    "artifact_id": "kotlinx-coroutines-core",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core",
+    "get_from": "Central",
+    "group_id": "org.jetbrains.kotlinx",
+    "name": "Kotlinx Coroutines Core",
+    "description": "Coroutines support libraries for Kotlin"
+   }
+  }
+ ]
 }

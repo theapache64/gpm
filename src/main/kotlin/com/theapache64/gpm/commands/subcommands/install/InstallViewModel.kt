@@ -88,7 +88,7 @@ class InstallViewModel @Inject constructor(
 
         if (mavenDeps.isNotEmpty()) {
 
-            val mostUsed = mavenDeps.maxBy { it.usage ?: 0 }!!
+            val mostUsed = mavenDeps.maxByOrNull { it.usage ?: 0 }!!
             val selDepIndex = if (mavenDeps.size > 1) {
 
                 val choosables = mavenDeps.map {
