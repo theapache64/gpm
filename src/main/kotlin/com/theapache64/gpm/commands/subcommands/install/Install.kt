@@ -61,13 +61,15 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     override fun call(): Int = runBlocking {
         modulePath = StringUtils.modulePathToFilePath(parent?.modulePath)
-        DaggerInstallComponent
-            .builder()
-            .commandModule(CommandModule(isFromTest = false))
-            .gradleModule(GradleModule(isFromTest = false, modulePath))
-            .transactionModule(TransactionModule(false))
-            .build()
-            .inject(this@Install)
+        if (!isFromTest) {
+            DaggerInstallComponent
+                .builder()
+                .commandModule(CommandModule(isFromTest = isFromTest))
+                .gradleModule(GradleModule(isFromTest = isFromTest, modulePath))
+                .transactionModule(TransactionModule(isFromTest))
+                .build()
+                .inject(this@Install)
+        }
 
         installViewModel.call(this@Install)
     }

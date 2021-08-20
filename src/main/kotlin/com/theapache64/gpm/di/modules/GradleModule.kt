@@ -20,7 +20,7 @@ class GradleModule(
 
         @Suppress("ConstantConditionIf")
         return if (isFromTest) {
-            val modPath = if (modulePath != null) {
+            val modPath = if (!modulePath.isNullOrBlank()) {
                 "$modulePath/"
             } else {
                 ""
