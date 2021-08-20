@@ -30,10 +30,14 @@ class InstallTest {
     private lateinit var tempBuildGradle: File
     private lateinit var tempGpmJson: File
 
+    companion object {
+        private const val DUMMY_MODULE = "feature/auth"
+    }
+
     @get:Rule
     val daggerRule = DaggerMock.rule<InstallComponent>(NetworkModule()) {
         customizeBuilder<DaggerInstallComponent.Builder> {
-            it.gradleModule(GradleModule(isFromTest = true))
+            it.gradleModule(GradleModule(isFromTest = true, DUMMY_MODULE)) // sample module
                 .transactionModule(TransactionModule(true))
                 .commandModule(CommandModule(true))
         }
@@ -47,7 +51,6 @@ class InstallTest {
 
     @Before
     fun setUp() = runBlockingUnitTest {
-
         this.installCmd = CommandLine(install)
         installCmd.out = PrintWriter(StringWriter())
     }
@@ -107,6 +110,14 @@ class InstallTest {
     fun `Install not existing library`() {
         val exitCode = installCmd.execute("gdfhdfghdfghfdg")
         exitCode.should.equal(InstallViewModel.RESULT_REPO_NOT_FOUND)
+    }
+
+    @Test
+    fun `Install --save into modules`() {
+        val exitCode = installCmd.execute("--save", "okhttp")
+        exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
+        tempBuildGradle.readText().should.contain("implementation 'com.squareup.okhttp3:okhttp:")
+        tempBuildGradle.absolutePath.should.contain(DUMMY_MODULE)
     }
 
     @Test

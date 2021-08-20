@@ -10,7 +10,8 @@ import kotlin.system.exitProcess
 
 @Module(includes = [TransactionModule::class])
 class GradleModule(
-    private val isFromTest: Boolean
+    private val isFromTest: Boolean,
+    private val modulePath: String?
 ) {
 
     @Provides
@@ -19,54 +20,91 @@ class GradleModule(
 
         @Suppress("ConstantConditionIf")
         return if (isFromTest) {
-            val tempGradleFile = File("src/test/resources/temp.build.gradle")
+            val modPath = if (modulePath != null) {
+                "$modulePath/"
+            } else {
+                ""
+            }
+            val tempGradleFile = File("${modPath}src/test/resources/temp.build.gradle")
             val sampleFile = File("src/test/resources/sample.build.gradle")
             tempGradleFile.delete()
             sampleFile.copyTo(tempGradleFile)
             tempGradleFile
 
         } else {
+            if (modulePath != null) {
+                val androidGradleFile = File("$modulePath/build.gradle")
+                val androidKtsGradleFile = File("$modulePath/build.gradle.kts")
+                when {
+                    androidGradleFile.exists() -> {
+                        // android project
+                        androidGradleFile
+                    }
 
-            val androidGradleFile = File("app/build.gradle")
-            val androidKtsGradleFile = File("app/build.gradle.kts")
-            val jvmGradleFile = File("build.gradle")
-            val jvmKtsGradleFile = File("build.gradle.kts")
+                    androidKtsGradleFile.exists() -> {
+                        androidKtsGradleFile
+                    }
 
-            when {
-                androidGradleFile.exists() -> {
-                    // android project
-                    androidGradleFile
+                    else -> {
+                        val currentDir = File(System.getProperty("user.dir"))
+
+                        println(
+                            """
+                        Couldn't find `$modulePath` inside '${currentDir.absolutePath}'.
+                        Are you sure that you're executing the command from project root?
+                    """.trimIndent()
+                        )
+
+                        exitProcess(0)
+                    }
+
                 }
+            } else {
+                findGradleFile()
+            }
+        }
+    }
 
-                androidKtsGradleFile.exists() -> {
-                    androidKtsGradleFile
-                }
-                
-                jvmGradleFile.exists() -> {
-                    jvmGradleFile
-                }
+    private fun findGradleFile(): File {
+        val androidGradleFile = File("app/build.gradle")
+        val androidKtsGradleFile = File("app/build.gradle.kts")
+        val jvmGradleFile = File("build.gradle")
+        val jvmKtsGradleFile = File("build.gradle.kts")
 
-                jvmKtsGradleFile.exists() -> {
-                    jvmKtsGradleFile
-                }
+        return when {
+            androidGradleFile.exists() -> {
+                // android project
+                androidGradleFile
+            }
 
-                else -> {
+            androidKtsGradleFile.exists() -> {
+                androidKtsGradleFile
+            }
 
-                    /**
-                     * SMART END
-                     */
+            jvmGradleFile.exists() -> {
+                jvmGradleFile
+            }
 
-                    val currentDir = File(System.getProperty("user.dir"))
+            jvmKtsGradleFile.exists() -> {
+                jvmKtsGradleFile
+            }
 
-                    println(
-                        """
+            else -> {
+
+                /**
+                 * SMART END
+                 */
+
+                val currentDir = File(System.getProperty("user.dir"))
+
+                println(
+                    """
                         Invalid directory '${currentDir.absolutePath}'.
                         Are you sure that you're executing the command from project root?
                     """.trimIndent()
-                    )
+                )
 
-                    exitProcess(0)
-                }
+                exitProcess(0)
             }
         }
     }

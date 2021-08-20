@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @CommandLine.Command(
     name = "gpm",
-    version = ["v1.0.3"],
+    version = ["v1.0.4-alpha01"],
     mixinStandardHelpOptions = true,
     subcommands = [
         Install::class,
@@ -22,9 +22,17 @@ import javax.inject.Singleton
 @Singleton
 class Gpm constructor(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
+
     init {
         DaggerGpmComponent.create().inject(this)
     }
+
+    @CommandLine.Parameters(
+        index = "0",
+        description = ["Module path or directory, separated and started by ':'. eg: :app , :feature:login"],
+        defaultValue = ""
+    )
+    var modulePath: String? = null
 
     @Inject
     lateinit var viewModel: GpmViewModel

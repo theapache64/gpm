@@ -9,7 +9,7 @@
   "repository": "https://github.com/theapache64/gpm",
   "version": "1.0.4-alpha01",
   "jdeploy": {
-    "jar": "gpm.main.jar"
+    "jar": "build/libs/gpm.main.jar"
   },
   "dependencies": {
     "shelljs": "0.8.4"

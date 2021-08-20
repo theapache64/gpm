@@ -27,7 +27,7 @@ class UninstallTest {
     @get:Rule
     val daggerMock = DaggerMock.rule<UninstallComponent>() {
         customizeBuilder<DaggerUninstallComponent.Builder> {
-            it.gradleModule(GradleModule(true))
+            it.gradleModule(GradleModule(true, modulePath = null))
                 .transactionModule(TransactionModule(true))
         }
         set {

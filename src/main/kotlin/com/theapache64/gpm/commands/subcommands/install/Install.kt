@@ -1,10 +1,12 @@
 package com.theapache64.gpm.commands.subcommands.install
 
 import com.theapache64.gpm.commands.base.BaseCommand
+import com.theapache64.gpm.commands.gpm.Gpm
 import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.di.modules.CommandModule
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
+import com.theapache64.gpm.utils.StringUtils
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import javax.inject.Inject
@@ -15,6 +17,10 @@ import javax.inject.Inject
     description = ["To install the dependency"]
 )
 class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
+
+
+    @CommandLine.ParentCommand
+    var parent: Gpm? = null
 
     @CommandLine.Option(
         names = ["-S", "-s", "--save"],
@@ -51,22 +57,26 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
 
     @Inject
     lateinit var installViewModel: InstallViewModel
+    private var modulePath: String? = null
 
-    init {
+    override fun call(): Int = runBlocking {
+        modulePath = StringUtils.modulePathToFilePath(parent?.modulePath)
         DaggerInstallComponent
             .builder()
             .commandModule(CommandModule(isFromTest = false))
-            .gradleModule(GradleModule(isFromTest = false))
+            .gradleModule(GradleModule(isFromTest = false, modulePath))
             .transactionModule(TransactionModule(false))
             .build()
-            .inject(this)
-    }
+            .inject(this@Install)
 
-    override fun call(): Int = runBlocking {
         installViewModel.call(this@Install)
     }
 
     fun onBeforeGetDep() {
+        if (modulePath != null) {
+            println("➡️ Module: $modulePath")
+        }
+
         println("🔍 Searching for '$depName'")
     }
 

@@ -12,7 +12,7 @@ import it.cosenonjaviste.daggermock.DaggerMockRule
 class MyDaggerMockRule : DaggerMockRule<InstallComponent>(
     InstallComponent::class.java,
     NetworkModule(),
-    GradleModule(isFromTest = true)
+    GradleModule(isFromTest = true, null)
 ) {
     init {
         customizeBuilder<DaggerInstallComponent.Builder> {

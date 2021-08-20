@@ -24,9 +24,9 @@ class GradleManagerTest {
 
     @get:Rule
     val daggerRule = DaggerMock.rule<InstallComponent>(
-        GradleModule(true),
-        TransactionModule(true),
-        CommandModule(true)
+        GradleModule(isFromTest = true, modulePath = null),
+        TransactionModule(isFromTest = true),
+        CommandModule(isFromTest = true)
     ) {
         set {
             gradleFile = it.gradleFile()

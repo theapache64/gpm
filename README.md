@@ -13,7 +13,6 @@ similar syntax as npm.
 
 ## Install ⚙️
 
-
 ```shell script
 sudo npm install -g gpm-cli
 ```
