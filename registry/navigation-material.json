@@ -1,0 +1,10 @@
+{
+  "name": "Navigation Material",
+  "github": "google/accompanist",
+  "docs": "https://google.github.io/accompanist/navigation-material/",
+  "group_id": "com.google.accompanist",
+  "artifact_id": "accompanist-navigation-material",
+  "get_from": "maven",
+  "default_type": "implementation",
+  "description": "Compose Material support for Jetpack Navigation Compose"
+}
