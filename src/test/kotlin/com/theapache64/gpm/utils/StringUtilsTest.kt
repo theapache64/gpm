@@ -47,18 +47,4 @@ class StringUtilsTest {
         val actualOutput = StringUtils.breakOnAndComment(80, input)
         assertEquals(actualOutput, expectedOutput)
     }
-
-    @Test
-    fun `modulePath to filePath conversion`() {
-        StringUtils.apply {
-            modulePathToFilePath(null).should.`null`
-            modulePathToFilePath("").should.`null`
-            modulePathToFilePath(" ").should.`null`
-            modulePathToFilePath(":").should.`null`
-            modulePathToFilePath("app:feature").should.`null`
-            modulePathToFilePath(":app").should.equal("app")
-            modulePathToFilePath(":app:feature").should.equal("app/feature")
-            modulePathToFilePath(":app:feature:x:y:z").should.equal("app/feature/x/y/z")
-        }
-    }
 }

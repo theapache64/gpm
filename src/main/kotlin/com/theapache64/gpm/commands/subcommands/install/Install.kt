@@ -6,7 +6,6 @@ import com.theapache64.gpm.core.gm.GradleDep
 import com.theapache64.gpm.di.modules.CommandModule
 import com.theapache64.gpm.di.modules.GradleModule
 import com.theapache64.gpm.di.modules.TransactionModule
-import com.theapache64.gpm.utils.StringUtils
 import kotlinx.coroutines.runBlocking
 import picocli.CommandLine
 import javax.inject.Inject
@@ -60,7 +59,7 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
     private var modulePath: String? = null
 
     override fun call(): Int = runBlocking {
-        modulePath = StringUtils.modulePathToFilePath(parent?.modulePath)
+        modulePath = parent?.modulePath?.ifBlank { null }
         if (!isFromTest) {
             DaggerInstallComponent
                 .builder()

@@ -44,15 +44,4 @@ object StringUtils {
         return chunks
     }
 
-    fun modulePathToFilePath(modulePath: String?): String? {
-        if (modulePath.isNullOrBlank() || !modulePath.startsWith(":") || modulePath.length <= 1) {
-            return null
-        }
-
-        // here, module path is not empty, and it starts with ':'
-        return modulePath
-            .replace(":", "/") // replace all ':' with "/"
-            .substring(1)
-    }
-
 }

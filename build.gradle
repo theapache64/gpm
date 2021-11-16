@@ -6,7 +6,7 @@ plugins {
 apply plugin: 'kotlin-kapt'
 
 group 'com.theapache64.gpm'
-version '1.0.4-alpha01'
+version '1.0.4'
 
 repositories {
     mavenCentral()

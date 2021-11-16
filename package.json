@@ -7,9 +7,9 @@
   "main": "index.js",
   "preferGlobal": true,
   "repository": "https://github.com/theapache64/gpm",
-  "version": "1.0.4-alpha01",
+  "version": "1.0.4",
   "jdeploy": {
-    "jar": "build/libs/gpm.main.jar"
+    "jar": "gpm.main.jar"
   },
   "dependencies": {
     "shelljs": "0.8.4"
