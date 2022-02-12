@@ -57,7 +57,7 @@ class InstallViewModel @Inject constructor(
                     isGradleKts = true
                 )
                 val coloredDepsSign = CommandLine.Help.Ansi.AUTO.string("@|bold,green $depSign|@")
-                println("✅ -> $coloredDepsSign")
+                println(coloredDepsSign)
             }else{
                 // Modify files
                 command.onBeforeAddDependency(depType)
