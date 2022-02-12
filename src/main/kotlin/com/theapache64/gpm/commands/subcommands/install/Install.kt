@@ -34,6 +34,12 @@ class Install(isFromTest: Boolean = false) : BaseCommand<Int>(isFromTest) {
     var isForceSearch: Boolean = true
 
     @CommandLine.Option(
+        names = ["-po"],
+        description = ["To print only. No files will be modified"]
+    )
+    var isPrintOnly: Boolean = false
+
+    @CommandLine.Option(
         names = ["-D", "-d", "--save-dev"],
         description = ["To install the dependency as 'testImplementation'"]
     )

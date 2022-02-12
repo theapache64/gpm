@@ -6,6 +6,8 @@ import com.theapache64.gpm.core.gm.GradleManager
 import com.theapache64.gpm.data.remote.gpm.models.GpmDep
 import com.theapache64.gpm.data.repos.GpmRepo
 import com.theapache64.gpm.data.repos.MavenRepo
+import com.theapache64.gpm.utils.GradleUtils
+import picocli.CommandLine
 import javax.inject.Inject
 
 const val RESET_COLOR = "\u001b[0m" // Text Reset
@@ -45,13 +47,27 @@ class InstallViewModel @Inject constructor(
 
         // Adding each dependency
         for (depType in depTypes) {
-            command.onBeforeAddDependency(depType)
-            val newlyAddedLines = gradleManager.addDep(
-                depName,
-                depType,
-                gpmDep
-            )
-            command.onAfterDependenciesAdded(newlyAddedLines)
+            if(command.isPrintOnly){
+                // Only print. No files need to be modified
+                val depSign = GradleUtils.getFullSignature(
+                    depType.key,
+                    gpmDep.groupId,
+                    gpmDep.artifactId,
+                    gpmDep.version!!,
+                    isGradleKts = true
+                )
+                val coloredDepsSign = CommandLine.Help.Ansi.AUTO.string("@|bold,green $depSign|@")
+                println("✅ -> $coloredDepsSign")
+            }else{
+                // Modify files
+                command.onBeforeAddDependency(depType)
+                val newlyAddedLines = gradleManager.addDep(
+                    depName,
+                    depType,
+                    gpmDep
+                )
+                command.onAfterDependenciesAdded(newlyAddedLines)
+            }
         }
 
 
