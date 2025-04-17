@@ -102,7 +102,7 @@ class InstallTest {
     fun `Install --kapt`() {
         val exitCode = installCmd.execute("--kapt", "dagger-compiler")
         exitCode.should.equal(InstallViewModel.RESULT_DEP_INSTALLED)
-        tempBuildGradle.readText().should.contain("kapt 'com.squareup.dagger:dagger-compiler:")
+        tempBuildGradle.readText().should.contain("kapt 'com.google.dagger:dagger-compiler:")
     }
 
 

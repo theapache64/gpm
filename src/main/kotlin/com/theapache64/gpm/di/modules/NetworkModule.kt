@@ -1,10 +1,13 @@
 package com.theapache64.gpm.di.modules
 
+import com.moczul.ok2curl.CurlInterceptor
+import com.moczul.ok2curl.logger.Logger
 import com.squareup.moshi.Moshi
 import com.theapache64.gpm.data.remote.gpm.GpmApiInterface
 import com.theapache64.gpm.data.remote.maven.MavenApiInterface
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -15,7 +18,18 @@ class NetworkModule {
 
     @Provides
     fun provideRetrofit(): Retrofit.Builder {
+        val okHttp = OkHttpClient.Builder()
+            .addInterceptor(
+                CurlInterceptor(object : Logger {
+                    override fun log(message: String) {
+                        println("QuickTag: NetworkModule:log: `$message`")
+                    }
+                })
+            )
+            .build()
+
         return Retrofit.Builder()
+            .client(okHttp)
     }
 
     @Singleton
