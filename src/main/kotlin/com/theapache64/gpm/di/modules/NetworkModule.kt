@@ -19,13 +19,13 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit.Builder {
         val okHttp = OkHttpClient.Builder()
-            .addInterceptor(
+            /*.addInterceptor(
                 CurlInterceptor(object : Logger {
                     override fun log(message: String) {
                         println("QuickTag: NetworkModule:log: `$message`")
                     }
                 })
-            )
+            )*/
             .build()
 
         return Retrofit.Builder()
