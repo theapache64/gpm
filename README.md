@@ -1,3 +1,5 @@
+[![npm version](https://img.shields.io/github/package-json/v/theapache64/gpm)](https://www.npmjs.com/package/gpm-cli)
+
 <p align="center">
   <img src="extras/logo/gpm_original_logo.png" width="300">
 </p>
